@@ -1,0 +1,149 @@
+========================================================================================================
+J-PER-MS CONVENTION: does H_J cost one MS window or two?
+========================================================================================================
+No convention adopted. runtime_table.md NOT edited.
+
+========================================================================================================
+1  THE TWO DEFINITIONS, QUOTED WITH FILE AND LINE
+========================================================================================================
+
+(1a) The H_J term being implemented
+     simulations/trotter_method_b_qubit.py:143-145
+       # H_J: carrier coupling (from H2XX+H2YY, sxsx+sysy terms)
+       # sxa*sxb + sya*syb = 2*(spa*smb + sma*spb) in qubit encoding
+       H_J = (g_ab*(sxa*sxb + sya*syb)/2 + g_ac*(sxa*sxc + sya*syc)/2)
+
+     So per pair the required generator is  g*(X_m X_n + Y_m Y_n)/2,
+     an excitation-preserving flip-flop (XY exchange), NOT a single
+     quadrature product.
+
+(1b) What this repo means by 'MS'
+     pulses_meth/docs/sdf_zbasis.md:22
+       "With dphi = 0 (symmetric) one instead recovers the standard
+        Molmer-Sorensen (sigma_x (x) sigma_x-type) coupling."
+
+     pulses_meth/hypulse_validation/qcd_bazavan_phys.py:21
+       "When delta = omega_z, the sigma_phi (MS/sigma_x) SDF emerges instead."
+
+     Both say MS = sigma_phi (x) sigma_phi, ONE quadrature product.
+
+(1c) What the circuit code actually emits
+     simulations/circuit_fig89_10_hqml_qnode_b_qubit.py:130,168,180,216
+       qml.IsingXX(g_at[i] * tau, wires=[QB[0], QB[1 + i]])   # x2
+       qml.IsingYY(g_at[i] * tau, wires=[QB[0], QB[1 + i]])   # x2
+     -> XX and YY are emitted as SEPARATE gates.
+
+(1d) CONFLICTING claim in the repo's own audit
+     docs/audit_trotter.md:78
+       "2x combined XX+YY two-qubit gate (Molmer-Sorensen flip-flop on TI)"
+     This calls XX+YY a single 'combined' gate, i.e. one window per pair.
+     It disagrees with (1b) and (1c). Flagged, not silently resolved.
+
+========================================================================================================
+2  ALGEBRA: DOES ONE MS WINDOW GENERATE XX+YY ?
+========================================================================================================
+
+  A Molmer-Sorensen window with phase phi generates
+      U_MS(theta, phi) = exp( -i theta  sigma_phi (x) sigma_phi ),
+      sigma_phi = cos(phi) X + sin(phi) Y.
+  Expanding the product:
+      sigma_phi (x) sigma_phi
+        = cos^2(phi) XX + sin^2(phi) YY
+        + cos(phi)sin(phi) (XY + YX).
+  For this to equal (XX + YY)/1 the cross terms must vanish and both
+  squared coefficients must be 1 simultaneously:
+      cos(phi)sin(phi) = 0   ->  phi = 0 or pi/2
+      phi = 0    ->  XX only
+      phi = pi/2 ->  YY only
+  There is NO phi giving XX + YY. One window yields ONE quadrature product.
+
+  Two windows suffice, and exactly, because XX and YY COMMUTE:
+      (X(x)X)(Y(x)Y) = (XY)(x)(XY)
+      (Y(x)Y)(X(x)X) = (YX)(x)(YX) = (-XY)(x)(-XY) = (XY)(x)(XY)
+      => [X(x)X, Y(x)Y] = 0
+  hence
+      exp(-i theta (XX+YY)) = exp(-i theta XX) exp(-i theta YY)
+  is an IDENTITY, not a Trotter approximation. No splitting error.
+
+  Convention followed: Molmer-Sorensen as in pulses_meth/docs/sdf_zbasis.md
+  (sigma_phi (x) sigma_phi). Meth's 200 us is quoted for that gate
+  (appendix_table.md: 'Molmer-Sorensen entangling gate on two ions',
+   Meth SI Note II p.3, 0.2 ms per gate, angle-independent).
+
+  CAVEAT: a native XY / exchange interaction WOULD do it in one window,
+  but nothing in this repo or in the Meth anchor claims such a gate.
+  Meth quotes an MS time, and this repo defines MS as sigma_phi(x)sigma_phi.
+
+========================================================================================================
+3  VERDICT
+========================================================================================================
+
+  H_J costs TWO MS windows per pair per application, i.e. 2 x 200 us.
+
+  Reasons: one window gives only sigma_phi(x)sigma_phi (section 2);
+  XX and YY commute so two windows are exact; and the repo's own
+  circuit code already emits IsingXX and IsingYY separately (1c).
+  The single contrary statement is docs/audit_trotter.md:78, which is
+  a prose label rather than emitted code.
+
+  NOT settled here, and deliberately left alone: H_Jl.
+    H_Jl = g_abl*(sxa*sxb + sya*syb)*xl/2 + g_acl*(...)*xl/2
+  carries the same XX+YY structure but multiplied by x_l, so it is a
+  3-body term realised via CD sandwiches, not by bare MS windows. Its
+  200 us pricing was already flagged as a CHOICE in
+  results/gate_count_reconcile.txt and is held fixed below so that only
+  ONE variable changes.
+
+========================================================================================================
+4  RECOMPUTE UNDER THE VERDICT   (Nc = 3)
+========================================================================================================
+  T_op read from pulses_meth\runtime_table.md:
+    QCR    = 55.93
+    QCD    = 2.566
+    QTSB   = 0.0597
+    ROT    = 5.0
+    MS     = 200.0
+    QT_lo  = 0.105
+    QT_hi  = 11.0
+
+  builder counts (Nc=3): {'chi': 6, 'cd': 8, 'Rotation': 8, 'rz': 4, 'J': 4, 'Jl': 2}
+
+  non-coupling part of the qubit step (unchanged by the verdict):
+    chi 6x55.93 + cd 8x2.566 + Rot 8x5.0 + rz 4x0
+    = 335.58 + 20.53 + 40.00 + 0 = 396.11 us
+
+  MS-window count:
+    published  : J 4 x1 + Jl 2 x1 = 6 windows  -> 1200 us
+    verdict    : J 4 x2 + Jl 2 x1 = 10 windows  -> 2000 us
+    difference : +4 windows = +800 us
+
+  T_qubit published = 396.11 + 6x200 = 1596.11 us
+  T_qubit verdict   = 396.11 + 10x200 = 2396.11 us
+
+  qudit step (UNCHANGED - no J/Jl on the qudit side):
+    T_QT low  : 6x55.93 + 8x2.566 + 8x5.0 + 2x0.105 + 2x0.0597 = 396.44 us
+    T_QT high : ... + 2x11.0 ... = 418.23 us
+
+  SEQUENTIAL RATIO BRACKET   (ratio = T_qubit / T_qudit)
+    published : [1596.11/418.23, 1596.11/396.44] = [3.82x, 4.03x]   (runtime_table.md prints [3.82x, 4.03x])
+    verdict   : [2396.11/418.23, 2396.11/396.44] = [5.73x, 6.04x]
+
+  PARALLEL-MS RATIO BRACKET
+    published assumes 3 windows (fwd J batch, middle Jl batch, rev J batch).
+    Under the verdict each J batch needs an XX window AND a YY window,
+    so fwd 2 + middle 1 (Jl held fixed) + rev 2 = 5 windows.
+    published : 396.11 + 3x200 = 996.11 us  -> [2.38x, 2.51x]   (runtime_table.md prints [2.38x, 2.51x])
+    verdict   : 396.11 + 5x200 = 1396.11 us  -> [3.34x, 3.52x]
+
+========================================================================================================
+5  SUMMARY
+========================================================================================================
+1. H_J needs g(XX+YY)/2 per pair; one MS window gives only
+   sigma_phi(x)sigma_phi, and no phi yields XX+YY. VERDICT: 2 windows.
+2. Two windows are EXACT, not approximate: [XX, YY] = 0, so
+   exp(-i t (XX+YY)) = exp(-i t XX) exp(-i t YY) identically.
+3. MS windows per qubit step: 6 published -> 10 under the verdict (+4), i.e. T_qubit 1596.1 -> 2396.1 us.
+4. Ratios move in the qudit's favour: sequential [3.82, 4.03] -> [5.73, 6.04]; parallel-MS [2.38, 2.51] -> [3.34, 3.52]. Published numbers are the conservative ones.
+5. OPEN: docs/audit_trotter.md:78 calls XX+YY one 'combined' gate,
+   contradicting this. And H_Jl's 200 us pricing is still an unexamined
+   CHOICE - it was held fixed here so only one variable moved.

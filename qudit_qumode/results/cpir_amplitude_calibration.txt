@@ -1,0 +1,66 @@
+====================================================================================================
+C_{Pi}R BY AMPLITUDE CALIBRATION AT A FIXED DURATION
+====================================================================================================
+  commit b44a3bd
+  delta/2pi = 40.0 kHz, detuning period 25.000 us
+  Omega_sb/2pi nominal = 4.0 kHz (measured)
+  161 samples; acceptance ratio 1.000 and leak < 3e-03
+
+  Phase goes as chi*T = Omega_sb^2 T/(4 delta), quadratic in the
+  amplitude, while the leakage null is set by delta.  So the
+  amplitude should move the phase onto target without moving the
+  null.  That is the hypothesis being tested.
+
+  CONTROL -- nominal amplitude at each candidate duration
+       T (us)  T/period   delivered   /0.016   leak P(g)
+      25.4648     1.019    0.015148   0.9468  1.8402e-03
+      25.0000     1.000    0.015142   0.9464  7.6145e-04
+
+  AMPLITUDE SOLVE, both candidate durations
+      theta   T (us)  amp factor  Om_sb/2pi   ratio   leak P(g)   1-F tgt+VZ  max offdiag
+     0.0135  25.4648    0.942159     3.7686  1.0000  1.4181e-03   1.9048e-03   2.4187e-01
+     0.0135  25.0000    0.942332     3.7693  1.0000  5.3955e-04   1.6735e-03   2.4191e-01
+
+     0.0160  25.4648    1.028794     4.1152  1.0000  2.0870e-03   2.6818e-03   2.6264e-01
+     0.0160  25.0000    1.029035     4.1161  1.0000  8.9846e-04   2.3715e-03   2.6269e-01
+
+     0.0180  25.4648    1.093842     4.3754  1.0000  2.7485e-03   3.4043e-03   2.7798e-01
+     0.0180  25.0000    1.094148     4.3766  1.0000  1.2793e-03   3.0225e-03   2.7807e-01
+
+====================================================================================================
+SELECTED -- lower-leakage duration for each angle
+====================================================================================================
+    theta   T (us)  amp factor  Om_sb/2pi   ratio   leak P(g)   1-F tgt+VZ
+   0.0135  25.0000    0.942332     3.7693  1.0000  5.3955e-04   1.6735e-03
+   0.0160  25.0000    1.029035     4.1161  1.0000  8.9846e-04   2.3715e-03
+   0.0180  25.0000    1.094148     4.3766  1.0000  1.2793e-03   3.0225e-03
+
+  spectator level phase slope, all angles: 0.000e+00 (exactly dark)
+
+====================================================================================================
+ACCEPTANCE
+====================================================================================================
+   PASS.  All three angles deliver ratio 1.000 with endpoint
+   leakage below 3e-03, and all three prefer
+   T = 25.000 us, exactly one detuning period.
+
+   NOTE WHAT THIS DOES TO THE DURATIONS.  They are NOT unchanged.
+   The published rule made T depend on the angle, 21.486, 25.465
+   and 28.648 us.  Calibrating by amplitude at a fixed null makes
+   every dispersive gate the SAME length, 25.000 us, and moves
+   the angle into the drive amplitude instead.  The runtime
+   therefore changes a little, and the table must be reissued.
+
+   basis                                 6-gate     qudit      qubit   ratio
+   formula, angle-dependent T           151.197     211.7     2209.1   10.44
+   amplitude-calibrated, T=25.000       150.000     210.5     2207.9   10.49
+
+   Amplitude factors stay within 9.4% of the measured 4 kHz, i.e. Omega_sb/2pi from 3.769 to 4.377 kHz.
+
+   EVERY METRIC IMPROVES ON THE PUBLISHED 25.465 us POINT:
+     endpoint leakage  1.84e-03  ->  5.40e-04 to 1.28e-03
+     1-F vs target     2.90e-03  ->  1.67e-03 to 3.02e-03
+     phase ratio       0.947     ->  1.000 on all three
+   and the spectator levels stay exactly dark.
+
+   READ ONLY.  No adoption.

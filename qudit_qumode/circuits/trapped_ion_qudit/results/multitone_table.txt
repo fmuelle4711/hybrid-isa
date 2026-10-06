@@ -1,0 +1,92 @@
+======================================================================================================================
+THE MULTITONE LEVEL  --  34 tones delivered in 27 blocks
+======================================================================================================================
+  source : data\circuit_qudit_generalized_27_one_step.json
+  Nc = 3, d = 4, tau = 5.000e-15 s, one second-order Trotter step
+
+  13 distinct blocks per half-step, mirrored, plus the un-mirrored
+  QT-SB centre.  13 x 2 + 1 = 27.
+
+   #  block          tones  x/step  seg   generator (multitone blocks written as the sum they carry)      angle
+  --------------------------------------------------------------------------------------------------------------------
+   1  Rotation(a)        1       2    1   omega_ga n_a                                                 0.123750
+   2  Rotation(b)        1       2    1   omega_gb n_b                                                 0.124500
+   3  Rotation(c)        1       2    1   omega_gc n_c                                                 0.123000
+   4  Rotation(l)        1       2    1   omega_l n_l                                                  0.015000
+   5  QCR(A,a)           1       2    1   chi_a Pi_A n_a                                               0.016000
+   6  QCR(B,b)           1       2    1   chi_b Pi_B n_b                                               0.018000
+   7  QCR(C,c)           1       2    1   chi_c Pi_C n_c                                               0.013500
+   8  QCD(A,a)           1       2    1   -omega_ea sqrt(S_a) Pi_A x_a                                 0.008185
+   9  QCD(B,b)           1       2    1   -omega_eb sqrt(S_b) Pi_B x_b                                 0.007305
+  10  QCD(C,c)           1       2    1   -omega_ec sqrt(S_c) Pi_C x_c                                 0.009005
+  11  QCD(A,l)           1       2    1   -omega_l sqrt(S_l) Pi_A x_l                                  0.003354
+  12  QPS_gen            3       2    0   (omega_ea S_a + omega_l S_l) Pi_A                            0.001329
+                                        + omega_eb S_b Pi_B                                            0.000462
+                                        + omega_ec S_c Pi_C                                            0.000697
+                                        ------------------------------------------------------------------------------
+  13  QT_multi           2       2    1   J_AB0 (|A><B| + h.c.)                                        0.007500
+                                        + J_AC0 (|A><C| + h.c.)                                        0.006750
+                                        ------------------------------------------------------------------------------
+  14  QT-SB_multi        2       1    1   J_AB0 eta_AB (|A><B| + h.c.) x_l                            -0.001500
+                                        + J_AC0 eta_AC (|A><C| + h.c.) x_l                             0.002025
+                                        ------------------------------------------------------------------------------
+  --------------------------------------------------------------------------------------------------------------------
+      TOTAL             34      27   25
+
+  FUSION REMOVES BLOCKS, NOT TONES.
+    34 tones  = the 34 single-tone ISA calls, every one still driven
+    27 blocks = what the waveform generator emits
+    25 segments = timed pulse slots as drawn (C_Pi R 1 each, Z_d 0)
+
+======================================================================================================================
+WHY ALL THREE FUSIONS ARE EXACT
+======================================================================================================================
+  A multitone drive applies its tones SIMULTANEOUSLY, so the Hamiltonian
+  during the pulse is their SUM and the block realises exp[-i(sum)t].
+  H_lab carries each of these groups as a sum:
+      QT      J_AB0 X_AB + J_AC0 X_AC
+      QT-SB   g_abl X_AB x_l + g_acl X_AC x_l
+      QPS     the three level phases
+  so the summed exponential IS that group's evolution.  These are the
+  generalized (higher-rank) generators of Table I, driven directly.
+
+  THE SEQUENTIAL PRODUCT IS THE APPROXIMATION, not the multitone:
+      max|multitone - sequential|,  QT group      2.53e-05
+      max|multitone - sequential|,  QT-SB centre  1.97e-05
+  Splitting a group into consecutive single-tone gates introduces that
+  error; driving it as one block does not.
+
+  This corrects two labels this table previously carried.  QT_multi was
+  marked SYNTHESIZED and QT-SB_multi MEASURED, both on the premise that
+  the multitone block had to reproduce the sequential product.  It does
+  not: the sequential product was never the target.  The JSON's
+  centre_operator_check numbers remain valid, but they measure how much
+  error the SEQUENTIAL split would have introduced, not an error in the
+  merge:
+      max_commutator_bare          1.0
+      max_commutator_tau_scaled    3.94875e-05
+      max_abs_diff                 1.9743590054108117e-05
+      infidelity                   5.247491330351295e-11
+
+  Non-commutation is why the split is lossy.  It is not an obstacle to
+  the multitone block, which never performs the split.
+
+======================================================================================================================
+TIMED PULSES: THIS TABLE AGAINST tab:gatecounts
+======================================================================================================================
+  Pricing every gate AS DRAWN gives 25 segments: the X_E of each
+  half step are fused into one QT_multi block, and every C_Pi R is one
+  flat pulse.  That is the multitone row of tab:gatecounts.
+
+  Leaving the X_E unfused gives 27, the reference row.  The qubit
+  reference, counted in results/segment_counts.txt, is the third row:
+      27   qudit reference, X_E unfused, centre merged   (tab:gatecounts)
+      25   qudit multitone, as Fig 3 draws it           (tab:gatecounts; this table)
+      58   qubit reference, J_l decomposed             (tab:gatecounts)
+
+  cross-check against results/segment_counts.txt: reference 27, multitone 25, qubit 58  ->  match
+
+
+======================================================================================================================
+SELF-CHECK   blocks 27/27, tones 34/34  ->  OK   segments 25/25 against results/segment_counts.txt
+======================================================================================================================

@@ -1,0 +1,109 @@
+====================================================================================================
+APPENDIX B -- QUBIT REFERENCE LADDER, 32 LOGICAL -> 58 TIMED, Nc = 3
+====================================================================================================
+  source: simulations/vibronic_scaling.py::build_one_hot_trotter_step
+  no reruns, no propagation
+
+1  LOGICAL HISTOGRAM BY GATE TYPE
+----------------------------------------------------------------------------------------------------
+        gate  count        formula   what it is                                  
+         chi      6            2Nc   sigma_z (x) n, per-site dispersive (CR)     
+          cd      8          4Nc-4   sigma_z (x) x, per-site + link (CD)         
+    Rotation      8          4Nc-4   mode free evolution                         
+          rz      4        2(Nc-1)   qubit detuning, virtual-Z                   
+           J      4        2(Nc-1)   2-qubit XY exchange (XX+YY)/2               
+          Jl      2        2(Nc-2)   2-qubit exchange (x) x_l, 3-body            
+       TOTAL     32        16Nc-16
+  Rotation and cd are counted 4Nc-4, audited against Vu Eq. 18 to
+  21: one mode free evolution per mode per half step over the
+  2Nc-2 modes, and per site one conditional displacement on its
+  high mode and one on its low mode, boundary low modes dropped.
+  J_l is counted 2(Nc-2), the chain link count of Vu Eq. 21 with
+  Eq. 52's boundary rule, not Nc-1.  The two agree at Nc = 3, where
+  both bonds are end bonds, so every number in this table is
+  unchanged; the closed form differs for Nc > 3.
+
+2  THE LADDER, LOGICAL GATE BY LOGICAL GATE
+----------------------------------------------------------------------------------------------------
+    logical    x  -> timed each  timed tot  VZ each  VZ tot   reason
+        chi    6              1          6        0       0   native dispersive sigma_z (x) n
+         cd    8              1          8        0       0   native sigma_z SDF
+   Rotation    8              1          8        0       0   native mode free evolution
+         rz    4              0          0        1       4   virtual-Z, T = 0
+          J    4              2          8        0       0   XX+YY needs 2 MS windows; exact, [XX,YY]=0
+         Jl    2             14         28        4       8   XX sandwich + YY sandwich; no native 3-body primitive
+                                        58               12
+
+  32 logical  ->  58 timed pulses  +  12 virtual-Z (T = 0)
+
+3  WHERE THE +26 COMES FROM
+----------------------------------------------------------------------------------------------------
+  source                                           timed   delta vs logical
+  CR + CD + Rotation, 1:1 with logical                22                 +0
+  rz -> virtual-Z, no pulse                            0                 -4
+  J -> 2 MS windows each                               8                 +4
+  Jl -> XX sandwich + YY sandwich                     28                +26
+  TOTAL                                               58                +26
+
+  So essentially ALL the inflation is Jl (+26 of +26 net, before the
+  -4 from rz becoming free and the +4 from J doubling).  26 of the 32
+  logical operations are 1:1 with a native pulse; the two Jl gates carry
+  the entire compilation cost.
+
+4  THE Jl SANDWICH, GATE BY GATE
+----------------------------------------------------------------------------------------------------
+  per Jl coupling, XX half:
+      H      1-wire  timed
+      H      1-wire  timed
+      CNOT   2-wire  timed
+      CD     2-wire  timed
+      CNOT   2-wire  timed
+      H      1-wire  timed
+      H      1-wire  timed
+  per Jl coupling, YY half (RZ(+-pi/2) conjugation rotates XX -> YY):
+      Z      1-wire  virtual
+      H      1-wire  timed
+      Z      1-wire  virtual
+      H      1-wire  timed
+      CNOT   2-wire  timed
+      CD     2-wire  timed
+      CNOT   2-wire  timed
+      H      1-wire  timed
+      Z      1-wire  virtual
+      H      1-wire  timed
+      Z      1-wire  virtual
+
+  per Jl: 2x CD (timed), 4x CNOT (timed), 8x H (timed), 4x Z (virtual)
+  x 2 couplings = 4x CD, 8x CNOT, 16x H, 8x Z
+
+  ONE sandwich alone realises XX only, not XX+YY -- measured +1.000*XX
+  by h_basis_check (scripts/circuit_qubit_hybridlane.py).  Both halves
+  are required, and the split is exact because [XX(x)x, YY(x)x] = 0.
+
+5  FULL NATIVE HISTOGRAM
+----------------------------------------------------------------------------------------------------
+   primitive  count      kind
+           H     16     timed
+          CD     12     timed
+           Z     12   virtual
+         Rot      8     timed
+          MS      8     timed
+        CNOT      8     timed
+          CR      6     timed
+       TIMED     58
+     VIRTUAL     12
+
+6  CNOT PRICING -- WHY 58 IS A LOWER BOUND
+----------------------------------------------------------------------------------------------------
+  8 CNOTs appear, each counted as ONE timed primitive.
+  On a trapped ion a CNOT is itself a Molmer-Sorensen plus local
+  rotations, and NO CNOT duration is anchored anywhere in this repo
+  (searched; only gate-set mentions in docs/scaling_theorems.md).
+  So 58 is a LOWER BOUND on the timed-pulse count.
+
+  The runtime table does NOT price the sandwich at all: it holds H_Jl at
+  a single MS window (200 us).  Pricing it from the decomposition instead
+  gave 412.57 us per Jl -- 2.06x MORE -- but that rests on an ASSUMED
+  CNOT time, so it was printed and NOT adopted (runtime_table.md).
+  Holding Jl at one window is therefore the conservative choice AGAINST
+  the qudit advantage, not for it.

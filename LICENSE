@@ -1,0 +1,34 @@
+MIT License
+
+Copyright (c) 2026 Masoud Hakimi Heris and co-authors of the manuscript
+"Hybrid qudit-oscillator ISA for vibronic dynamics on trapped ions"
+(PRA submission).
+
+This license applies to the contents of the qudit_qumode/ directory,
+which is the authors' own code for the paper.
+
+The hybridlane/ directory is a derived copy of the PNNL Hybridlane
+project and is governed by its own upstream license
+(BSD-2-Clause, see hybridlane/LICENSE.txt and hybridlane/LICENSES/).
+The authors' modifications to hybridlane/ are also released under
+BSD-2-Clause, consistent with the upstream project.
+
+--- MIT License text ---
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.

@@ -1,0 +1,61 @@
+========================================================================================================
+REPRODUCING THE THREE GRAPE PULSES THROUGH HYPULSE
+========================================================================================================
+  qudit_qumode commit   ac46abc
+  hypulse commit        0c6526c   (C:\Users\mhakimi\Documents\hypulse)
+  device spec           innsbruck_meth_2025
+  cutoff 8, 200 slots
+
+  STORED WAVEFORMS ARE NOT TOUCHED.  This run writes only this file.
+
+  AMPLITUDE BOUNDS, recomputed from the operating point
+    x = 4 Omega_c/omega_z = 0.5068   (J1+J3)(x) = 0.248022
+    QCD  eta*Omega_c*(J1+J3) = 0.006233 rad/us
+    CD   eta*Omega_c         = 0.025132 rad/us
+    CR   chi = Omega_sb^2/4delta at delta/2pi=40 kHz = 6.283060e-04 rad/us
+
+========================================================================================================
+1  C_{Pi_z}D  (QCD)   alpha = 0.5, T = 160.4 us
+========================================================================================================
+    HyPulse F_grape        0.9999943599362953
+    self-consistency 1-F   1.128005e-05   (independent replay)
+    termination            Goal achieved   (0.9 s)
+    stored waveform, same replay 1-F = 1.130109e-05
+    max |u_new - u_stored| = 3.478082e-05 rad/us
+    max|u| new 6.233412e-03  stored 6.232920e-03  bound 6.233412e-03
+
+  PHYSICAL REPLAY under the full Bazavan Eq. 1, optical RWA only.
+  step_qcd_bazavan_full_lab.py is reused unchanged; only the module's
+  waveform global is repointed at the freshly compiled pulse, so the
+  physics and the fits are the stored run's own.
+    HyPulse rerun  N_cut=8   1-F raw 6.3271e-02   1-F after frame fit 1.0634e-03
+    stored         N_cut=8   1-F raw 6.3849e-02   1-F after frame fit 1.0589e-03
+    appendix_table.md records 0.998-0.999 unramped at N_cut 8/10/12,
+    i.e. 1-F of order 1e-3 to 2e-3.
+
+========================================================================================================
+2  CD   alpha = 0.5, T = 39.79 us
+========================================================================================================
+    HyPulse F_grape        0.9999979946930231
+    self-consistency 1-F   4.010618e-06
+    termination            Goal achieved   (0.3 s)
+    stored waveform, same replay 1-F = 4.010618e-06
+    max |u_new - u_stored| = 0.000000e+00 rad/us
+
+========================================================================================================
+3  CR   theta = 0.016, T = 24.192 us   -- TWO PATHS, BOTH REPORTED
+========================================================================================================
+    The stored 24.192 us CR did NOT come through the plugin.  See
+    this file's docstring and appendix_table.md FINDING 6.
+
+  (a) through the HyPulse CR plugin
+      channels ['u1_sx_X', 'u2_sy_Qphi0']
+      F_grape  0.9977615952854055   termination function converged
+
+  (b) the imposed-generator path the stored run used
+      F_grape  0.9999943997   (0.1 s)
+      int u dt = +0.015124  (target +0.016000)
+      stored   F_grape  0.9999944040   T 24.192 us
+
+========================================================================================================
+READ ONLY.  Stored waveforms untouched; no adoption.

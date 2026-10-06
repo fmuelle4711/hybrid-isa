@@ -1,0 +1,30 @@
+__pycache__/
+*.py[cod]
+*.pyo
+*.egg-info/
+.venv/
+venv/
+.mypy_cache/
+.pytest_cache/
+.ipynb_checkpoints/
+.DS_Store
+
+# LaTeX build products (source .tex kept)
+*.aux
+*.log
+# ...except this one: it is the primary evidence for the Sec. V
+# universality closure, and *.log above is a LaTeX rule, not a
+# run-log rule.
+!qudit_qumode/results/universality_closure_check.log
+*.out
+# ...except these: Vu published reference trajectories, data not LaTeX output
+!qudit_qumode/data/vu_reference/*.out
+*.toc
+*.synctex.gz
+*.fls
+*.fdb_latexmk
+*.bbl
+*.blg
+
+# Snapshot verify logs land here at run time; don't ship them
+qudit_qumode/logs/verify_reproduce/

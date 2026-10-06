@@ -1,0 +1,588 @@
+{
+  "operating_points": {
+    "A_meth": {
+      "point": {
+        "Omega_c_2pi_kHz": 97.56,
+        "Omega_sb_2pi_kHz": 4.0,
+        "tag": "METH_OPERATING_POINT"
+      },
+      "derived": {
+        "bessel": {
+          "x_qcd": 0.5068051948051948,
+          "J0": 0.9368106217619223,
+          "J1": 0.2453533492487136,
+          "J2": 0.03142471506418187,
+          "J3": 0.0026686946157804038,
+          "J1_plus_J3": 0.248022043864494,
+          "J0_plus_J2": 0.9682353368261042
+        },
+        "Omega_c_rad_per_s": 612987.5585684405,
+        "amp_QCD_rad_per_us": 0.006233411512725684,
+        "amp_CD_rad_per_us": 0.025132489901306062,
+        "amp_CD_alt_rad_per_us": 0.024334164824869733,
+        "T_min_QCD_us": 160.42579540248096,
+        "T_min_CD_us": 39.78913366431047,
+        "T_min_CD_alt_us": 41.094486175995286
+      },
+      "summary": {
+        "point": "A_meth",
+        "tag": "METH_OPERATING_POINT",
+        "Omega_c_2pi_kHz": 97.56,
+        "Omega_sb_2pi_kHz": 4.0,
+        "x_qcd": 0.5068051948051948,
+        "J1_plus_J3": 0.248022043864494,
+        "J0_plus_J2": 0.9682353368261042,
+        "amp_QCD": 0.006233411512725684,
+        "amp_CD": 0.025132489901306062,
+        "amp_CD_alt": 0.024334164824869733,
+        "T_min_QCD_analytic": 160.42579540248096,
+        "T_min_CD_analytic": 39.78913366431047,
+        "T_min_CD_alt_analytic": 41.094486175995286,
+        "T_QCD_grape": 160.43,
+        "T_CD_grape": 39.79,
+        "T_CD_alt_grape": 41.09,
+        "F_QCD": 0.9999938356667797,
+        "F_CD": 0.9999979946930231,
+        "F_CD_alt": 0.9999977054761882,
+        "ratio_QCD_over_CD_main": 4.031917567227947,
+        "ratio_QCD_over_CD_alt": 3.904356291068386
+      }
+    },
+    "B_bazavan_opt": {
+      "point": {
+        "Omega_c_2pi_kHz": 308.0,
+        "Omega_sb_2pi_kHz": 12.6,
+        "tag": "BAZAVAN_DEMONSTRATED_RANGE"
+      },
+      "derived": {
+        "bessel": {
+          "x_qcd": 1.6,
+          "J0": 0.4554021676393807,
+          "J1": 0.5698959352616805,
+          "J2": 0.25696775143771977,
+          "J3": 0.07252344333261901,
+          "J1_plus_J3": 0.6424193785942995,
+          "J0_plus_J2": 0.7123699190771005
+        },
+        "Omega_c_rad_per_s": 1935221.0746113125,
+        "amp_QCD_rad_per_us": 0.050972164327970075,
+        "amp_CD_rad_per_us": 0.07934406405906382,
+        "amp_CD_alt_rad_per_us": 0.056522324493003574,
+        "T_min_QCD_us": 19.618550893105155,
+        "T_min_CD_us": 12.603337273669254,
+        "T_min_CD_alt_us": 17.692124465330185
+      },
+      "summary": {
+        "point": "B_bazavan_opt",
+        "tag": "BAZAVAN_DEMONSTRATED_RANGE",
+        "Omega_c_2pi_kHz": 308.0,
+        "Omega_sb_2pi_kHz": 12.6,
+        "x_qcd": 1.6,
+        "J1_plus_J3": 0.6424193785942995,
+        "J0_plus_J2": 0.7123699190771005,
+        "amp_QCD": 0.050972164327970075,
+        "amp_CD": 0.07934406405906382,
+        "amp_CD_alt": 0.056522324493003574,
+        "T_min_QCD_analytic": 19.618550893105155,
+        "T_min_CD_analytic": 12.603337273669254,
+        "T_min_CD_alt_analytic": 17.692124465330185,
+        "T_QCD_grape": 19.62,
+        "T_CD_grape": 12.6,
+        "T_CD_alt_grape": 17.69,
+        "F_QCD": 0.9999961476062921,
+        "F_CD": 0.9999982212766804,
+        "F_CD_alt": 0.9999935006961997,
+        "ratio_QCD_over_CD_main": 1.5571428571428572,
+        "ratio_QCD_over_CD_alt": 1.1091011871113623
+      }
+    }
+  },
+  "sweep_rows": [
+    {
+      "gate": "QCD",
+      "T_us": 96.26,
+      "F_grape": 0.8659619592349099,
+      "termination": "function converged",
+      "walltime_s": 2.041294574737549,
+      "point": "A_meth",
+      "amp_variant": "QCD"
+    },
+    {
+      "gate": "QCD",
+      "T_us": 128.34,
+      "F_grape": 0.9653757823637803,
+      "termination": "function converged",
+      "walltime_s": 1.3762786388397217,
+      "point": "A_meth",
+      "amp_variant": "QCD"
+    },
+    {
+      "gate": "QCD",
+      "T_us": 144.38,
+      "F_grape": 0.9912700103914767,
+      "termination": "function converged",
+      "walltime_s": 0.9970424175262451,
+      "point": "A_meth",
+      "amp_variant": "QCD"
+    },
+    {
+      "gate": "QCD",
+      "T_us": 160.43,
+      "F_grape": 0.9999938356667797,
+      "termination": "Goal achieved",
+      "walltime_s": 0.3470425605773926,
+      "point": "A_meth",
+      "amp_variant": "QCD"
+    },
+    {
+      "gate": "QCD",
+      "T_us": 168.45,
+      "F_grape": 0.9999926155439369,
+      "termination": "Goal achieved",
+      "walltime_s": 0.3562750816345215,
+      "point": "A_meth",
+      "amp_variant": "QCD"
+    },
+    {
+      "gate": "QCD",
+      "T_us": 184.49,
+      "F_grape": 0.9999952015936289,
+      "termination": "Goal achieved",
+      "walltime_s": 0.4159376621246338,
+      "point": "A_meth",
+      "amp_variant": "QCD"
+    },
+    {
+      "gate": "QCD",
+      "T_us": 208.55,
+      "F_grape": 0.9999944356653611,
+      "termination": "Goal achieved",
+      "walltime_s": 0.4194357395172119,
+      "point": "A_meth",
+      "amp_variant": "QCD"
+    },
+    {
+      "gate": "QCD",
+      "T_us": 240.64,
+      "F_grape": 0.9999950670094147,
+      "termination": "Goal achieved",
+      "walltime_s": 0.4066460132598877,
+      "point": "A_meth",
+      "amp_variant": "QCD"
+    },
+    {
+      "gate": "QCD",
+      "T_us": 320.85,
+      "F_grape": 0.9999942943747204,
+      "termination": "Goal achieved",
+      "walltime_s": 0.41530346870422363,
+      "point": "A_meth",
+      "amp_variant": "QCD"
+    },
+    {
+      "gate": "CD",
+      "T_us": 23.87,
+      "F_grape": 0.8658876900841133,
+      "termination": "function converged",
+      "walltime_s": 1.4744508266448975,
+      "point": "A_meth",
+      "amp_variant": "CD_main"
+    },
+    {
+      "gate": "CD",
+      "T_us": 31.83,
+      "F_grape": 0.9653653326128473,
+      "termination": "function converged",
+      "walltime_s": 1.2525033950805664,
+      "point": "A_meth",
+      "amp_variant": "CD_main"
+    },
+    {
+      "gate": "CD",
+      "T_us": 35.81,
+      "F_grape": 0.9912722833362433,
+      "termination": "function converged",
+      "walltime_s": 1.2763762474060059,
+      "point": "A_meth",
+      "amp_variant": "CD_main"
+    },
+    {
+      "gate": "CD",
+      "T_us": 39.79,
+      "F_grape": 0.9999979946930231,
+      "termination": "Goal achieved",
+      "walltime_s": 0.28448033332824707,
+      "point": "A_meth",
+      "amp_variant": "CD_main"
+    },
+    {
+      "gate": "CD",
+      "T_us": 41.78,
+      "F_grape": 0.9999972696819339,
+      "termination": "Goal achieved",
+      "walltime_s": 0.32004857063293457,
+      "point": "A_meth",
+      "amp_variant": "CD_main"
+    },
+    {
+      "gate": "CD",
+      "T_us": 45.76,
+      "F_grape": 0.9999965354570306,
+      "termination": "Goal achieved",
+      "walltime_s": 0.36344218254089355,
+      "point": "A_meth",
+      "amp_variant": "CD_main"
+    },
+    {
+      "gate": "CD",
+      "T_us": 51.73,
+      "F_grape": 0.9999916192565061,
+      "termination": "Goal achieved",
+      "walltime_s": 0.3179292678833008,
+      "point": "A_meth",
+      "amp_variant": "CD_main"
+    },
+    {
+      "gate": "CD",
+      "T_us": 59.68,
+      "F_grape": 0.9999956637773894,
+      "termination": "Goal achieved",
+      "walltime_s": 0.4350166320800781,
+      "point": "A_meth",
+      "amp_variant": "CD_main"
+    },
+    {
+      "gate": "CD",
+      "T_us": 79.58,
+      "F_grape": 0.9999919585646515,
+      "termination": "Goal achieved",
+      "walltime_s": 0.4782681465148926,
+      "point": "A_meth",
+      "amp_variant": "CD_main"
+    },
+    {
+      "gate": "CD",
+      "T_us": 24.66,
+      "F_grape": 0.8659955769439895,
+      "termination": "function converged",
+      "walltime_s": 1.6189491748809814,
+      "point": "A_meth",
+      "amp_variant": "CD_alt"
+    },
+    {
+      "gate": "CD",
+      "T_us": 32.88,
+      "F_grape": 0.9654133720978552,
+      "termination": "function converged",
+      "walltime_s": 1.2516703605651855,
+      "point": "A_meth",
+      "amp_variant": "CD_alt"
+    },
+    {
+      "gate": "CD",
+      "T_us": 36.99,
+      "F_grape": 0.9912941951286993,
+      "termination": "function converged",
+      "walltime_s": 1.2794969081878662,
+      "point": "A_meth",
+      "amp_variant": "CD_alt"
+    },
+    {
+      "gate": "CD",
+      "T_us": 41.09,
+      "F_grape": 0.9999977054761882,
+      "termination": "Goal achieved",
+      "walltime_s": 0.24345636367797852,
+      "point": "A_meth",
+      "amp_variant": "CD_alt"
+    },
+    {
+      "gate": "CD",
+      "T_us": 43.15,
+      "F_grape": 0.9999946242821789,
+      "termination": "Goal achieved",
+      "walltime_s": 0.2789897918701172,
+      "point": "A_meth",
+      "amp_variant": "CD_alt"
+    },
+    {
+      "gate": "CD",
+      "T_us": 47.26,
+      "F_grape": 0.9999949057958284,
+      "termination": "Goal achieved",
+      "walltime_s": 0.3360781669616699,
+      "point": "A_meth",
+      "amp_variant": "CD_alt"
+    },
+    {
+      "gate": "CD",
+      "T_us": 53.42,
+      "F_grape": 0.9999943407122207,
+      "termination": "Goal achieved",
+      "walltime_s": 0.2843513488769531,
+      "point": "A_meth",
+      "amp_variant": "CD_alt"
+    },
+    {
+      "gate": "CD",
+      "T_us": 61.64,
+      "F_grape": 0.9999957337674789,
+      "termination": "Goal achieved",
+      "walltime_s": 0.3969402313232422,
+      "point": "A_meth",
+      "amp_variant": "CD_alt"
+    },
+    {
+      "gate": "CD",
+      "T_us": 82.19,
+      "F_grape": 0.9999923180536667,
+      "termination": "Goal achieved",
+      "walltime_s": 0.43813514709472656,
+      "point": "A_meth",
+      "amp_variant": "CD_alt"
+    },
+    {
+      "gate": "QCD",
+      "T_us": 11.77,
+      "F_grape": 0.8659070019253915,
+      "termination": "function converged",
+      "walltime_s": 2.460871696472168,
+      "point": "B_bazavan_opt",
+      "amp_variant": "QCD"
+    },
+    {
+      "gate": "QCD",
+      "T_us": 15.69,
+      "F_grape": 0.96529176425232,
+      "termination": "function converged",
+      "walltime_s": 1.5891928672790527,
+      "point": "B_bazavan_opt",
+      "amp_variant": "QCD"
+    },
+    {
+      "gate": "QCD",
+      "T_us": 17.66,
+      "F_grape": 0.9913019861461037,
+      "termination": "function converged",
+      "walltime_s": 0.987645149230957,
+      "point": "B_bazavan_opt",
+      "amp_variant": "QCD"
+    },
+    {
+      "gate": "QCD",
+      "T_us": 19.62,
+      "F_grape": 0.9999961476062921,
+      "termination": "Goal achieved",
+      "walltime_s": 0.3057997226715088,
+      "point": "B_bazavan_opt",
+      "amp_variant": "QCD"
+    },
+    {
+      "gate": "QCD",
+      "T_us": 20.6,
+      "F_grape": 0.9999932517890705,
+      "termination": "Goal achieved",
+      "walltime_s": 0.26575660705566406,
+      "point": "B_bazavan_opt",
+      "amp_variant": "QCD"
+    },
+    {
+      "gate": "QCD",
+      "T_us": 22.56,
+      "F_grape": 0.9999923677258429,
+      "termination": "Goal achieved",
+      "walltime_s": 0.31506896018981934,
+      "point": "B_bazavan_opt",
+      "amp_variant": "QCD"
+    },
+    {
+      "gate": "QCD",
+      "T_us": 25.5,
+      "F_grape": 0.9999958031789271,
+      "termination": "Goal achieved",
+      "walltime_s": 0.3412632942199707,
+      "point": "B_bazavan_opt",
+      "amp_variant": "QCD"
+    },
+    {
+      "gate": "QCD",
+      "T_us": 29.43,
+      "F_grape": 0.9999946975255039,
+      "termination": "Goal achieved",
+      "walltime_s": 0.3408370018005371,
+      "point": "B_bazavan_opt",
+      "amp_variant": "QCD"
+    },
+    {
+      "gate": "QCD",
+      "T_us": 39.24,
+      "F_grape": 0.9999932404141622,
+      "termination": "Goal achieved",
+      "walltime_s": 0.42816615104675293,
+      "point": "B_bazavan_opt",
+      "amp_variant": "QCD"
+    },
+    {
+      "gate": "CD",
+      "T_us": 7.56,
+      "F_grape": 0.8658414972445889,
+      "termination": "function converged",
+      "walltime_s": 1.2273011207580566,
+      "point": "B_bazavan_opt",
+      "amp_variant": "CD_main"
+    },
+    {
+      "gate": "CD",
+      "T_us": 10.08,
+      "F_grape": 0.9653039879372809,
+      "termination": "function converged",
+      "walltime_s": 1.9393796920776367,
+      "point": "B_bazavan_opt",
+      "amp_variant": "CD_main"
+    },
+    {
+      "gate": "CD",
+      "T_us": 11.34,
+      "F_grape": 0.9912316663711884,
+      "termination": "function converged",
+      "walltime_s": 2.052285671234131,
+      "point": "B_bazavan_opt",
+      "amp_variant": "CD_main"
+    },
+    {
+      "gate": "CD",
+      "T_us": 12.6,
+      "F_grape": 0.9999982212766804,
+      "termination": "Goal achieved",
+      "walltime_s": 0.316373348236084,
+      "point": "B_bazavan_opt",
+      "amp_variant": "CD_main"
+    },
+    {
+      "gate": "CD",
+      "T_us": 13.23,
+      "F_grape": 0.9999972988869206,
+      "termination": "Goal achieved",
+      "walltime_s": 0.316103458404541,
+      "point": "B_bazavan_opt",
+      "amp_variant": "CD_main"
+    },
+    {
+      "gate": "CD",
+      "T_us": 14.49,
+      "F_grape": 0.9999967524782605,
+      "termination": "Goal achieved",
+      "walltime_s": 0.3660609722137451,
+      "point": "B_bazavan_opt",
+      "amp_variant": "CD_main"
+    },
+    {
+      "gate": "CD",
+      "T_us": 16.38,
+      "F_grape": 0.9999975643896923,
+      "termination": "Goal achieved",
+      "walltime_s": 0.31597423553466797,
+      "point": "B_bazavan_opt",
+      "amp_variant": "CD_main"
+    },
+    {
+      "gate": "CD",
+      "T_us": 18.91,
+      "F_grape": 0.9999961390643566,
+      "termination": "Goal achieved",
+      "walltime_s": 0.3979165554046631,
+      "point": "B_bazavan_opt",
+      "amp_variant": "CD_main"
+    },
+    {
+      "gate": "CD",
+      "T_us": 25.21,
+      "F_grape": 0.999990533439062,
+      "termination": "Goal achieved",
+      "walltime_s": 0.36486077308654785,
+      "point": "B_bazavan_opt",
+      "amp_variant": "CD_main"
+    },
+    {
+      "gate": "CD",
+      "T_us": 10.62,
+      "F_grape": 0.8661149860305313,
+      "termination": "function converged",
+      "walltime_s": 2.1376914978027344,
+      "point": "B_bazavan_opt",
+      "amp_variant": "CD_alt"
+    },
+    {
+      "gate": "CD",
+      "T_us": 14.15,
+      "F_grape": 0.9653049424985267,
+      "termination": "function converged",
+      "walltime_s": 2.1571202278137207,
+      "point": "B_bazavan_opt",
+      "amp_variant": "CD_alt"
+    },
+    {
+      "gate": "CD",
+      "T_us": 15.92,
+      "F_grape": 0.991244040663534,
+      "termination": "function converged",
+      "walltime_s": 1.5321240425109863,
+      "point": "B_bazavan_opt",
+      "amp_variant": "CD_alt"
+    },
+    {
+      "gate": "CD",
+      "T_us": 17.69,
+      "F_grape": 0.9999935006961997,
+      "termination": "Goal achieved",
+      "walltime_s": 0.40305042266845703,
+      "point": "B_bazavan_opt",
+      "amp_variant": "CD_alt"
+    },
+    {
+      "gate": "CD",
+      "T_us": 18.58,
+      "F_grape": 0.999996377999548,
+      "termination": "Goal achieved",
+      "walltime_s": 0.3194162845611572,
+      "point": "B_bazavan_opt",
+      "amp_variant": "CD_alt"
+    },
+    {
+      "gate": "CD",
+      "T_us": 20.35,
+      "F_grape": 0.9999952331196038,
+      "termination": "Goal achieved",
+      "walltime_s": 0.32268404960632324,
+      "point": "B_bazavan_opt",
+      "amp_variant": "CD_alt"
+    },
+    {
+      "gate": "CD",
+      "T_us": 23.0,
+      "F_grape": 0.9999956426010782,
+      "termination": "Goal achieved",
+      "walltime_s": 0.36296939849853516,
+      "point": "B_bazavan_opt",
+      "amp_variant": "CD_alt"
+    },
+    {
+      "gate": "CD",
+      "T_us": 26.54,
+      "F_grape": 0.9999950515628122,
+      "termination": "Goal achieved",
+      "walltime_s": 0.35454511642456055,
+      "point": "B_bazavan_opt",
+      "amp_variant": "CD_alt"
+    },
+    {
+      "gate": "CD",
+      "T_us": 35.38,
+      "F_grape": 0.9999934659800319,
+      "termination": "Goal achieved",
+      "walltime_s": 0.3595752716064453,
+      "point": "B_bazavan_opt",
+      "amp_variant": "CD_alt"
+    }
+  ]
+}

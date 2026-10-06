@@ -1,0 +1,41 @@
+================================================================================================================================
+DURATION RULES, Nc = 3   (all values read from files; no reruns)
+================================================================================================================================
+  gate          test angle  test T (us)   circuit angle scaling rule                           circuit T used (us)
+--------------------------------------------------------------------------------------------------------------------------------
+    QT       pi/4 = 0.7854       11.000          0.0075 linear in angle (bracket)                    [0.105, 11.0]
+   QCD         alpha = 0.5        160.4   alpha = 0.008 linear in alpha: T x 0.008/0.5                      2.5664
+    CD         alpha = 0.5        39.79   alpha = 0.008 own run UNUSED; takes QCD [1]                       2.5664
+    CR       theta = 0.016       24.192   theta = 0.016 own run UNUSED; takes QCR [1]                        55.93
+   QCR       theta = 0.016       25.465   theta = 0.016 T=theta/chi, then echo 2T+t_pi [2]                   55.93
+ QT-SB   0.0015 / 0.002025       0.0597    same as test NOT angle-based: 0.5 x 2pi/nu [3]                 0.649351
+    MS                none          200            none angle-independent (Meth) [4]                         200.0
+--------------------------------------------------------------------------------------------------------------------------------
+
+  counts at Nc=3:  qudit {'Rotation': 8, 'QCR': 6, 'QCD': 8, 'QT_SB': 2, 'QPS': 6, 'QT_multi': 4}
+                   qubit {'QCR': 6, 'QCD': 8, 'Rotation': 8, 'rz': 4, 'MS_J': 4, 'MS_Jl': 2}  + 10 MS windows
+
+  [1] CD and CR have their OWN pulse runs but the table does not use them;
+      both read the qudit keys.  Scaled to the circuit angle their own
+      runs give CD 0.6366 us (table uses 2.5664) and
+      CR 24.192 us (table uses 55.93).
+  [2] chi = Omega_sb^2/(4 delta_disp); t_pi = 5 us is ASSUMED.
+      2 x 25.465 + 5 = 55.93.
+  [3] the angle sets the AMPLITUDE, not the duration.  The old angle-based
+      0.0597 us is 0.046 motional periods and does not function.
+  [4] Meth quote 0.2 ms per gate independent of angle; the entire runtime
+      asymmetry rests on that simplification.
+
+  NOTES
+  1. CD and CR have their own pulse runs but the table does not use them;
+     both read the qudit keys.  Both substitutions charge the qubit MORE
+     (CR 55.93 vs 24.192 = 2.31x; CD 2.5664 vs 0.6366 = 4.03x), so the
+     reported advantage is conservative with respect to them.
+  2. Only QCR/CR was tested AT the circuit angle.  QCD/CD were tested at
+     62.5x the circuit alpha and QT at 105x its circuit angle, then
+     extrapolated down linearly.
+  3. QT-SB is the one gate whose duration is NOT set by its angle -- the
+     old angle-based value (0.0597 us) was 0.046 motional periods and did
+     not function; see results/qtsb_duration_sweep.txt.
+  4. MS is the only gate with no angle dependence at all, by Meth's own
+     framing; the entire runtime asymmetry rests on that simplification.

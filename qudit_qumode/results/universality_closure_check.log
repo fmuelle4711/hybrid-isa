@@ -1,0 +1,93 @@
+==============================================================================
+Universality closure check -- Sec V of the paper
+==============================================================================
+
+== HYBRID_1MODE   d=4  N=6  tol=1.0e-09  max_iter=4 ==
+  safe_max = 3 (Fock index window [0, 3])
+  boundary-leak threshold: iter >= 4  (results at earlier iters are truncation-ghost-free)
+  seeds = 12   ambient dim = 24   u(dN) dim = 576
+  elapsed 10.0s   final dim = 576
+  iteration table:
+    iter | dim  | max deg of ops ADDED this iter | cumulative max deg | boundary-safe?
+       0 |   12 |   1                             | 1 | yes
+       1 |   29 |   1                             | 1 | yes
+       2 |  105 |   2                             | 2 | yes
+       3 |  375 |   3                             | 3 | yes
+       4 |  576 |   3                             | 3 | NO (boundary leak possible)
+  MAX POLY DEGREE (safe_max=3) at last boundary-safe iter = 3
+
+== HYBRID_1MODE   d=4  N=8  tol=1.0e-09  max_iter=5 ==
+  safe_max = 3 (Fock index window [0, 3])
+  boundary-leak threshold: iter >= 8  (results at earlier iters are truncation-ghost-free)
+  seeds = 12   ambient dim = 32   u(dN) dim = 1024
+  elapsed 99.8s   final dim = 1024
+  iteration table:
+    iter | dim  | max deg of ops ADDED this iter | cumulative max deg | boundary-safe?
+       0 |   12 |   1                             | 1 | yes
+       1 |   29 |   1                             | 1 | yes
+       2 |  105 |   2                             | 2 | yes
+       3 |  375 |   3                             | 3 | yes
+       4 | 1024 |   3                             | 3 | yes
+  MAX POLY DEGREE (safe_max=3) at last boundary-safe iter = 3
+
+== HYBRID_1MODE   d=4  N=10  tol=1.0e-09  max_iter=5 ==
+  safe_max = 3 (Fock index window [0, 3])
+  boundary-leak threshold: iter >= 12  (results at earlier iters are truncation-ghost-free)
+  seeds = 12   ambient dim = 40   u(dN) dim = 1600
+  elapsed 200.5s   final dim = 1600
+  iteration table:
+    iter | dim  | max deg of ops ADDED this iter | cumulative max deg | boundary-safe?
+       0 |   12 |   1                             | 1 | yes
+       1 |   29 |   1                             | 1 | yes
+       2 |  105 |   2                             | 2 | yes
+       3 |  375 |   3                             | 3 | yes
+       4 | 1600 |   3                             | 3 | yes
+  MAX POLY DEGREE (safe_max=3) at last boundary-safe iter = 3
+
+== CONTROL_1MODE_UNCOND_DISPL   d=4  N=6  tol=1.0e-09  max_iter=4 ==
+  safe_max = 3 (Fock index window [0, 3])
+  boundary-leak threshold: iter >= 4  (results at earlier iters are truncation-ghost-free)
+  seeds = 12   ambient dim = 24   u(dN) dim = 576
+  elapsed 0.0s   final dim = 29
+  iteration table:
+    iter | dim  | max deg of ops ADDED this iter | cumulative max deg | boundary-safe?
+       0 |   12 |   1                             | 1 | yes
+       1 |   19 |   0                             | 1 | yes
+       2 |   21 |   0                             | 1 | yes
+       3 |   24 |   0                             | 1 | yes
+       4 |   29 |   0                             | 1 | NO (boundary leak possible)
+  MAX POLY DEGREE (safe_max=3) at last boundary-safe iter = 1
+
+== CONTROL_1MODE_UNCOND_DISPL   d=4  N=8  tol=1.0e-09  max_iter=5 ==
+  safe_max = 3 (Fock index window [0, 3])
+  boundary-leak threshold: iter >= 8  (results at earlier iters are truncation-ghost-free)
+  seeds = 12   ambient dim = 32   u(dN) dim = 1024
+  elapsed 0.0s   final dim = 61
+  iteration table:
+    iter | dim  | max deg of ops ADDED this iter | cumulative max deg | boundary-safe?
+       0 |   12 |   1                             | 1 | yes
+       1 |   19 |   0                             | 1 | yes
+       2 |   21 |   0                             | 1 | yes
+       3 |   24 |   0                             | 1 | yes
+       4 |   31 |   0                             | 1 | yes
+       5 |   61 |   0                             | 1 | yes
+  MAX POLY DEGREE (safe_max=3) at last boundary-safe iter = 1
+
+== CONTROL_1MODE_UNCOND_DISPL   d=4  N=10  tol=1.0e-09  max_iter=5 ==
+  safe_max = 3 (Fock index window [0, 3])
+  boundary-leak threshold: iter >= 12  (results at earlier iters are truncation-ghost-free)
+  seeds = 12   ambient dim = 40   u(dN) dim = 1600
+  elapsed 0.1s   final dim = 71
+  iteration table:
+    iter | dim  | max deg of ops ADDED this iter | cumulative max deg | boundary-safe?
+       0 |   12 |   1                             | 1 | yes
+       1 |   19 |   0                             | 1 | yes
+       2 |   21 |   0                             | 1 | yes
+       3 |   24 |   0                             | 1 | yes
+       4 |   31 |   0                             | 1 | yes
+       5 |   71 |   0                             | 1 | yes
+  MAX POLY DEGREE (safe_max=3) at last boundary-safe iter = 1
+
+== HYBRID_2MODE_WITH_BS   d=4  N=4 (per mode)  tol=1.0e-09  max_iter=3 ==
+  safe_max = 1   boundary-leak threshold: iter >= 4
+  seeds = 15   ambient dim = 64   u(d*N*N) dim = 4096

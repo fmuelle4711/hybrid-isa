@@ -1,0 +1,57 @@
+========================================================================================================
+CLOSED-SYSTEM QUBIT REFERENCE vs VU'S PUBLISHED TRAJECTORY
+========================================================================================================
+  commit   ac46abc
+  ours     data\trotter_method_b_qubit_fock8.npz
+           401 points, t = 0.000 to 2.000 ps, gate_count = 32
+  ref      data\vu_reference\idealSim_Fock8_10k.out
+           201 points, t = 0.000 to 2.000 ps
+
+  IS THE REFERENCE SHOT-SAMPLED?
+    PA x 10000 = [9983.47 9934.01 9852.08 9738.36 9593.78 9419.46 9216.65]
+    Not integers, so the published trajectory is a statevector result,
+    not a 10,000-shot sample.  A 'shot-noise floor' argument does not
+    apply to this comparison.
+
+  GRID ALIGNMENT
+    max |t_ref - t_ours[::2]| = 2.220e-16 ps
+    exact coincidence: True  -> primary comparison uses the 201 shared points, no interpolation
+
+========================================================================================================
+RESULT
+========================================================================================================
+  comparison                                             A         B         C      mean
+  Trotterized qubit circuit vs ref (201 pts)        0.0465    0.0273    0.0203    0.0314
+  Trotterized qubit circuit vs ref (interp 401)     0.0488    0.0290    0.0209    0.0329
+  exact H_cqed vs ref (interp)                      0.0365    0.0219    0.0159    0.0248
+  Trotterized qubit circuit vs its own exact        0.0120    0.0104    0.0062    0.0095
+  qudit circuit vs ref (201 pts)                    2.0349    1.4102    1.3960    1.6137
+  qudit circuit vs qubit circuit (401 pts)          2.0203    1.3993    1.3962    1.6053
+
+  All values are percentage points of population.
+
+========================================================================================================
+BEARING ON THE MANUSCRIPT'S 0.16%
+========================================================================================================
+  The 401-point qubit compilation agrees with the published
+  trajectory to 0.031% mean RMSE on the shared grid.
+
+  The manuscript says 0.16%.  This run does NOT reproduce it, and
+  neither does the 41-point 10^4-shot file: data/fig6_hqml_b_qubit_N8_10000shots.npz
+  gives 0.43% against the same reference.  The three numbers come
+  from three different objects:
+      this run   deterministic 401-point Trotter circuit
+      0.43%      10^4-shot sampled circuit, 41 points
+      0.16%      writeup/results_closed.tex prose, referring to
+                 _qubit_vustack_N8.npz, which is not in data/
+
+  RECOMMENDATION.  Quote this run, with this file as the source, or
+  drop the number.  Do not keep 0.16% -- it cannot be traced.
+
+  NOTE ON THE ACCOMPANYING CLAIM.  The manuscript's struck text said
+  the agreement was 'at the level of its statistical uncertainty'.
+  That strike is correct and should stay struck: the reference is not
+  sampled, so there is no statistical uncertainty to be at the level
+  of.
+
+  NO ADOPTION.  Report only.

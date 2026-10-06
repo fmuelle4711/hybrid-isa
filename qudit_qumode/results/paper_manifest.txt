@@ -1,0 +1,296 @@
+# paper manifest -- every file the manuscript depends on
+# built by scripts/paper_manifest.py at commit d98477d
+# seeded from mas.tex figures and the results files whose
+# numbers the manuscript quotes, then closed over imports
+# and file reads.  One line per file: path, then reason.
+#
+# files: 289   missing from this repo: 0
+
+circuits/cqed_vu/results/verify_vu_132.txt                                                App. B, 132 primitives against Vu's own script
+circuits/cqed_vu/verify_vu_132.py                                                         produces circuits/cqed_vu/results/verify_vu_132.txt
+circuits/pulse_lib.py                                                                     shared device and GRAPE helpers
+circuits/trapped_ion_qubit/circuit_qubit_hybridlane.py                                    imported by scripts/split_benchmark.py
+circuits/trapped_ion_qubit/circuit_qubit_logical32.py                                     imported by scripts/paper_gate_numbers.py
+circuits/trapped_ion_qudit/figures/multitone_table.pdf                                    multitone schedule table, written by multitone_table.py
+circuits/trapped_ion_qudit/figures/multitone_table.png                                    companion raster/vector written beside multitone_table.pdf
+circuits/trapped_ion_qudit/multitone_table.py                                             produces circuits/trapped_ion_qudit/results/multitone_table.txt
+circuits/trapped_ion_qudit/results/multitone_table.txt                                    Sec. methodA, 34 tones / 27 blocks / 37 segments
+data/circuit_qudit_generalized_27_one_step.json                                           read by circuits/trapped_ion_qudit/multitone_table.py
+data/circuit_qudit_generalized_28_one_step.json                                           read by simulations/circuit_diagrams_28.py
+data/circuit_vu_one_step.json                                                             read by circuits/cqed_vu/verify_vu_132.py
+data/convergence_trotter_qubit_tau10fs_N8.npz                                             Trotter convergence sweep behind the fitted slopes
+data/convergence_trotter_qubit_tau1fs_N8.npz                                              Trotter convergence sweep behind the fitted slopes
+data/convergence_trotter_qubit_tau20fs_N8.npz                                             Trotter convergence sweep behind the fitted slopes
+data/convergence_trotter_qubit_tau2fs_N8.npz                                              Trotter convergence sweep behind the fitted slopes
+data/convergence_trotter_qubit_tau5fs_N8.npz                                              Trotter convergence sweep behind the fitted slopes
+data/convergence_trotter_qudit_tau10fs_N8.npz                                             Trotter convergence sweep behind the fitted slopes
+data/convergence_trotter_qudit_tau1fs_N8.npz                                              Trotter convergence sweep behind the fitted slopes
+data/convergence_trotter_qudit_tau20fs_N8.npz                                             Trotter convergence sweep behind the fitted slopes
+data/convergence_trotter_qudit_tau2fs_N8.npz                                              Trotter convergence sweep behind the fitted slopes
+data/convergence_trotter_qudit_tau5fs_N8.npz                                              Trotter convergence sweep behind the fitted slopes
+data/fig10_hqml_a_qudit_N4_10000shots.npz                                                 dissipative shot trajectories for tab:rmse
+data/fig10_hqml_a_qudit_N8_10000shots.npz                                                 dissipative shot trajectories for tab:rmse
+data/fig10_hqml_a_qudit_d_N4_10000shots.npz                                               dissipative shot trajectories for tab:rmse
+data/fig10_hqml_a_qudit_d_N8_10000shots.npz                                               dissipative shot trajectories for tab:rmse
+data/fig10_hqml_b_qubit_N4_10000shots.npz                                                 dissipative shot trajectories for tab:rmse
+data/fig10_hqml_b_qubit_N8_10000shots.npz                                                 dissipative shot trajectories for tab:rmse
+data/fig6_hqml_b_qubit_N8_10000shots.npz                                                  read by scripts/closed_qubit_vs_reference_401.py
+data/fig8_hqml_a_qudit_N4_10000shots.npz                                                  dissipative shot trajectories for tab:rmse
+data/fig8_hqml_a_qudit_N8_10000shots.npz                                                  dissipative shot trajectories for tab:rmse
+data/fig8_hqml_a_qudit_d_N4_10000shots.npz                                                dissipative shot trajectories for tab:rmse
+data/fig8_hqml_a_qudit_d_N8_10000shots.npz                                                dissipative shot trajectories for tab:rmse
+data/fig8_hqml_b_qubit_N4_10000shots.npz                                                  dissipative shot trajectories for tab:rmse
+data/fig8_hqml_b_qubit_N8_10000shots.npz                                                  dissipative shot trajectories for tab:rmse
+data/fig9_hqml_a_qudit_N4_10000shots.npz                                                  dissipative shot trajectories for tab:rmse
+data/fig9_hqml_a_qudit_N8_10000shots.npz                                                  dissipative shot trajectories for tab:rmse
+data/fig9_hqml_a_qudit_d_N4_10000shots.npz                                                dissipative shot trajectories for tab:rmse
+data/fig9_hqml_a_qudit_d_N8_10000shots.npz                                                dissipative shot trajectories for tab:rmse
+data/fig9_hqml_b_qubit_N4_10000shots.npz                                                  dissipative shot trajectories for tab:rmse
+data/fig9_hqml_b_qubit_N8_10000shots.npz                                                  dissipative shot trajectories for tab:rmse
+data/hypulse_reproduce_cd.npz                                                             read by scripts/hypulse_reproduce_three.py
+data/hypulse_reproduce_qcd.npz                                                            read by scripts/hypulse_reproduce_three.py
+data/qcr_delta_sweep.npz                                                                  read by scripts/qcr_delta_sweep.py
+data/qtsb_qtrl_working.npz                                                                read by scripts/pulse_fidelity_common.py
+data/trotter_method_a_fock8.npz                                                           read by scripts/closed_qubit_vs_reference_401.py
+data/trotter_method_a_fused_qps_fock8.npz                                                 closed-system reference trajectories
+data/trotter_method_b_fock8.npz                                                           closed-system reference trajectories
+data/trotter_method_b_qubit_fock8.npz                                                     read by scripts/closed_qubit_vs_reference_401.py
+data/vu_reference/amp_3.15-1.05-3.15_Fock8_10k.out                                        published reference trajectories of Ref. vu2025
+data/vu_reference/amp_3.15-3.15-3.15_Fock8_10k.out                                        published reference trajectories of Ref. vu2025
+data/vu_reference/amp_3.15-9.45-3.15_Fock8_10k.out                                        published reference trajectories of Ref. vu2025
+data/vu_reference/amp_all3.15_dep_all0.9_Fock8_10k.out                                    published reference trajectories of Ref. vu2025
+data/vu_reference/dep_0.9-0.3-0.9_Fock8_10k.out                                           published reference trajectories of Ref. vu2025
+data/vu_reference/dep_0.9-0.9-0.9_Fock8_10k.out                                           published reference trajectories of Ref. vu2025
+data/vu_reference/dep_0.9-2.7-0.9_Fock8_10k.out                                           published reference trajectories of Ref. vu2025
+data/vu_reference/idealSim_Fock8_10k.out                                                  read by simulations/trotter_method_b_qubit.py
+figures/_style.py                                                                         imported by figures/fig_convergence_trotter.py
+figures/circuit_qubit_32_one_step.pdf                                                     Fig. circuit_qubit, 32-operation qubit reference
+figures/circuit_qubit_32_one_step.png                                                     companion raster/vector written beside circuit_qubit_32_one_step.pdf
+figures/circuit_qubit_32_one_step.svg                                                     companion raster/vector written beside circuit_qubit_32_one_step.pdf
+figures/circuit_qubit_58_one_step.pdf                                                     Fig. circuit_qubit_58, compiled to 58 timed pulses
+figures/circuit_qubit_58_one_step.png                                                     companion raster/vector written beside circuit_qubit_58_one_step.pdf
+figures/circuit_qudit_generalized_27_one_step.pdf                                         Fig. circuit_qudit, 27-control-block qudit step
+figures/circuit_qudit_generalized_27_one_step.png                                         companion raster/vector written beside circuit_qudit_generalized_27_one_step.pdf
+figures/circuit_qudit_generalized_27_one_step.svg                                         companion raster/vector written beside circuit_qudit_generalized_27_one_step.pdf
+figures/fig1.png                                                                          Fig. landscape, hand-drawn schematic (no generator in this repo)  [copied from figures/paper/fig1.png]
+figures/fig5_amplitude_final.png                                                          Fig. amp, dissipative amplitude damping (no generator in this repo)  [copied from figures/final_paper_figures/fig5_amplitude_final.png]
+figures/fig6_final.png                                                                    Fig. dep, dissipative dephasing (no generator in this repo)  [copied from figures/final_paper_figures/fig6_final.png]
+figures/fig6_three_way.pdf                                                                Fig. closed, closed-system three-way comparison
+figures/fig6_three_way.png                                                                companion raster/vector written beside fig6_three_way.pdf
+figures/fig6_three_way.py                                                                 produces figures/fig6_three_way.pdf
+figures/fig7_final.png                                                                    Fig. combined, dissipative combined (no generator in this repo)  [copied from figures/final_paper_figures/fig7_final.png]
+figures/fig_convergence_trotter.pdf                                                       Fig. conv_trotter, Trotter convergence
+figures/fig_convergence_trotter.png                                                       companion raster/vector written beside fig_convergence_trotter.pdf
+figures/fig_convergence_trotter.py                                                        produces figures/fig_convergence_trotter.pdf
+figures/pulses/fig_pulses_cd.pdf                                                          Supplementary, CzD and CxD through HyPulse (not used by mas.tex)
+figures/pulses/fig_pulses_cd.png                                                          companion raster/vector written beside fig_pulses_cd.pdf
+figures/pulses/fig_pulses_cd.txt                                                          Supplementary, CzD/CxD synthesis, flatness and physical replay
+figures/pulses/fig_pulses_cd_sources.txt                                                  Supplementary, source/bound/flatness/replay of the CzD and CxD panels
+figures/pulses/fig_pulses_qubit.pdf                                                       Supplementary, CD and CR (not used by mas.tex)
+figures/pulses/fig_pulses_qubit.png                                                       companion raster/vector written beside fig_pulses_qubit.pdf
+figures/pulses/fig_pulses_qudit.pdf                                                       Supplementary, four qudit primitives (not used by mas.tex)
+figures/pulses/fig_pulses_qudit.png                                                       companion raster/vector written beside fig_pulses_qudit.pdf
+figures/pulses/fig_pulses_sources.txt                                                     Supplementary, source and fidelity of the six legacy pulse panels
+hamiltonians/hcqed_qudit.py                                                               imported by simulations/reproduce_vu_dissipative_figs.py
+hamiltonians/hlab.py                                                                      imported by simulations/circuit_diagrams.py
+hamiltonians/lindblad_qudit.py                                                            imported by simulations/reproduce_vu_dissipative_figs.py
+hybridlane/CONTRIBUTING.md                                                                HybridLane package
+hybridlane/DISCLAIMER.txt                                                                 HybridLane package
+hybridlane/LICENSE.txt                                                                    HybridLane package
+hybridlane/LICENSES/BSD-2-Clause.txt                                                      HybridLane package
+hybridlane/README.md                                                                      HybridLane package
+hybridlane/REUSE.toml                                                                     HybridLane package
+hybridlane/conftest.py                                                                    HybridLane package
+hybridlane/pyproject.toml                                                                 HybridLane package
+hybridlane/pytest.toml                                                                    HybridLane package
+hybridlane/src/hybridlane/__init__.py                                                     HybridLane package
+hybridlane/src/hybridlane/channels/__init__.py                                            HybridLane package
+hybridlane/src/hybridlane/channels/stinespring_qudit.py                                   HybridLane qudit primitives and tests
+hybridlane/src/hybridlane/decomposition/__init__.py                                       HybridLane package
+hybridlane/src/hybridlane/decomposition/graph_decomposition.py                            HybridLane package
+hybridlane/src/hybridlane/decomposition/resources.py                                      HybridLane package
+hybridlane/src/hybridlane/decomposition/symbolic_decomposition.py                         HybridLane package
+hybridlane/src/hybridlane/decomposition/utils.py                                          HybridLane package
+hybridlane/src/hybridlane/devices/__init__.py                                             HybridLane package
+hybridlane/src/hybridlane/devices/bosonic_qiskit/__init__.py                              HybridLane package
+hybridlane/src/hybridlane/devices/bosonic_qiskit/device.py                                HybridLane package
+hybridlane/src/hybridlane/devices/bosonic_qiskit/gates.py                                 HybridLane package
+hybridlane/src/hybridlane/devices/bosonic_qiskit/register_mapping.py                      HybridLane package
+hybridlane/src/hybridlane/devices/bosonic_qiskit/simulate.py                              HybridLane package
+hybridlane/src/hybridlane/devices/preprocess.py                                           HybridLane package
+hybridlane/src/hybridlane/devices/sandia_qscout/__init__.py                               HybridLane package
+hybridlane/src/hybridlane/devices/sandia_qscout/device.py                                 HybridLane package
+hybridlane/src/hybridlane/devices/sandia_qscout/draw.py                                   HybridLane package
+hybridlane/src/hybridlane/devices/sandia_qscout/jaqal.py                                  HybridLane package
+hybridlane/src/hybridlane/devices/sandia_qscout/ops.py                                    HybridLane package
+hybridlane/src/hybridlane/drawer/__init__.py                                              HybridLane package
+hybridlane/src/hybridlane/drawer/draw.py                                                  HybridLane package
+hybridlane/src/hybridlane/drawer/mpldrawer.py                                             HybridLane package
+hybridlane/src/hybridlane/drawer/tape_mpl.py                                              HybridLane package
+hybridlane/src/hybridlane/io/__init__.py                                                  HybridLane package
+hybridlane/src/hybridlane/io/openqasm.py                                                  HybridLane package
+hybridlane/src/hybridlane/measurements/__init__.py                                        HybridLane package
+hybridlane/src/hybridlane/measurements/base.py                                            HybridLane package
+hybridlane/src/hybridlane/measurements/counts.py                                          HybridLane package
+hybridlane/src/hybridlane/measurements/expectation.py                                     HybridLane package
+hybridlane/src/hybridlane/measurements/probability.py                                     HybridLane package
+hybridlane/src/hybridlane/measurements/sample.py                                          HybridLane package
+hybridlane/src/hybridlane/measurements/state.py                                           HybridLane package
+hybridlane/src/hybridlane/measurements/variance.py                                        HybridLane package
+hybridlane/src/hybridlane/ops/__init__.py                                                 HybridLane package
+hybridlane/src/hybridlane/ops/attributes.py                                               HybridLane package
+hybridlane/src/hybridlane/ops/hybrid/__init__.py                                          HybridLane package
+hybridlane/src/hybridlane/ops/hybrid/non_parametric_ops.py                                HybridLane package
+hybridlane/src/hybridlane/ops/hybrid/observables_qudit.py                                 HybridLane qudit primitives and tests
+hybridlane/src/hybridlane/ops/hybrid/parametric_ops_multi_qumode.py                       HybridLane package
+hybridlane/src/hybridlane/ops/hybrid/parametric_ops_qudit.py                              HybridLane qudit primitives and tests
+hybridlane/src/hybridlane/ops/hybrid/parametric_ops_single_qumode.py                      HybridLane package
+hybridlane/src/hybridlane/ops/mixins.py                                                   HybridLane package
+hybridlane/src/hybridlane/ops/op_math/__init__.py                                         HybridLane package
+hybridlane/src/hybridlane/ops/op_math/decompositions/__init__.py                          HybridLane package
+hybridlane/src/hybridlane/ops/op_math/decompositions/qubit_conditioned_decompositions.py  HybridLane package
+hybridlane/src/hybridlane/ops/op_math/qubit_conditioned.py                                HybridLane package
+hybridlane/src/hybridlane/ops/qumode/__init__.py                                          HybridLane package
+hybridlane/src/hybridlane/ops/qumode/non_parametric_ops.py                                HybridLane package
+hybridlane/src/hybridlane/ops/qumode/observables.py                                       HybridLane package
+hybridlane/src/hybridlane/ops/qumode/parametric_ops_multi_qumode.py                       HybridLane package
+hybridlane/src/hybridlane/ops/qumode/parametric_ops_single_qumode.py                      HybridLane package
+hybridlane/src/hybridlane/sa/__init__.py                                                  HybridLane package
+hybridlane/src/hybridlane/sa/base.py                                                      HybridLane package
+hybridlane/src/hybridlane/sa/exceptions.py                                                HybridLane package
+hybridlane/src/hybridlane/sa/infer_wires.py                                               HybridLane package
+hybridlane/src/hybridlane/templates/__init__.py                                           HybridLane package
+hybridlane/src/hybridlane/templates/fock_state.py                                         HybridLane package
+hybridlane/src/hybridlane/templates/non_abelian_qsp.py                                    HybridLane package
+hybridlane/src/hybridlane/transforms/__init__.py                                          HybridLane package
+hybridlane/src/hybridlane/transforms/from_pennylane.py                                    HybridLane package
+hybridlane/src/hybridlane/util.py                                                         HybridLane package
+hybridlane/test/__init__.py                                                               HybridLane package
+hybridlane/test/decomposition/test_graph_decomposition.py                                 HybridLane package
+hybridlane/test/devices/__init__.py                                                       HybridLane package
+hybridlane/test/devices/bosonic_qiskit/__init__.py                                        HybridLane package
+hybridlane/test/devices/bosonic_qiskit/test_device.py                                     HybridLane package
+hybridlane/test/devices/sandia_qscout/__init__.py                                         HybridLane package
+hybridlane/test/devices/sandia_qscout/test_device.py                                      HybridLane package
+hybridlane/test/devices/sandia_qscout/test_jaqal.py                                       HybridLane package
+hybridlane/test/devices/test_preprocess.py                                                HybridLane package
+hybridlane/test/draw/__init__.py                                                          HybridLane package
+hybridlane/test/draw/test_draw_mpl.py                                                     HybridLane package
+hybridlane/test/io/test_openqasm.py                                                       HybridLane package
+hybridlane/test/measurements/__init__.py                                                  HybridLane package
+hybridlane/test/measurements/test_measurement.py                                          HybridLane package
+hybridlane/test/measurements/test_sample.py                                               HybridLane package
+hybridlane/test/ops/op_math/test_qubit_conditioned.py                                     HybridLane package
+hybridlane/test/ops/test_cv.py                                                            HybridLane package
+hybridlane/test/ops/test_hybrid.py                                                        HybridLane package
+hybridlane/test/ops/test_qudit_ops.py                                                     HybridLane qudit primitives and tests
+hybridlane/test/sa/__init__.py                                                            HybridLane package
+hybridlane/test/sa/test_infer_wires.py                                                    HybridLane package
+hybridlane/test/templates/__init__.py                                                     HybridLane package
+hybridlane/test/templates/test_fock_state.py                                              HybridLane package
+hybridlane/test/templates/test_non_abelian_qsp.py                                         HybridLane package
+hybridlane/test/util.py                                                                   HybridLane package
+params.py                                                                                 vibronic model parameters, imported by nearly everything
+pulses_meth/anchor_params.json                                                            Meth hardware anchors
+pulses_meth/appendix_table.md                                                             provenance for every pulse number
+pulses_meth/hypulse_validation/audit_cd_independent_results.json                          read by scripts/make_fig_pulses.py
+pulses_meth/hypulse_validation/cd_waveform_persist.json                                   read by scripts/pulse_fidelity_common.py
+pulses_meth/hypulse_validation/final_v3.json                                              read by pulses_meth/hypulse_validation/step_runtime_table.py
+pulses_meth/hypulse_validation/qt_waveform_persist.json                                   read by scripts/pulse_fidelity_common.py
+pulses_meth/hypulse_validation/step_hypulse_grape_v3.py                                   imported by scripts/pulse_fidelity_common.py
+pulses_meth/hypulse_validation/step_hypulse_grape_v3_results.json                         read by pulses_meth/hypulse_validation/step_hypulse_grape_v3.py
+pulses_meth/hypulse_validation/step_qcd_bazavan_full_lab.py                               imported by scripts/hypulse_reproduce_three.py
+pulses_meth/hypulse_validation/step_qcd_bazavan_full_lab_ramps_results.json               read by scripts/pulse_fidelity_common.py
+pulses_meth/hypulse_validation/step_qcd_bazavan_full_lab_results.json                     read by scripts/pulse_fidelity_common.py
+pulses_meth/hypulse_validation/step_qcr_cr_two_points.py                                  imported by scripts/make_fig_pulses.py
+pulses_meth/hypulse_validation/step_qcr_cr_two_points_results.json                        read by pulses_meth/hypulse_validation/step_qcr_cr_two_points.py
+pulses_meth/hypulse_validation/step_qcr_cr_two_points_v2.py                               imported by scripts/hypulse_reproduce_three.py
+pulses_meth/hypulse_validation/step_qcr_cr_two_points_v2_results.json                     read by scripts/duration_rule_table.py
+pulses_meth/hypulse_validation/step_qt_meth.py                                            imported by scripts/pulse_fidelity_common.py
+pulses_meth/hypulse_validation/step_qt_meth_aggcap.py                                     imported by scripts/pulse_fidelity_common.py
+pulses_meth/hypulse_validation/step_qt_meth_aggcap_results.json                           read by scripts/duration_rule_table.py
+pulses_meth/hypulse_validation/step_qt_meth_results.json                                  read by pulses_meth/hypulse_validation/step_qt_meth.py
+pulses_meth/hypulse_validation/step_qtsb_meth_results.json                                read by pulses_meth/hypulse_validation/step_runtime_table.py
+pulses_meth/hypulse_validation/step_runtime_table.py                                      imported by scripts/qcr_delta_sweep.py
+pulses_meth/hypulse_validation/step_two_points_v4_results.json                            read by scripts/duration_rule_table.py
+pulses_meth/runtime_table.json                                                            gate times and counts, machine readable
+pulses_meth/runtime_table.md                                                              runtime table, human readable twin
+results/appendix_d_tables.txt                                                             App. D, rules R1-R8, the per-instance qudit and qubit tables (tab:perinstance_qudit / tab:perinstance_qubit) and the per-class totals 210.5 / 2207.9 us, ratio 10.5
+results/appendix_table_regen_diff.txt                                                     read by pulses_meth/hypulse_validation/step_runtime_table.py
+results/closed_qubit_vs_reference_401.txt                                                 Sec. results_closed, 0.031% and 1.6%
+results/cluster_bound.json                                                                cluster speedup, bound and limit, machine-readable
+results/cluster_bound.md                                                                  cluster speedup S, its bound and the (N_c-1)/(N_c-K) limit, re-derived from the edge costs with cluster size K free
+results/cpir_amplitude_calibration.txt                                                    App. D rule R2, C_Pi R amplitudes 3.77 / 4.12 / 4.38 kHz at T = 25 us
+results/cpir_amplitude_sweep.txt                                                          App. D tab:deltasweep rows, amplitude solved at each detuning
+results/cpir_one_pulse_regen.txt                                                          tab:gatecounts, tab:runtime, tab:deltasweep under one-pulse C_Pi R
+results/duration_rule_table.txt                                                           App. D, per-gate duration scaling rules
+results/entangling_only_counts.txt                                                        tab:gatecounts, entangling column
+results/gate_counts.md                                                                    read by simulations/vibronic_scaling.py
+results/hcqed_four_piece_split.txt                                                        App. B, H_cqed four-piece split and the 32 count
+results/hypulse_reproduce_three.txt                                                       App. C, the three GRAPE pulses reproduced through HyPulse
+results/j_ms_convention.txt                                                               read by pulses_meth/hypulse_validation/step_runtime_table.py
+results/multitone_counts_and_centres.txt                                                  Sec. methodA, 27 control blocks and 6Nc+9
+results/paper_gate_numbers.txt                                                            every gate count in the manuscript, checked against source
+results/paper_manifest.txt                                                                this manifest
+results/pulse_fidelity_common.txt                                                         tab:pulsemethods, one replay protocol for every gate
+results/qcr_delta_ratio_34.txt                                                            tab:deltasweep, detuning sweep
+results/qcr_delta_sweep.txt                                                               App. D, the detuning grid read by runtime_final_regen.py; its 1-F and leakage columns are superseded
+results/qcr_mechanism.txt                                                                 read by scripts/qcr_mechanism.py
+results/qcr_mechanism_paper_angle.txt                                                     read by scripts/make_fig_pulses.py
+results/qtsb_duration_sweep.txt                                                           read by pulses_meth/hypulse_validation/step_runtime_table.py
+results/qtsb_echo.txt                                                                     read by scripts/qtsb_grape.py
+results/qtsb_grape.txt                                                                    read by scripts/qtsb_grape.py
+results/qtsb_mechanism.txt                                                                read by scripts/qtsb_mechanism.py
+results/qubit_ladder_58.txt                                                               App. B, 32 logical to 58 timed pulses
+results/runtime_final_regen.tex                                                           App. D, tab:runtime and tab:deltasweep
+results/runtime_final_regen.txt                                                           App. D, N_c projection and detuning sweep, readable
+results/segment_counts.txt                                                                tab:gatecounts, timed pulses per step
+results/split_benchmark.json                                                              multi-ion split, machine-readable
+results/split_benchmark.md                                                                multi-ion split of the qudit register, crossing X_E at two MS windows
+results/table3_cross_recomputed.txt                                                       tab:rmse, all six dissipative RMSE values
+results/universality_closure_check.log                                                    Sec. V, Lie closure per iteration, u(4N) saturation, and the Gaussian control
+results/universality_degree_vs_bandwidth.txt                                              App. A, rank sequence 12/29/105/375 and bandwidth 3
+scripts/analyze_n4_results.py                                                             imported by scripts/table3_cross_recompute.py
+scripts/appendix_b_qubit_ladder.py                                                        produces results/qubit_ladder_58.txt
+scripts/appendix_d_tables_tex.py                                                          produces results/appendix_d_tables.txt
+scripts/closed_qubit_vs_reference_401.py                                                  produces results/closed_qubit_vs_reference_401.txt
+scripts/cpir_amplitude_calibration.py                                                     produces results/cpir_amplitude_calibration.txt
+scripts/cpir_amplitude_sweep.py                                                           produces results/cpir_amplitude_sweep.txt
+scripts/cpir_one_pulse_regen.py                                                           produces results/cpir_one_pulse_regen.txt
+scripts/duration_rule_table.py                                                            produces results/duration_rule_table.txt
+scripts/entangling_only_counts.py                                                         produces results/entangling_only_counts.txt
+scripts/hcqed_four_piece_split.py                                                         produces results/hcqed_four_piece_split.txt
+scripts/hypulse_reproduce_three.py                                                        produces results/hypulse_reproduce_three.txt
+scripts/make_fig_pulses.py                                                                produces figures/pulses/fig_pulses_qudit.pdf
+scripts/make_fig_pulses_cd.py                                                             produces figures/pulses/fig_pulses_cd.pdf
+scripts/multitone_counts_and_centres.py                                                   produces results/multitone_counts_and_centres.txt
+scripts/paper_gate_numbers.py                                                             produces results/paper_gate_numbers.txt
+scripts/paper_manifest.py                                                                 builds this manifest
+scripts/paper_repo_build_check.py                                                         runs every manifest script and checks it reproduces its artifact
+scripts/paper_repo_sync.py                                                                syncs the submission repo to this manifest
+scripts/pulse_fidelity_common.py                                                          produces results/pulse_fidelity_common.txt
+scripts/qcr_delta_ratio_34.py                                                             produces results/qcr_delta_ratio_34.txt
+scripts/qcr_delta_sweep.py                                                                produces results/qcr_delta_sweep.txt
+scripts/qcr_mechanism.py                                                                  detuned-sideband drive for C_Pi R, imported by the App. D amplitude calibration and sweep
+scripts/qtsb_grape.py                                                                     imported by scripts/make_fig_pulses_cd.py
+scripts/qtsb_mechanism.py                                                                 imported by scripts/pulse_fidelity_common.py
+scripts/runtime_final_regen.py                                                            produces results/runtime_final_regen.tex
+scripts/segment_counts.py                                                                 produces results/segment_counts.txt
+scripts/split_benchmark.py                                                                produces results/split_benchmark.md
+scripts/table3_cross_recompute.py                                                         produces results/table3_cross_recomputed.txt
+scripts/universality_degree_vs_bandwidth.py                                               produces results/universality_degree_vs_bandwidth.txt
+simulations/circuit_diagrams.py                                                           Vu cQED circuit, recounted for the 132 primitives
+simulations/circuit_diagrams_28.py                                                        imported by scripts/entangling_only_counts.py
+simulations/circuit_dissipative_kraus.py                                                  imported by scripts/multitone_counts_and_centres.py
+simulations/circuit_fig6_hqml.py                                                          imported by scripts/split_benchmark.py
+simulations/circuit_fig89_10_hqml_qnode_b_qubit.py                                        imported by scripts/multitone_counts_and_centres.py
+simulations/circuit_fig_common.py                                                         shared circuit-figure helpers
+simulations/draw_qubit_32_hqml.py                                                         produces figures/circuit_qubit_32_one_step.pdf
+simulations/draw_qubit_58_hqml.py                                                         produces figures/circuit_qubit_58_one_step.pdf
+simulations/draw_qudit_27_hqml.py                                                         produces figures/circuit_qudit_generalized_27_one_step.pdf
+simulations/reproduce_vu_dissipative_figs.py                                              imported by simulations/circuit_fig89_10_hqml_qnode_b_qubit.py
+simulations/trotter_method_a.py                                                           imported by simulations/circuit_diagrams.py
+simulations/trotter_method_a_fused_qps.py                                                 imported by simulations/circuit_diagrams.py
+simulations/trotter_method_b_qubit.py                                                     imported by simulations/circuit_diagrams.py
+simulations/vibronic_scaling.py                                                           one-hot qubit Trotter step, the 32-operation builder
+verification/universality_closure_check.py                                                produces results/universality_closure_check.log

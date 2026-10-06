@@ -1,0 +1,55 @@
+====================================================================================================
+APPENDIX REGENERATION DIFF (F21)
+====================================================================================================
+Only the derived runtime SECTION is rewritten.  The gate-time rows are
+this script's INPUT and are deliberately untouched -- regenerating them
+would make the dependency circular.
+lines changed: 27
+====================================================================================================
+
+--- appendix_table.md (before, STALE at J=1 for Nc>=6)
++++ appendix_table.md (after, single-sourced J=2)
+@@ -209,25 +209,34 @@
+ 
+ | N_c | d | T_qudit range (µs) | T_qubit seq (µs) | T_qubit MS×5 (µs) | T_qubit MS×3 (µs) | ratio seq | **ratio MS×5 (paper)** | ratio MS×3 (bound) |
+ |---:|---:|---|---:|---:|---:|---|---|---|
+-| 3 | 4 | [397.6, 419.4] | 2396.1 | 1396.1 | 996.1 | [5.71×, 6.03×] | **[3.33×, 3.51×]** | [2.38×, 2.51×] |
+-| 6 | 7 | [780.5, 802.3] | 5777.1 | 1777.1 | 1377.1 | [7.20×, 7.40×] | **[2.21×, 2.28×]** | [1.72×, 1.76×] |
+-| 8 | 9 | [1035.8, 1057.6] | 8031.1 | 2031.1 | 1631.1 | [7.59×, 7.75×] | **[1.92×, 1.96×]** | [1.54×, 1.57×] |
+-| 12 | 13 | [1546.4, 1568.2] | 12539.0 | 2539.0 | 2139.0 | [8.00×, 8.11×] | **[1.62×, 1.64×]** | [1.36×, 1.38×] |
++| 3 | 4 | [397.8, 441.4] | 2396.1 | 1396.1 | 996.1 | [5.43×, 6.02×] | **[3.16×, 3.51×]** | [2.26×, 2.50×] |
++| 6 | 7 | [781.4, 890.3] | 5777.1 | 1777.1 | 1377.1 | [6.49×, 7.39×] | **[2.00×, 2.27×]** | [1.55×, 1.76×] |
++| 8 | 9 | [1037.1, 1189.6] | 8031.1 | 2031.1 | 1631.1 | [6.75×, 7.74×] | **[1.71×, 1.96×]** | [1.37×, 1.57×] |
++| 12 | 13 | [1548.5, 1788.2] | 12539.0 | 2539.0 | 2139.0 | [7.01×, 8.10×] | **[1.42×, 1.64×]** | [1.20×, 1.38×] |
+ 
+ **Parallel-MS variants.** `MS×5` is **paper-facing**: under J = 2 the MS-type gates split as forward J (XX + YY), the middle Jl at full τ, and reverse J (XX + YY) — a batch cannot merge an XX window with a YY window, so **5 windows is the defensible floor**. `MS×3` is the **most qubit-favourable bound and is likely unphysical**: besides that split, the J gates are A↔R for every R and so all share qubit A — a shared-control fan-out, not the disjoint pairs Figgatt et al. parallelise. It is retained only as a lower bound on T_qubit. **The qudit encoding is ahead at every N_c under all three assumptions.**
+ 
+ Range width is driven by the T_QT bounds [0.105 µs (angle-scaled to the circuit angle 0.0075 rad, overhead-limited), 11.0 µs (calibrated θ=π/4)]. The qudit step is dominated by QCR (2·N_c gates × 55.93 µs). MS-type gates on the qubit side = 2(N_c−1) J + (N_c−1) Jl per step, verified from [simulations/vibronic_scaling.py::build_one_hot_trotter_step](../simulations/vibronic_scaling.py).
+ 
+-**The two advantages move in opposite directions with N_c — state this plainly rather than let a referee find it.** The sequential ratio *grows* (6.03× at N_c=3 → 8.11× at N_c=12) while the MS-batched ratio *shrinks* (3.51× → 1.64×). The reason is structural, not a modelling artefact: the qubit encoding's MS-type gates are 3(N_c−1) in number and batching collapses them to a **fixed** window count (5 or 3) independent of N_c, so parallelism helps the qubit side more and more as N_c grows. The qudit side has no such lever — its cost is dominated by QCR, 2N_c gates that are sequential on one ion and do not batch. So the qudit advantage is **robust but not uniformly improving**: it survives at every N_c under every batching assumption, and it is *largest* sequentially at large N_c and *smallest* under aggressive batching at large N_c.
++**Alternative qudit convention (labelled extra, NOT the headline).** The `28`-operation count (7N_c+7) additionally fuses the QT gates into a single multi-transition operation. That fusion is *not* an operator identity: |A><B| and |A><C| share level A and max|[\Sigma_{AB},\Sigma_{AC}]| = 1.000000 (measured). It rests on a multi-tone hardware claim priced from `step_qt_meth_aggcap.py`. QPS fusion, by contrast, is exact (commuting diagonal projectors, measured 0.0), which is why the headline uses 34.
++
++| N_c | T_qudit range, 28-op (µs) | ratio seq, 28-op |
++|---:|---|---|
++| 3 | [397.6, 419.4] | [5.71×, 6.03×] |
++| 6 | [780.5, 802.3] | [7.20×, 7.40×] |
++| 8 | [1035.8, 1057.6] | [7.59×, 7.75×] |
++| 12 | [1546.4, 1568.2] | [8.00×, 8.11×] |
++
++**The two advantages move in opposite directions with N_c — state this plainly rather than let a referee find it.** The sequential ratio *grows* (6.02× at N_c=3 → 8.10× at N_c=12) while the MS-batched ratio *shrinks* (3.51× → 1.64×). The reason is structural, not a modelling artefact: the qubit encoding's MS-type gates are 3(N_c−1) in number and batching collapses them to a **fixed** window count (5 or 3) independent of N_c, so parallelism helps the qubit side more and more as N_c grows. The qudit side has no such lever — its cost is dominated by QCR, 2N_c gates that are sequential on one ion and do not batch. So the qudit advantage is **robust but not uniformly improving**: it survives at every N_c under every batching assumption, and it is *largest* sequentially at large N_c and *smallest* under aggressive batching at large N_c.
+ 
+ ### Trotter steps within the motional coherence limit τ_mot = 27.4 ms
+ 
+ | N_c | steps_qudit (@ T_QT low → high) | steps_qubit seq | steps_qubit MS×5 (paper) | steps_qubit MS×3 (bound) |
+ |---:|---|---:|---:|---:|
+-| 3 | [65, 68] | 11 | 19 | 27 |
+-| 6 | [34, 35] | 4 | 15 | 19 |
+-| 8 | [25, 26] | 3 | 13 | 16 |
+-| 12 | [17, 17] | 2 | 10 | 12 |
++| 3 | [62, 68] | 11 | 19 | 27 |
++| 6 | [30, 35] | 4 | 15 | 19 |
++| 8 | [23, 26] | 3 | 13 | 16 |
++| 12 | [15, 17] | 2 | 10 | 12 |
+ 
+ <!-- END GENERATED -->
+ 

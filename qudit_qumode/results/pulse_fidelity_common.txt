@@ -1,0 +1,102 @@
+========================================================================================================
+COMMON REPLAY PROTOCOL -- all five adopted waveforms
+========================================================================================================
+  slot-by-slot expm of the SAVED pulse under the gate's own control
+  operators, against the gate's own target, with one fidelity formula
+  F = |Tr(V^dag U)|^2/D^2 and one virtual-Z treatment.  No optimisation.
+
+   gate      T (us)   dim       1-F raw   1-F after VZ   1-F_grape (stored)   source
+    QCD  160.400000    16  1.130109e-05   1.130109e-05         5.650584e-06   final_v3.json headline
+     CD   39.790000    16  4.010618e-06   4.010618e-06         2.005307e-06   cd_waveform_persist.json
+     QT   11.000000     5  1.926236e-05   1.748164e-05         9.631242e-06   qt_waveform_persist.json
+    QCR   25.465000    16  1.001421e-13   4.751755e-14         4.951595e-14   step_qcr_cr_two_points_v2_results.json
+  QT-SB    0.649351    24  3.452651e-09   3.452651e-09                  n/a   data/qtsb_qtrl_working.npz
+
+  '1-F_grape (stored)' is what the optimiser reported at the time and is
+  shown only for comparison; it is NOT the common-protocol number.
+
+  THE FACTOR 2 IS A METRIC CONVENTION, NOT A DISCREPANCY.  For every
+  GRAPE gate the replayed 1-F is exactly twice the stored value:
+      QCD  1.130109e-05 = 2 x 5.650584e-06
+      CD   4.010618e-06 = 2 x 2.005307e-06
+      QT   1.926236e-05 = 2 x 9.631242e-06
+  qutip-qtrl reports the PSU amplitude error eps = 1 - |Tr(V^dag U)|/D,
+  while this protocol uses the trace fidelity |Tr|^2/D^2, and
+      1 - (1-eps)^2 = 2 eps - eps^2 ~ 2 eps.
+  Quote one convention consistently; they differ by 2x by construction.
+
+  INDEPENDENT CROSS-CHECK.  CD's common-protocol value, 4.010618e-06,
+  reproduces audit_cd_independent_results.json EXACTLY -- that audit was
+  the FINDING 7 remediation and recomputed CD from a deterministically
+  recompiled waveform.  Two separate routes, same digits, so the replay
+  and the persisted waveform are both sound.
+
+========================================================================================================
+Q1  WHY QCR SHOWS 3.64e-06 HERE AND 2.9e-03 IN THE MECHANISM RERUN
+========================================================================================================
+  They propagate DIFFERENT Hamiltonians and answer different questions.
+
+  3.64e-06  fig_pulses_sources.txt / this table
+      Source: step_qcr_cr_two_points_v2_results.json, an IMPOSED-GENERATOR
+      GRAPE run.  The control operator handed to the optimiser IS the gate
+      generator, H_c = Pi_l (x) n, and the target is exp(-i theta Pi_l n).
+      Replaying that waveform under that same operator therefore asks only:
+      did the optimiser hit its own target?  With a single control that
+      commutes with itself the answer is trivially yes -- the pulse is flat
+      (std exactly 0) and the problem reduces to setting one integral.
+      It contains NO physics about whether a laser can produce Pi_l (x) n.
+
+  2.9e-03   results/qcr_mechanism_paper_angle.txt
+      Source: the REAL off-resonant blue-sideband drive,
+        H(t) = (Omega_sb/2)(|l><g| (x) a^dag e^{-i delta t} + h.c.),
+      with NO imposed generator, compared against the effective generator
+      that Schrieffer-Wolff predicts it should produce.  That is the
+      physics question, and 2.9e-03 (endpoint, after VZ) is its answer.
+
+  So the two numbers are not in conflict and neither is wrong.  3.64e-06
+  is a compiler self-consistency check; 2.9e-03 is the gate's actual
+  infidelity against the operator it is supposed to implement.  THE PAPER
+  SHOULD QUOTE 2.9e-03 for QCR and must not present 3.64e-06 as a
+  physical fidelity.  The same caveat applies to every imposed-generator
+  row in this table -- see the note below.
+
+========================================================================================================
+Q2  WHERE THE QCD 0.998-0.999 BAZAVAN REPLAY LIVES
+========================================================================================================
+  step_qcd_bazavan_full_lab_results.json   exists = True
+  step_qcd_bazavan_full_lab_ramps_results.json   exists = True
+  produced by  pulses_meth/hypulse_validation/step_qcd_bazavan_full_lab.py
+               and step_qcd_bazavan_full_lab_ramps.py
+  quoted in    pulses_meth/appendix_table.md, the table at lines 98-99
+
+  That run takes the SAME final_v3 QCD waveform and propagates it with
+  qutip.sesolve under the full time-dependent Bazavan Eq. 1 -- cos(delta t)
+  carrier envelope and e^{+-i omega_z t} mode oscillations kept explicit,
+  only the optical RWA applied -- rather than under the imposed
+  sigma_z (x) X control operator.  Cutoff-converged over N in {8, 10, 12}.
+  Reported there:
+    unramped, T = 160.4 us   F = 0.999 / 0.999 / 0.998
+    sin^2 ramps 5 us/side, T = 165.4 us   F = 0.999 / 0.999 / 0.999
+
+  So QCD has BOTH kinds of number, and they differ for the same reason
+  QCR's two numbers differ:
+    imposed-generator replay (this table)  1-F = 1.130109e-05
+    full Bazavan lab-frame replay          1-F ~ 1e-3 to 2e-3
+  The Bazavan value is the physically meaningful one for QCD, and it is
+  the analogue of the 2.9e-03 for QCR.
+
+========================================================================================================
+READ THIS TABLE WITH THE FOLLOWING CAVEAT
+========================================================================================================
+  QCD, CD, QT and QCR were all optimised against IMPOSED effective
+  generators (the control operator is the gate generator).  Their
+  common-protocol numbers are therefore self-consistency checks, not
+  physical fidelities.  Only QT-SB is replayed here under its real
+  time-dependent drive, because that is the model its waveform was
+  optimised against.
+  Physical counterparts that DO exist:
+    QCD   1e-3 to 2e-3   step_qcd_bazavan_full_lab*_results.json
+    QCR   2.9e-03        results/qcr_mechanism_paper_angle.txt
+    QT-SB 3.45e-09       already physical (this table)
+    CD    none           no full-lab replay exists
+    QT    none           no full-lab replay exists

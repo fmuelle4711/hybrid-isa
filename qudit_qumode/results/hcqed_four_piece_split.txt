@@ -1,0 +1,111 @@
+====================================================================================================
+H_cqed AS THE QUBIT REFERENCE BUILDS IT -- FOUR-PIECE SPLIT
+====================================================================================================
+  commit   ac46abc
+  operators transcribed from simulations/circuit_fig89_10_hqml_qnode_b_qubit.py
+  coefficients read from params.py, never retyped
+
+  One symmetric second-order step, as the code applies it:
+      H_0  H_1  H_{2XX}  H_{2YY} | H_{2YY}' H_{2XX}' H_1' H_0'
+  (circuit_fig89_10_hqml_qnode_b_qubit.py lines 222-229)
+
+----------------------------------------------------------------------------------------------------
+  H_0   free evolution and qubit detunings
+----------------------------------------------------------------------------------------------------
+    \sum_{m\in\{a,b,c,l\}} \omega_m\, \hat n_m
+      realized by : Rotation (unconditional mode rotation)   (4 per half-step)
+      omega_a    = +4.790000e+13 rad/s  = +47.900000 rad/ps
+      omega_b    = +4.800000e+13 rad/s  = +48.000000 rad/ps
+      omega_c    = +4.785000e+13 rad/s  = +47.850000 rad/ps
+      omega_l    = +6.000000e+12 rad/s  = +6.000000 rad/ps
+
+    -\tfrac{1}{2}\sum_{R\in\{B,C\}} \delta_{AR}\, \sigma_z^R
+      realized by : RZ (virtual, T = 0)   (2 per half-step)
+      delta_ab   = +5.020006e+11 rad/s  = +0.502001 rad/ps
+      delta_ac   = +4.974876e+10 rad/s  = +0.049749 rad/ps
+
+----------------------------------------------------------------------------------------------------
+  H_1   dispersive shifts and vibronic displacements
+----------------------------------------------------------------------------------------------------
+    \sum_{R\in\{A,B,C\}} \chi_R\, \sigma_z^R \hat n_R
+      realized by : CR (conditional rotation)   (3 per half-step)
+      chi_a      = -3.200000e+12 rad/s  = -3.200000 rad/ps
+      chi_b      = -3.600000e+12 rad/s  = -3.600000 rad/ps
+      chi_c      = -2.700000e+12 rad/s  = -2.700000 rad/ps
+
+    \sum_{R\in\{A,B,C\}} g_{{\rm cd},R}\, \sigma_z^R \hat x_R
+      realized by : CD (conditional displacement)   (3 per half-step)
+      g_cd_a     = +3.383262e+12 rad/s  = +3.383262 rad/ps
+      g_cd_b     = +3.031517e+12 rad/s  = +3.031517 rad/ps
+      g_cd_c     = +3.703495e+12 rad/s  = +3.703495 rad/ps
+
+----------------------------------------------------------------------------------------------------
+  H_{2XX} + H_{2YY}   electronic exchange, and the link-mode CD
+----------------------------------------------------------------------------------------------------
+    \sum_{R\in\{B,C\}} \tfrac{1}{2} g_{AR}\left(\sigma_x^A\sigma_x^R + \sigma_y^A\sigma_y^R\right)
+      realized by : exchange J -- ONE logical gate per pair, TWO MS windows (XX then YY) at the pulse level   (2 per half-step)
+      g_ab       = +3.000000e+12 rad/s  = +3.000000 rad/ps
+      g_ac       = +2.700000e+12 rad/s  = +2.700000 rad/ps
+
+    g_{{\rm cd},l}\, \sigma_z^A \hat x_l
+      realized by : CD (link mode)   (1 per half-step)
+      g_cdl      = +1.341641e+12 rad/s  = +1.341641 rad/ps
+
+----------------------------------------------------------------------------------------------------
+  centre   link-modulated exchange, applied ONCE at full tau
+----------------------------------------------------------------------------------------------------
+    \sum_{R\in\{B,C\}} \tfrac{1}{2} g_{AR,l}\left(\sigma_x^A\sigma_x^R + \sigma_y^A\sigma_y^R\right)\hat x_l
+      realized by : link exchange J_l -- no native two-ion primitive; synthesized from MS sandwiches around a CD (14 pulses each)   (2 per step, at the centre)
+      g_abl      = -3.000000e+11 rad/s  = -0.300000 rad/ps
+      g_acl      = +4.050000e+11 rad/s  = +0.405000 rad/ps
+
+----------------------------------------------------------------------------------------------------
+
+====================================================================================================
+HOW THIS GIVES 32
+====================================================================================================
+  Per HALF-step, counted as logical operations:
+      H_0                4 Rotation + 2 RZ            =  6
+      H_1                3 CR + 3 CD                  =  6
+      H_2XX + H_2YY      2 exchange J + 1 CD(link)    =  3
+                                                        --
+                                                        15
+  The two link-modulated exchange terms sit ONCE at the centre of the
+  symmetric step at full tau, not in either half:
+      2 x 15 + 2 = 32
+
+  TWO PLACES THIS IS EASY TO GET WRONG.
+    1. Exchange J is ONE logical operation per pair, even though
+       H_2XX and H_2YY are separate Trotter pieces in the code.  The
+       XX/YY split is a PULSE-level fact -- a bichromatic MS window
+       gives XX or YY, not their sum -- and is exact because
+       [XX, YY] = 0.  It is what takes 4 exchange operations to 8 MS
+       windows in Appendix B, and it does NOT change the 32.
+    2. CD appears in two pieces: three local ones in H_1 and the
+       link-mode one in H_2XX, giving 4 per half-step and 8 per step,
+       which is the Conditional displacement row of tab:qubit32.
+
+  This reproduces the count in Table tab:qubit32 and the logical
+  column of tab:gatecounts.  Verified independently against the drawn
+  tape by scripts/paper_gate_numbers.py, which reads 32 from the
+  circuit rather than from this arithmetic.
+
+====================================================================================================
+CROSS-CHECK AGAINST THE LEVEL-ENCODED BUILDER
+====================================================================================================
+  simulations/circuit_dissipative_kraus.py::build_sub_hamiltonians('B')
+  builds the SAME Hamiltonian grouped six ways instead of four, using
+  projectors rather than Paulis.  The two agree because
+      Pi_R = (I - sigma_z^R)/2   on the single-excitation code space,
+  so each sigma_z term there appears as an identity piece plus a
+  projector piece, e.g.
+      -chi_a/2 * I (x) n_a  +  chi_a * Pi_A (x) n_a
+  The identity pieces are unconditional mode rotations and are
+  absorbed into the free frame; the projector pieces are the CR and CD
+  gates above.  Same coefficient names, same values.
+
+  The four-piece split is the one to quote in Appendix B: it is what
+  the executed three-qubit circuit actually applies, and its ordering
+  is the one the 32 count is derived from.
+
+  READ ONLY.  No adoption, no data path touched.

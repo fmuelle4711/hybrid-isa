@@ -1,0 +1,94 @@
+========================================================================================================
+DETUNING SWEEP UNDER AMPLITUDE CALIBRATION
+========================================================================================================
+  commit b44a3bd
+  rule: T = 2*pi/delta (one detuning period); amplitude SOLVED
+        numerically per angle under the full drive at that delta,
+        not scaled from 40 kHz and not taken from the closed form
+        Omega_sb = delta sqrt(2 theta/pi), which is ~2% low.
+  base read from results/appendix_d_tables.txt: qudit 210.4971 (C_Pi R 150.0000), qubit 2207.8701 (CR 150.0000)
+  nominal Omega_sb/2pi = 4.0 kHz (measured)
+
+    delta  T=2pi/del  amp(0.016)  Om_sb/2pi  Om_sb/delta   max leak   six-gate    qudit     qubit   ratio
+       20     50.000      0.5145      2.058       0.1029   1.28e-03    300.000    360.5    2357.9    6.54
+       30     33.333      0.7718      3.087       0.1029   1.28e-03    200.000    260.5    2257.9    8.67
+       40     25.000      1.0290      4.116       0.1029   1.28e-03    150.000    210.5    2207.9   10.49
+       60     16.667      1.5436      6.174       0.1029   1.28e-03    100.000    160.5    2157.9   13.44
+       80     12.500      2.0581      8.232       0.1029   1.28e-03     75.000    135.5    2132.9   15.74
+
+  PER-ANGLE DETAIL
+    delta 20 kHz, T = 50.000 us (= 2*pi/delta, delta = 0.125664 rad/us)
+      theta 0.0135  amp  0.47117  Om_sb/2pi   1.885 kHz  ratio 1.0000  leak 5.396e-04  1-F 1.673e-03
+      theta 0.0160  amp  0.51452  Om_sb/2pi   2.058 kHz  ratio 1.0000  leak 8.985e-04  1-F 2.371e-03
+      theta 0.0180  amp  0.54707  Om_sb/2pi   2.188 kHz  ratio 1.0000  leak 1.279e-03  1-F 3.022e-03
+    delta 30 kHz, T = 33.333 us (= 2*pi/delta, delta = 0.188496 rad/us)
+      theta 0.0135  amp  0.70675  Om_sb/2pi   2.827 kHz  ratio 1.0000  leak 5.396e-04  1-F 1.673e-03
+      theta 0.0160  amp  0.77178  Om_sb/2pi   3.087 kHz  ratio 1.0000  leak 8.985e-04  1-F 2.371e-03
+      theta 0.0180  amp  0.82061  Om_sb/2pi   3.282 kHz  ratio 1.0000  leak 1.279e-03  1-F 3.022e-03
+    delta 40 kHz, T = 25.000 us (= 2*pi/delta, delta = 0.251327 rad/us)
+      theta 0.0135  amp  0.94233  Om_sb/2pi   3.769 kHz  ratio 1.0000  leak 5.396e-04  1-F 1.673e-03
+      theta 0.0160  amp  1.02903  Om_sb/2pi   4.116 kHz  ratio 1.0000  leak 8.985e-04  1-F 2.371e-03
+      theta 0.0180  amp  1.09415  Om_sb/2pi   4.377 kHz  ratio 1.0000  leak 1.279e-03  1-F 3.022e-03
+    delta 60 kHz, T = 16.667 us (= 2*pi/delta, delta = 0.376991 rad/us)
+      theta 0.0135  amp  1.41350  Om_sb/2pi   5.654 kHz  ratio 1.0000  leak 5.396e-04  1-F 1.673e-03
+      theta 0.0160  amp  1.54355  Om_sb/2pi   6.174 kHz  ratio 1.0000  leak 8.985e-04  1-F 2.371e-03
+      theta 0.0180  amp  1.64122  Om_sb/2pi   6.565 kHz  ratio 1.0000  leak 1.279e-03  1-F 3.022e-03
+    delta 80 kHz, T = 12.500 us (= 2*pi/delta, delta = 0.502655 rad/us)
+      theta 0.0135  amp  1.88466  Om_sb/2pi   7.539 kHz  ratio 1.0000  leak 5.396e-04  1-F 1.673e-03
+      theta 0.0160  amp  2.05807  Om_sb/2pi   8.232 kHz  ratio 1.0000  leak 8.985e-04  1-F 2.371e-03
+      theta 0.0180  amp  2.18830  Om_sb/2pi   8.753 kHz  ratio 1.0000  leak 1.279e-03  1-F 3.022e-03
+
+========================================================================================================
+INDEPENDENCE CHECK -- was every row simulated at its own delta?
+========================================================================================================
+  Every quantity this table reports is scale invariant: delta*T =
+  2 pi and Omega_sb/delta = sqrt(2 theta/pi) are both free of delta,
+  so the leakage column is identical at every row BY CONSTRUCTION.
+  An identical column is also what a scaled copy of the 40 kHz row
+  would produce, so the column alone cannot distinguish the two.
+
+  The probe below breaks the invariance on purpose.  It evaluates
+  the propagator at the same ABSOLUTE time, 5.000 us, for every
+  row.  That is a different fraction of the detuning cycle at each
+  delta, so a scaled copy could not reproduce it; only a genuine
+  propagation at that delta can.
+
+      delta   delta (rad/us)    T (us)  T*delta/2pi   P(g) at t=5 us
+         20         0.125664    50.000       1.0000     7.060843e-03
+         30         0.188496    33.333       1.0000     1.519258e-02
+         40         0.251327    25.000       1.0000     2.535357e-02
+         60         0.376991    16.667       1.0000     4.739145e-02
+         80         0.502655    12.500       1.0000     6.415500e-02
+
+  The probe spans a factor of 9.1 across the five rows.
+  CONFIRMED: each row is an independent propagation at its own
+  delta.  No row is scaled from the 40 kHz result.
+
+  Mechanically, set_delta() rewrites QC.DELTA_DISP, and
+  AC.build_H_amp() reads QC.DELTA_DISP at call time into the drive's
+  args dict, so each solve and each measure builds a fresh
+  Hamiltonian at the current detuning.  The table above is the
+  behavioural confirmation of that.
+
+========================================================================================================
+READING
+========================================================================================================
+  The sweep REVERSES relative to the published one.  T = 2*pi/delta,
+  so a smaller detuning now means a LONGER gate, not a shorter one,
+  and the ratio rises with delta instead of falling.  The published
+  table had the opposite slope because it priced T = theta/chi.
+
+  Leakage stays below 3e-03 at every detuning.
+
+  The amplitude required grows linearly with delta: theta = chi T
+  with chi = Omega_sb^2/(4 delta) and T = 2*pi/delta gives
+  Omega_sb = delta sqrt(2 theta/pi).  That closed form is the
+  leading-order Schrieffer-Wolff estimate only; the tabulated
+  amplitudes are solved numerically under the full drive at each
+  detuning and run about 2% above it.  Across the sweep that is
+  2.06 to 8.23 kHz against a measured 4.0 kHz, so the far ends of the
+  sweep ask for a drive well away from the characterised point.
+  Omega_sb/delta stays near 0.10 throughout, so the drive remains
+  dispersive by the same margin at every detuning.
+
+   READ ONLY.  No adoption.

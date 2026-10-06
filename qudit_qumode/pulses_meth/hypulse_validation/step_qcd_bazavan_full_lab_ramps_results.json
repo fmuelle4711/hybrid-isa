@@ -1,0 +1,71 @@
+{
+  "run_params": {
+    "T_total_us": 165.4,
+    "T_ramp_us": 5.0,
+    "T_unramped_us": 160.4,
+    "alpha": 0.5,
+    "Omega_c_2pi_kHz": 97.56,
+    "dt_out_ns": 30.0,
+    "atol": 1e-10,
+    "rtol": 1e-08,
+    "max_step_ns": 30.0,
+    "N_tlist": 5515,
+    "J1_plus_J3": 0.248022043864494,
+    "u_x_zeroed": true,
+    "drive_phase_note": "phi_drive = pi convention"
+  },
+  "results_by_ncut": {
+    "8": {
+      "F_raw": 0.9985450022124481,
+      "F_su2": 0.9991998219047232,
+      "phi_mode": -0.007931467541522274,
+      "spin_axis": [
+        2.8529984020132395e-06,
+        4.644855798248146,
+        9.436290218676685e-07
+      ],
+      "spin_angle": 0.03607347986536564
+    },
+    "10": {
+      "F_raw": 0.9982858031115219,
+      "F_su2": 0.9989679010508907,
+      "phi_mode": -0.0065264298951178724,
+      "spin_axis": [
+        -4.685711627707915e-07,
+        0.4422630108129254,
+        -1.5409015523072334e-07
+      ],
+      "spin_angle": 0.0364254372224401
+    },
+    "12": {
+      "F_raw": 0.9980443560612322,
+      "F_su2": 0.9987487798646065,
+      "phi_mode": -0.005550217965811568,
+      "spin_axis": [
+        3.273199817489606e-07,
+        2.5472383353886157,
+        2.3061803686501904e-07
+      ],
+      "spin_angle": 0.03680065585820458
+    }
+  },
+  "sigma_y_residual_prediction": {
+    "note": "Analytical Magnus 1st-order prediction of the SU(2) sigma_y fit angle for the ramped run.",
+    "formula_1st_order": "angle = -2 * Omega_c * integral_0^T E(t) * cos(delta t) dt",
+    "integral_E_cos_dt_seconds": 2.165e-08,
+    "analytical_angle_1st_order_rad": 0.02654,
+    "fitted_angles_rad": {
+      "8": 0.03607,
+      "10": 0.03643,
+      "12": 0.0368
+    },
+    "gap_1st_order_rad_by_ncut": {
+      "8": 0.00953,
+      "10": 0.00989,
+      "12": 0.01026
+    },
+    "higher_order_note": "Second-order Magnus does not contribute to sigma_y ([H_A, H_A]=0; [H_A, H_B] gives sigma_z; [H_B, H_B] mode-only). The +0.01 rad gap is a third-order Magnus term of the form [H_B, [H_B, H_A]] scaling as (eta*Omega_c)^2 * Omega_c; not derived here in closed form. First-order captures sign and order-of-magnitude; correction cost = 0 us absorbed into adjacent QT.",
+    "correction_cost_us_absorbed_into_QT": 0.0,
+    "correction_cost_us_standalone": 0.043
+  }
+}

@@ -1,0 +1,346 @@
+{
+  "implementation": "qudit_generalized_27",
+  "gate_count_total": 27,
+  "gate_count_actual": 27,
+  "by_primitive": {
+    "Rotation": 8,
+    "QCR": 6,
+    "QCD": 8,
+    "QPS_gen": 2,
+    "QT_multi": 2,
+    "QT-SB_multi": 1
+  },
+  "derived_from": "qudit_generalized_28",
+  "centre_change": "two QT-SB gates merged into one multitone QT-SB_multi block",
+  "centre_operator_check": {
+    "max_commutator_bare": 1.0,
+    "max_commutator_tau_scaled": 3.94875e-05,
+    "theta_AB_rad": -0.0015,
+    "theta_AC_rad": 0.002025,
+    "max_abs_diff": 1.9743590054108117e-05,
+    "infidelity": 5.247491330351295e-11,
+    "dim": 32,
+    "n_cut": 8
+  },
+  "gates": [
+    {
+      "gate": "Rotation",
+      "wires": [
+        "a"
+      ],
+      "params": [
+        "0.12375"
+      ],
+      "source_term": "H_free"
+    },
+    {
+      "gate": "Rotation",
+      "wires": [
+        "b"
+      ],
+      "params": [
+        "0.1245"
+      ],
+      "source_term": "H_free"
+    },
+    {
+      "gate": "Rotation",
+      "wires": [
+        "c"
+      ],
+      "params": [
+        "0.123"
+      ],
+      "source_term": "H_free"
+    },
+    {
+      "gate": "Rotation",
+      "wires": [
+        "l"
+      ],
+      "params": [
+        "0.015"
+      ],
+      "source_term": "H_free"
+    },
+    {
+      "gate": "QCR",
+      "wires": [
+        "q",
+        "a"
+      ],
+      "params": [
+        "0.016",
+        "level=A"
+      ],
+      "source_term": "H_QCR"
+    },
+    {
+      "gate": "QCR",
+      "wires": [
+        "q",
+        "b"
+      ],
+      "params": [
+        "0.018",
+        "level=B"
+      ],
+      "source_term": "H_QCR"
+    },
+    {
+      "gate": "QCR",
+      "wires": [
+        "q",
+        "c"
+      ],
+      "params": [
+        "0.0135",
+        "level=C"
+      ],
+      "source_term": "H_QCR"
+    },
+    {
+      "gate": "QCD",
+      "wires": [
+        "q",
+        "a"
+      ],
+      "params": [
+        "0.008184760992234287",
+        "phi=pi/2",
+        "level=A"
+      ],
+      "source_term": "H_QCD"
+    },
+    {
+      "gate": "QCD",
+      "wires": [
+        "q",
+        "b"
+      ],
+      "params": [
+        "0.007304861394988957",
+        "phi=pi/2",
+        "level=B"
+      ],
+      "source_term": "H_QCD"
+    },
+    {
+      "gate": "QCD",
+      "wires": [
+        "q",
+        "c"
+      ],
+      "params": [
+        "0.009004686279932244",
+        "phi=pi/2",
+        "level=C"
+      ],
+      "source_term": "H_QCD"
+    },
+    {
+      "gate": "QCD",
+      "wires": [
+        "q",
+        "l"
+      ],
+      "params": [
+        "0.0033541019662496844",
+        "phi=pi/2",
+        "level=A"
+      ],
+      "source_term": "H_QCD (mode-l on Pi_A)"
+    },
+    {
+      "gate": "QPS_gen",
+      "wires": [
+        "q"
+      ],
+      "params": [
+        "0.00132875",
+        "0.000462",
+        "0.0006975",
+        "diagonal virtual-Z: exp[-i(theta_A Pi_A + theta_B Pi_B + theta_C Pi_C)]"
+      ],
+      "source_term": "H_QPS diagonal (fusion of Pi_A, Pi_B, Pi_C)"
+    },
+    {
+      "gate": "QT_multi",
+      "wires": [
+        "q"
+      ],
+      "params": [
+        "0.0075",
+        "0.00675",
+        "C1: multitone that reproduces U_seq = exp(-i th_AB X_AB) exp(-i th_AC X_AC)"
+      ],
+      "source_term": "H_QT multi (simultaneous A-B, A-C tones)"
+    },
+    {
+      "gate": "QT-SB_multi",
+      "wires": [
+        "q",
+        "l"
+      ],
+      "params": [
+        "-0.0015",
+        "0.002025",
+        "simultaneous A-B and A-C sideband tones on mode l: exp[-i (Sigma_AB + Sigma_AC) tau]"
+      ],
+      "source_term": "H_QT-SB summed (one multitone sideband block)"
+    },
+    {
+      "gate": "QT_multi",
+      "wires": [
+        "q"
+      ],
+      "params": [
+        "0.0075",
+        "0.00675",
+        "C1: multitone that reproduces U_seq = exp(-i th_AB X_AB) exp(-i th_AC X_AC)"
+      ],
+      "source_term": "H_QT multi (simultaneous A-B, A-C tones)"
+    },
+    {
+      "gate": "QPS_gen",
+      "wires": [
+        "q"
+      ],
+      "params": [
+        "0.00132875",
+        "0.000462",
+        "0.0006975",
+        "diagonal virtual-Z: exp[-i(theta_A Pi_A + theta_B Pi_B + theta_C Pi_C)]"
+      ],
+      "source_term": "H_QPS diagonal (fusion of Pi_A, Pi_B, Pi_C)"
+    },
+    {
+      "gate": "QCD",
+      "wires": [
+        "q",
+        "l"
+      ],
+      "params": [
+        "0.0033541019662496844",
+        "phi=pi/2",
+        "level=A"
+      ],
+      "source_term": "H_QCD (mode-l on Pi_A)"
+    },
+    {
+      "gate": "QCD",
+      "wires": [
+        "q",
+        "c"
+      ],
+      "params": [
+        "0.009004686279932244",
+        "phi=pi/2",
+        "level=C"
+      ],
+      "source_term": "H_QCD"
+    },
+    {
+      "gate": "QCD",
+      "wires": [
+        "q",
+        "b"
+      ],
+      "params": [
+        "0.007304861394988957",
+        "phi=pi/2",
+        "level=B"
+      ],
+      "source_term": "H_QCD"
+    },
+    {
+      "gate": "QCD",
+      "wires": [
+        "q",
+        "a"
+      ],
+      "params": [
+        "0.008184760992234287",
+        "phi=pi/2",
+        "level=A"
+      ],
+      "source_term": "H_QCD"
+    },
+    {
+      "gate": "QCR",
+      "wires": [
+        "q",
+        "c"
+      ],
+      "params": [
+        "0.0135",
+        "level=C"
+      ],
+      "source_term": "H_QCR"
+    },
+    {
+      "gate": "QCR",
+      "wires": [
+        "q",
+        "b"
+      ],
+      "params": [
+        "0.018",
+        "level=B"
+      ],
+      "source_term": "H_QCR"
+    },
+    {
+      "gate": "QCR",
+      "wires": [
+        "q",
+        "a"
+      ],
+      "params": [
+        "0.016",
+        "level=A"
+      ],
+      "source_term": "H_QCR"
+    },
+    {
+      "gate": "Rotation",
+      "wires": [
+        "l"
+      ],
+      "params": [
+        "0.015"
+      ],
+      "source_term": "H_free"
+    },
+    {
+      "gate": "Rotation",
+      "wires": [
+        "c"
+      ],
+      "params": [
+        "0.123"
+      ],
+      "source_term": "H_free"
+    },
+    {
+      "gate": "Rotation",
+      "wires": [
+        "b"
+      ],
+      "params": [
+        "0.1245"
+      ],
+      "source_term": "H_free"
+    },
+    {
+      "gate": "Rotation",
+      "wires": [
+        "a"
+      ],
+      "params": [
+        "0.12375"
+      ],
+      "source_term": "H_free"
+    }
+  ]
+}

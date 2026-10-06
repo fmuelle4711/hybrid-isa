@@ -1,0 +1,91 @@
+================================================================================================================
+QT-SB GRAPE RESCUE ATTEMPT -- full physical H, carrier included
+================================================================================================================
+MODEL quoted from scripts/qtsb_mechanism.py (H_phys bichromatic + M_ld LDfull):
+    C = OMEGA_C * math.cos(NU * t) * np.exp(-1j * ZETA)
+    blk = C * np.kron(KG, M_ld(t, variant));  return blk + blk.conj().T
+    M_ld LDfull: _expm(alpha*AD - conj(alpha)*A),  alpha = 1j*ETA*e^{i nu t}
+  -> LD-0 carrier and LD-1 sideband share ONE envelope (same laser).
+
+CONTROLS: c(t) = u_x + i u_y replaces OMEGA_C*exp(-i ZETA)
+    H(t) = u_x (G + G^dag) + u_y i(G - G^dag),  G = cos(nu t) |k><g| (x) M(t)
+  N_SLOTS = 200, substeps/slot = 10 (independent repropagation at 40)
+  Fock cutoff = 8, Hilbert dim = 24
+
+AMPLITUDE CAP, from hypulse device spec 'innsbruck_meth_2025':
+    amp_bound_rad_per_us = OMEGA_C = 6.129936885e-01 rad/us
+    box bound per quadrature = OMEGA_C/sqrt(2) = 4.334519940e-01 rad/us
+    (aggregate |c| <= OMEGA_C; same convention as step_qt_meth_aggcap.py)
+
+NOT the HyPulse/qutip-qtrl stack: optimize_pulse_unitary takes FIXED
+control operators, but these carry cos(nu t) and D(i eta e^{i nu t}).
+Passing it a time-independent operator would re-impose the effective
+generator this run exists to avoid.  GRAPE is implemented directly here.
+
+BASELINE, quoted from results/qtsb_echo.txt:
+    0.5    C  8.664350e-03  8.664350e-03  1.064854e-02       0.0341      26.1479 4.133916e-03    19.894368
+    0.5    A  6.352814e-02  6.352814e-02  7.190399e-02       0.2501      26.1479 1.142723e-02    29.894368
+    0.5    B  8.870167e-02  3.636281e-02  3.636281e-02       0.1432      26.1506 1.155467e-02    19.894368
+    flat-pulse endpoint 1-F at theta=0.5, T=19.894 us = 8.664350e-03
+
+================================================================================================================
+T = 19.894368 us    theta = 0.5    (15.319 motional periods)
+================================================================================================================
+  seed=flat       iters= 300  1-F_grape=1.515763e-02  1-F_vz=1.514509e-02
+                  1-F_indep=1.516244e-02  1-F_indep_vz=1.514984e-02  |match|=4.807e-06
+                  err/signal=0.0596  leak=5.937801e-02  max|u|=4.3345e-01 (100.0% of bound)  max|c|=6.1299e-01 (100.0% of Omega_c)  (323s)
+  seed=rand1      iters= 300  1-F_grape=1.364200e-02  1-F_vz=1.363922e-02
+                  1-F_indep=1.364666e-02  1-F_indep_vz=1.364394e-02  |match|=4.666e-06
+                  err/signal=0.0537  leak=5.627395e-02  max|u|=4.3345e-01 (100.0% of bound)  max|c|=6.1299e-01 (100.0% of Omega_c)  (283s)
+  seed=rand2      iters= 300  1-F_grape=1.342330e-02  1-F_vz=1.342037e-02
+                  1-F_indep=1.342773e-02  1-F_indep_vz=1.342485e-02  |match|=4.432e-06
+                  err/signal=0.0528  leak=5.620437e-02  max|u|=4.3345e-01 (100.0% of bound)  max|c|=6.1299e-01 (100.0% of Omega_c)  (287s)
+
+  BEST at T=19.894368: seed=rand2  1-F_vz=1.342037e-02  1-F_indep_vz=1.342485e-02  err/signal=0.0528
+
+================================================================================================================
+T = 25.000000 us    theta = 0.5    (19.250 motional periods)
+================================================================================================================
+  seed=flat       iters= 300  1-F_grape=1.406125e-04  1-F_vz=1.386597e-04
+                  1-F_indep=1.409259e-04  1-F_indep_vz=1.390608e-04  |match|=3.134e-07
+                  err/signal=0.0005  leak=2.103439e-03  max|u|=4.3345e-01 (100.0% of bound)  max|c|=6.1299e-01 (100.0% of Omega_c)  (317s)
+  seed=rand1      iters= 300  1-F_grape=1.678277e-04  1-F_vz=1.673204e-04
+                  1-F_indep=1.682185e-04  1-F_indep_vz=1.677479e-04  |match|=3.908e-07
+                  err/signal=0.0007  leak=2.911511e-03  max|u|=4.3345e-01 (100.0% of bound)  max|c|=6.1299e-01 (100.0% of Omega_c)  (291s)
+  seed=rand2      iters= 300  1-F_grape=1.111229e-04  1-F_vz=1.108058e-04
+                  1-F_indep=1.116942e-04  1-F_indep_vz=1.113555e-04  |match|=5.713e-07
+                  err/signal=0.0004  leak=2.486950e-03  max|u|=4.3345e-01 (100.0% of bound)  max|c|=6.1299e-01 (100.0% of Omega_c)  (287s)
+
+  BEST at T=25.000000: seed=rand2  1-F_vz=1.108058e-04  1-F_indep_vz=1.113555e-04  err/signal=0.0004
+
+================================================================================================================
+T = 30.000000 us    theta = 0.5    (23.100 motional periods)
+================================================================================================================
+  seed=flat       iters= 300  1-F_grape=3.429913e-07  1-F_vz=3.429908e-07
+                  1-F_indep=3.429905e-07  1-F_indep_vz=3.429899e-07  |match|=8.065e-13
+                  err/signal=0.0000  leak=3.158220e-04  max|u|=4.3345e-01 (100.0% of bound)  max|c|=4.3345e-01 (70.7% of Omega_c)  (293s)
+  seed=rand1      iters= 300  1-F_grape=8.767889e-07  1-F_vz=8.758730e-07
+                  1-F_indep=8.920661e-07  1-F_indep_vz=8.903133e-07  |match|=1.528e-08
+                  err/signal=0.0000  leak=3.417225e-04  max|u|=4.3345e-01 (100.0% of bound)  max|c|=6.0764e-01 (99.1% of Omega_c)  (288s)
+  seed=rand2      iters= 300  1-F_grape=7.517592e-07  1-F_vz=7.515550e-07
+                  1-F_indep=7.521195e-07  1-F_indep_vz=7.518509e-07  |match|=3.603e-10
+                  err/signal=0.0000  leak=3.465265e-04  max|u|=4.3345e-01 (100.0% of bound)  max|c|=6.0893e-01 (99.3% of Omega_c)  (287s)
+
+  BEST at T=30.000000: seed=flat  1-F_vz=3.429908e-07  1-F_indep_vz=3.429899e-07  err/signal=0.0000
+
+================================================================================================================
+SUMMARY
+================================================================================================================
+    T (us)     seed      1-F_grape         1-F_vz      1-F_indep     1-F_ind_vz  err/signal         leak   %bound
+   19.8944    rand2   1.342330e-02   1.342037e-02   1.342773e-02   1.342485e-02      0.0528 5.620437e-02   100.0%
+   25.0000    rand2   1.111229e-04   1.108058e-04   1.116942e-04   1.113555e-04      0.0004 2.486950e-03   100.0%
+   30.0000     flat   3.429913e-07   3.429908e-07   3.429905e-07   3.429899e-07      0.0000 3.158220e-04   100.0%
+
+               baseline flat pulse, T=19.894  1-F = 8.664350e-03
+  best GRAPE (independent, vz) = 3.429899e-07 at T = 30.0 us
+  improvement over flat pulse  = 25261.24x
+
+  F_indep is an INDEPENDENT repropagation of the saved waveform at 4x
+  finer substepping; |F_grape - F_indep| is printed per seed above and
+  must be small for the optimiser's own number to be trusted.
+  NOTHING ADOPTED.  No paper edits.

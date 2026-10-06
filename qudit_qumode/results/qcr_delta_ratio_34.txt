@@ -1,0 +1,49 @@
+========================================================================================================
+APPENDIX C, ITEM 2 -- Nc = 3 sequential ratio vs delta_disp, 34-op headline
+========================================================================================================
+  All numbers READ from files; nothing propagated here.
+    T_ang(delta), fidelity, leakage : results\qcr_delta_sweep.txt
+    gate times, counts, T_qubit     : pulses_meth\runtime_table.json
+
+  FIXED ACROSS ALL ROWS (only T_QCR varies):
+    T_qubit sequential = 2396.1112 us   (unaffected by delta)
+    QCD  8 x 2.5664 us
+    Rot  8 x 5.0 us
+    QT-SB 2 x 0.649351 us
+    QT   4 x [0.105, 11.0] us   (34-op: QT NOT fused)
+    QPS  6 x 0 us (virtual)
+    QCR  6 x T_QCR(delta)
+
+  T_QCR = 2*T_ang + t_pi,  t_pi = 5.0 us ASSUMED
+    echo structure, step_runtime_table.py:60 "T_paper = 2*T + t_pi with t_pi = 5 us ASSUMED"
+
+  non-(QCR,QT) part = 8x5.0 + 8x2.5664 + 2x0.649351 = 61.8299 us
+
+========================================================================================================
+  delta  Om/del     T_ang     T_QCR  T_qudit lo  T_qudit hi     ratio seq (Nc=3)   1-F fit+VZ   leak P(g)
+  (kHz)              (us)      (us)
+     20   0.200    12.732    30.464    245.0339    288.6139       [8.30x, 9.78x]   4.6870e-02  1.3531e-01
+     30   0.133    19.099    43.198    321.4379    365.0179       [6.56x, 7.45x]   3.7836e-02  9.8508e-02
+     40   0.100    25.465    55.930    397.8299    441.4099       [5.43x, 6.02x]   2.8403e-03  1.8402e-03
+     60   0.067    38.197    81.394    550.6139    594.1939       [4.03x, 4.35x]   9.1885e-03  2.2121e-02
+     80   0.050    50.930   106.860    703.4099    746.9899       [3.21x, 3.41x]   2.7163e-03  1.9687e-03
+
+  CROSS-CHECK against the adopted table:
+    delta = 40 kHz gives T_QCR = 55.930 us; runtime_table.json holds 55.93 us   match: True
+    ratio there = [5.43x, 6.02x]; runtime_table.json holds [5.43x, 6.02x]
+
+  READING
+    The bracket sweeps [8.30x, 9.78x] at 20 kHz down to [3.21x, 3.41x] at 80 kHz -- a factor
+    3.0 across the window, because T_QCR is proportional to delta and QCR
+    is 6 of the qudit step's gates.
+    Fidelity and leakage are printed alongside DELIBERATELY: smaller
+    delta shortens the gate and flatters the ratio while the
+    Schrieffer-Wolff parameter Omega/delta grows.  At 20 kHz the
+    leakage out of |l> is 1.35e-01 -- that is not a
+    working gate, whatever the ratio says.  A ratio-only column would
+    invite exactly the wrong conclusion.
+
+    40 kHz sits at Omega/delta = 0.100 (the usual 10% rule), mid-window,
+    with leakage 1.84e-03.  Adopted; unchanged by this run.
+
+  NO RERUNS.  Every value above is read from the two files named at top.

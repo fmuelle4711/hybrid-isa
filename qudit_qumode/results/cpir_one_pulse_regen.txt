@@ -1,0 +1,161 @@
+========================================================================================================
+C_{\Pi}R AS ONE PULSE -- REGENERATED SEGMENT AND RUNTIME TABLES
+========================================================================================================
+  STATUS: section 1 (timed pulse segments) is CURRENT and backs
+  tab:gatecounts; scripts/segment_counts.py reproduces it.  Sections
+  2 to 4 (runtime, share, rotations, detuning sweep) are SUPERSEDED
+  BY APPENDIX D and are kept for traceability only.
+  commit            ac46abc   (8 files dirty in the tree, pre-existing)
+  inputs            pulses_meth\runtime_table.json
+                    pulses_meth\anchor_params.json
+  name mapping      Z_d=QPS  X_E=QT  C_{Pi_z}D=QCD  C_{Pi}R=QCR  C_{Pi_x}D=QT-SB
+
+  DERIVATION OF THE SINGLE-PULSE DURATION
+    eta                       0.041            (anchor_params.json)
+    Omega_sb/2pi              4.0 kHz       (anchor_params.json)
+    delta/2pi                 40 kHz      ASSUMED (tab:params)
+    chi = Omega_sb^2/(4delta) 6.283185e-04 rad/us  -> chi/2pi = 100.000 Hz
+    T = theta/chi             25.4648 us     at theta = 0.016
+
+  CROSS-CHECK AGAINST THE ADOPTED TABLE
+    2T + t_pi (t_pi = 5.0 ASSUMED) = 55.9296 us
+    runtime_table.json holds QCR       = 55.93 us
+    match: True
+
+  other gate times read, unchanged: QCD 2.5664  Rotation 5.0  QT-SB 0.649351  MS 200.0  X_E [0.105, 11.0]
+
+========================================================================================================
+1  TIMED PULSE SEGMENTS PER TROTTER STEP
+========================================================================================================
+    C_{Pi}R and CR: 3 segments (echo) -> 1 segment (single pulse).
+    Everything else unchanged.  Qubit uses the decomposed-J_l convention (14), which is the manuscript's.
+
+   Nc             qudit ref       qudit multitone                 qubit
+            echo -> 1 pulse       echo -> 1 pulse       echo -> 1 pulse
+    3         39 -> 27               37 -> 25               70 -> 58      
+    6         75 -> 51               67 -> 43              154 -> 130     
+    8         99 -> 67               87 -> 55              210 -> 178     
+   12        147 -> 99              127 -> 79              322 -> 274     
+
+  Echo convention      : 39 / 37 / 70   (the superseded draft printed 39 / 37 / 70: True)
+  One-pulse convention : 27 / 25 / 58   (the manuscript prints 27 / 25 / 58: True)
+
+########################################################################################################
+#  SECTIONS 2 TO 4 ARE SUPERSEDED BY APPENDIX D.  DO NOT QUOTE THEM.
+#
+#  They price C_Pi R and CR at T = theta/chi with a bracketed X_E.
+#  Appendix D now holds every dispersive gate for one detuning
+#  period, 25.000 us, delivers the angle by sideband amplitude, and
+#  prices X_E as a flat two-tone block, so the numbers below are the
+#  wrong basis.  Current values:
+#    results/appendix_d_tables.txt     210.5 / 2207.9 us, ratio 10.5
+#    results/runtime_final_regen.txt   N_c projection, detuning sweep
+#    results/cpir_amplitude_sweep.txt  the sweep rows
+########################################################################################################
+
+========================================================================================================
+2  PROJECTED STEP TIME AND RATIO  [SUPERSEDED BY APP D]
+========================================================================================================
+    C_{Pi}R and CR priced at T = theta/chi on both sides.
+    X_E bracket, MS windows, and every other gate time unchanged.
+
+   Nc        T_qudit ref (us)         T_qudit mt (us)     T_qubit         ratio ref          ratio mt
+    3    397.8-441.4  -> 215.0-258.6    397.0-418.8  -> 214.2-236.0   2396->2213    5.4-6.0  ->  8.6-10.3   5.7-6.0  ->  9.4-10.3
+    6    781.4-890.3  -> 415.8-524.8    777.9-799.7  -> 412.4-434.2   5777->5412    6.5-7.4  -> 10.3-13.0   7.2-7.4  -> 12.5-13.1
+    8   1037.1-1189.6 -> 549.6-702.2   1031.9-1053.7 -> 544.5-566.3   8031->7544    6.8-7.7  -> 10.7-13.7   7.6-7.8  -> 13.3-13.9
+   12   1548.5-1788.2 -> 817.3-1057.0   1539.9-1561.7 -> 808.7-830.5  12539->11808   7.0-8.1  -> 11.2-14.4   8.0-8.1  -> 14.2-14.6
+
+  VERIFICATION -- the 'echo' halves must reproduce the adopted table:
+    Nc=3   rebuilt 397.8/441.4/2396.1 ratio [5.43, 6.02]   json holds 397.8/441.4/2396.1 ratio [5.43, 6.02]   match: True
+    Nc=6   rebuilt 781.4/890.3/5777.1 ratio [6.49, 7.39]   json holds 781.4/890.3/5777.1 ratio [6.49, 7.39]   match: True
+    Nc=8   rebuilt 1037.1/1189.6/8031.1 ratio [6.75, 7.74]   json holds 1037.1/1189.6/8031.1 ratio [6.75, 7.74]   match: True
+    Nc=12  rebuilt 1548.5/1788.2/12539.0 ratio [7.01, 8.10]   json holds 1548.5/1788.2/12539.0 ratio [7.01, 8.10]   match: True
+
+========================================================================================================
+3  SHARE OF THE QUDIT STEP SPENT IN C_{\Pi}R  [SUPERSEDED BY APP D]
+========================================================================================================
+    Nc=3  echo        C_Pi R =  335.58 us of  397.83- 441.41 us  =  76% to 84%
+    Nc=3  one pulse   C_Pi R =  152.79 us of  215.04- 258.62 us  =  59% to 71%
+
+  The manuscript's 'About 85%' is the echo convention's LOW end only (84%);
+  at the high end of the X_E bracket it is 76%.
+
+========================================================================================================
+3b  VARIANT WITH THE MODE ROTATIONS REMOVED  [SUPERSEDED BY APP D]
+========================================================================================================
+    App D says rotations can in principle be absorbed into oscillator
+    frame tracking at no cost, and quotes the ratio that would give.
+    Recomputed under both conventions.
+
+    echo       qudit  357.83-401.41  qubit  2356.11   ratio 5.9 to 6.6
+    one pulse  qudit  175.04-218.62  qubit  2173.32   ratio 9.9 to 12.4
+
+    The echo row reproduces the 5.9 to 6.6 the appendix already quotes.
+
+========================================================================================================
+4  DETUNING SWEEP, RATIO COLUMN REPRICED  [SUPERSEDED BY APP D]
+========================================================================================================
+    tab:deltasweep holds delta, Omega_sb/delta, T, 1-F and leakage
+    unchanged -- only the last column, the projected sequential ratio,
+    depends on the echo convention.  T(delta) = theta/chi(delta) with
+    chi = Omega_sb^2/(4 delta), which is linear in delta.
+
+  delta-independent qudit part = 61.8299 us   qubit part = 2060.5312 us
+
+   delta  Om/delta    T_ang   T echo     ratio echo    ratio one pulse
+   (kHz)               (us)     (us)
+      20     0.200    12.73    30.46    7.8 to 9.2         11.7 to 15.4 
+      30     0.133    19.10    43.20    6.4 to 7.2          9.9 to 12.3 
+      40     0.100    25.46    55.93    5.4 to 6.0          8.6 to 10.3 
+      60     0.067    38.20    81.39    4.3 to 4.6          6.8 to 7.9  
+      80     0.050    50.93   106.86    3.6 to 3.8          5.8 to 6.4  
+
+  THE PUBLISHED COLUMN USES A DIFFERENT CONVENTION -- FLAGGED, NOT FIXED
+  results/qcr_delta_ratio_34.txt states 'T_qubit sequential = 2396.1112 us
+  (unaffected by delta)', i.e. it varies delta on the QUDIT SIDE ONLY.  But
+  CR is priced at the C_Pi R duration (FINDING 5), so a change of delta must
+  move the qubit's six dispersive gates as well.  The two conventions agree
+  only at the 40 kHz anchor, which is why the paper's headline row is safe
+  and the other four rows are not.
+
+   delta    published     frozen qubit       both sides   (echo convention)
+      20   8.3 to 9.8       8.3 to 9.8        7.8 to 9.2      ok
+      30   6.6 to 7.5       6.6 to 7.5        6.4 to 7.2      ok
+      40   5.4 to 6.0       5.4 to 6.0        5.4 to 6.0      ok
+      60   4.0 to 4.4       4.0 to 4.4        4.3 to 4.6      ok
+      80   3.2 to 3.4       3.2 to 3.4        3.6 to 3.8      ok
+
+  The 'frozen qubit' column reproduces the published numbers, so the
+  published column is the frozen convention.  The 'both sides' column
+  is the self-consistent one.  Adopting the one-pulse convention does
+  not settle this; it is a separate defect and the author should pick
+  a convention deliberately.
+
+  RATIO COLUMN UNDER THE ONE-PULSE CONVENTION.  Only the self-consistent
+  reading is given: under one pulse the qubit's CR is also a single
+  segment, so freezing the qubit at its echo time would pair a one-pulse
+  qudit against an echoed qubit, which is not a convention at all.
+  The 40 kHz row, 8.6 to 10.3, agrees with section 2 as it must.
+
+   delta (kHz)       ratio (seq.)
+            20     11.7 to 15.4    
+            30      9.9 to 12.3    
+            40      8.6 to 10.3    
+            60      6.8 to 7.9     
+            80      5.8 to 6.4     
+
+========================================================================================================
+WHAT THIS DOES NOT ESTABLISH
+========================================================================================================
+  Dropping the echo is a physics claim, not a counting one.  This
+  script only reprices; it does not show the uncompensated gate
+  works.  The supporting evidence already in the repo is:
+    results/qcr_mechanism_paper_angle.txt   single segment, VZ absorbed: 1-F = 2.900031e-03, leak 1.840207e-03
+    results/qcr_echo_physical.txt           full echo,      VZ absorbed: 1-F = 3.918260e-03, leak 3.151496e-03
+  i.e. the echo is WORSE in this closed-system replay.  The argument
+  against dropping it is experimental: a virtual Z_d has to know the
+  light shift, which drifts with laser intensity, while the echo
+  cancels it without knowing it.  That trade must be stated in the
+  paper if the one-pulse convention is adopted.
+
+  NO ADOPTION.  Report only.

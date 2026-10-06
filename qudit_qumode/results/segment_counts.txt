@@ -1,0 +1,187 @@
+========================================================================================================
+TIMED PULSE SEGMENTS PER TROTTER STEP -- one-pulse convention
+========================================================================================================
+  C_Pi R and CR count 1 segment each (single pulse, App. D rule R2).
+  The N_c - 1 central C_Pi_x D terms form one merged block.
+  C_Pi_z D and CD count 1.  Virtual gates count 0.
+  Qubit: J_l decomposed into 8 H + 4 CNOT + 2 CD, the manuscript's
+  convention; the one-window alternative is listed for reference.
+
+--------------------------------------------------------------------------------------------------------
+  Nc = 3
+    QUDIT, reference
+      gate                          count  seg/gate  segments
+      Rotation                          8         1         8
+      C_Pi R                            6         1         6
+      C_Pi_z D                          8         1         8
+      X_E                               4         1         4
+      C_Pi_x D centre, merged           1         1         1
+      Z_d                               6         0         0
+      TOTAL SEGMENTS                                       27
+    QUDIT, multitone
+      gate                          count  seg/gate  segments
+      Rotation                          8         1         8
+      C_Pi R                            6         1         6
+      C_Pi_z D                          8         1         8
+      X_E, multitone blocks             2         1         2
+      C_Pi_x D centre, merged           1         1         1
+      Z_d, generalized                  2         0         0
+      TOTAL SEGMENTS                                       25
+    QUBIT, J_l decomposed (manuscript)
+      gate                          count  seg/gate  segments
+      Rotation                          8         1         8
+      CR                                6         1         6
+      CD                                8         1         8
+      r_z                               4         0         0
+      J                                 4         2         8
+      J_l, decomposed                   2        14        28
+      TOTAL SEGMENTS                                       58
+    QUBIT, J_l as one MS window (alternative)
+      gate                          count  seg/gate  segments
+      Rotation                          8         1         8
+      CR                                6         1         6
+      CD                                8         1         8
+      r_z                               4         0         0
+      J                                 4         2         8
+      J_l, one MS window                2         1         2
+      TOTAL SEGMENTS                                       32
+
+--------------------------------------------------------------------------------------------------------
+  Nc = 6
+    QUDIT, reference
+      gate                          count  seg/gate  segments
+      Rotation                         14         1        14
+      C_Pi R                           12         1        12
+      C_Pi_z D                         14         1        14
+      X_E                              10         1        10
+      C_Pi_x D centre, merged           1         1         1
+      Z_d                              12         0         0
+      TOTAL SEGMENTS                                       51
+    QUDIT, multitone
+      gate                          count  seg/gate  segments
+      Rotation                         14         1        14
+      C_Pi R                           12         1        12
+      C_Pi_z D                         14         1        14
+      X_E, multitone blocks             2         1         2
+      C_Pi_x D centre, merged           1         1         1
+      Z_d, generalized                  2         0         0
+      TOTAL SEGMENTS                                       43
+    QUBIT, J_l decomposed (manuscript)
+      gate                          count  seg/gate  segments
+      Rotation                         14         1        14
+      CR                               12         1        12
+      CD                               14         1        14
+      r_z                              10         0         0
+      J                                10         2        20
+      J_l, decomposed                   5        14        70
+      TOTAL SEGMENTS                                      130
+    QUBIT, J_l as one MS window (alternative)
+      gate                          count  seg/gate  segments
+      Rotation                         14         1        14
+      CR                               12         1        12
+      CD                               14         1        14
+      r_z                              10         0         0
+      J                                10         2        20
+      J_l, one MS window                5         1         5
+      TOTAL SEGMENTS                                       65
+
+--------------------------------------------------------------------------------------------------------
+  Nc = 8
+    QUDIT, reference
+      gate                          count  seg/gate  segments
+      Rotation                         18         1        18
+      C_Pi R                           16         1        16
+      C_Pi_z D                         18         1        18
+      X_E                              14         1        14
+      C_Pi_x D centre, merged           1         1         1
+      Z_d                              16         0         0
+      TOTAL SEGMENTS                                       67
+    QUDIT, multitone
+      gate                          count  seg/gate  segments
+      Rotation                         18         1        18
+      C_Pi R                           16         1        16
+      C_Pi_z D                         18         1        18
+      X_E, multitone blocks             2         1         2
+      C_Pi_x D centre, merged           1         1         1
+      Z_d, generalized                  2         0         0
+      TOTAL SEGMENTS                                       55
+    QUBIT, J_l decomposed (manuscript)
+      gate                          count  seg/gate  segments
+      Rotation                         18         1        18
+      CR                               16         1        16
+      CD                               18         1        18
+      r_z                              14         0         0
+      J                                14         2        28
+      J_l, decomposed                   7        14        98
+      TOTAL SEGMENTS                                      178
+    QUBIT, J_l as one MS window (alternative)
+      gate                          count  seg/gate  segments
+      Rotation                         18         1        18
+      CR                               16         1        16
+      CD                               18         1        18
+      r_z                              14         0         0
+      J                                14         2        28
+      J_l, one MS window                7         1         7
+      TOTAL SEGMENTS                                       87
+
+--------------------------------------------------------------------------------------------------------
+  Nc = 12
+    QUDIT, reference
+      gate                          count  seg/gate  segments
+      Rotation                         26         1        26
+      C_Pi R                           24         1        24
+      C_Pi_z D                         26         1        26
+      X_E                              22         1        22
+      C_Pi_x D centre, merged           1         1         1
+      Z_d                              24         0         0
+      TOTAL SEGMENTS                                       99
+    QUDIT, multitone
+      gate                          count  seg/gate  segments
+      Rotation                         26         1        26
+      C_Pi R                           24         1        24
+      C_Pi_z D                         26         1        26
+      X_E, multitone blocks             2         1         2
+      C_Pi_x D centre, merged           1         1         1
+      Z_d, generalized                  2         0         0
+      TOTAL SEGMENTS                                       79
+    QUBIT, J_l decomposed (manuscript)
+      gate                          count  seg/gate  segments
+      Rotation                         26         1        26
+      CR                               24         1        24
+      CD                               26         1        26
+      r_z                              22         0         0
+      J                                22         2        44
+      J_l, decomposed                  11        14       154
+      TOTAL SEGMENTS                                      274
+    QUBIT, J_l as one MS window (alternative)
+      gate                          count  seg/gate  segments
+      Rotation                         26         1        26
+      CR                               24         1        24
+      CD                               26         1        26
+      r_z                              22         0         0
+      J                                22         2        44
+      J_l, one MS window               11         1        11
+      TOTAL SEGMENTS                                      131
+
+========================================================================================================
+SUMMARY -- segments per step
+========================================================================================================
+  Nc  qudit ref  qudit mt   qubit  qubit (J_l=1 win)
+   3         27        25      58                 32
+   6         51        43     130                 65
+   8         67        55     178                 87
+  12         99        79     274                131
+
+========================================================================================================
+CROSS-CHECK -- against results/cpir_one_pulse_regen.txt
+========================================================================================================
+  Nc=3   here 27/25/58   reference 27/25/58   match
+  Nc=6   here 51/43/130   reference 51/43/130   match
+  Nc=8   here 67/55/178   reference 67/55/178   match
+  Nc=12  here 99/79/274   reference 99/79/274   match
+
+  N_c = 3, the manuscript's tab:gatecounts: qubit 58, qudit reference 27, qudit multitone 25.
+  Expected 58 / 27 / 25: PASS
+
+  Segment count and runtime are different axes: the qubit's extra
+  cost sits in a few long MS windows, not in many segments.

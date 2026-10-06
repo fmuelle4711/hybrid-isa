@@ -1,0 +1,1258 @@
+{
+  "implementation": "vu",
+  "gate_count_total": 96,
+  "gate_count_actual": 132,
+  "source_files": [
+    "legacy/vu_reference/cqed-vibronic-simulation-main/3_chromophore_vibronic_simulation.py"
+  ],
+  "gates": [
+    {
+      "gate": "cv_r",
+      "wires": [
+        "m_0"
+      ],
+      "params": [
+        -0.11975
+      ],
+      "source_term": "H_0 (eq 14): omega_R*n_R, -delta_RR'*sigma_z/2"
+    },
+    {
+      "gate": "cv_r",
+      "wires": [
+        "m_1"
+      ],
+      "params": [
+        -0.12
+      ],
+      "source_term": "H_0 (eq 14): omega_R*n_R, -delta_RR'*sigma_z/2"
+    },
+    {
+      "gate": "cv_r",
+      "wires": [
+        "m_2"
+      ],
+      "params": [
+        -0.11962500000000001
+      ],
+      "source_term": "H_0 (eq 14): omega_R*n_R, -delta_RR'*sigma_z/2"
+    },
+    {
+      "gate": "cv_r",
+      "wires": [
+        "m_3"
+      ],
+      "params": [
+        -0.015
+      ],
+      "source_term": "H_0 (eq 14): omega_R*n_R, -delta_RR'*sigma_z/2"
+    },
+    {
+      "gate": "rz",
+      "wires": [
+        "q_1"
+      ],
+      "params": [
+        -0.001255001498697389
+      ],
+      "source_term": "H_0 (eq 14): omega_R*n_R, -delta_RR'*sigma_z/2"
+    },
+    {
+      "gate": "rz",
+      "wires": [
+        "q_2"
+      ],
+      "params": [
+        -0.0001243719017726709
+      ],
+      "source_term": "H_0 (eq 14): omega_R*n_R, -delta_RR'*sigma_z/2"
+    },
+    {
+      "gate": "cv_c_r",
+      "wires": [
+        "q_0",
+        "m_0"
+      ],
+      "params": [
+        -0.004
+      ],
+      "source_term": "H_1 (eq 15): -chi_R*n_R*sigma_z/2 + g_cd_R*x_R*sigma_z/2"
+    },
+    {
+      "gate": "cv_c_d",
+      "wires": [
+        "q_0",
+        "m_0"
+      ],
+      "params": [
+        "(-0-0.004229077965716046j)"
+      ],
+      "source_term": "H_1 (eq 15): -chi_R*n_R*sigma_z/2 + g_cd_R*x_R*sigma_z/2"
+    },
+    {
+      "gate": "cv_c_r",
+      "wires": [
+        "q_1",
+        "m_1"
+      ],
+      "params": [
+        -0.0045000000000000005
+      ],
+      "source_term": "H_1 (eq 15): -chi_R*n_R*sigma_z/2 + g_cd_R*x_R*sigma_z/2"
+    },
+    {
+      "gate": "cv_c_d",
+      "wires": [
+        "q_1",
+        "m_1"
+      ],
+      "params": [
+        "(-0-0.0037893968486505214j)"
+      ],
+      "source_term": "H_1 (eq 15): -chi_R*n_R*sigma_z/2 + g_cd_R*x_R*sigma_z/2"
+    },
+    {
+      "gate": "cv_c_r",
+      "wires": [
+        "q_2",
+        "m_2"
+      ],
+      "params": [
+        -0.0033750000000000004
+      ],
+      "source_term": "H_1 (eq 15): -chi_R*n_R*sigma_z/2 + g_cd_R*x_R*sigma_z/2"
+    },
+    {
+      "gate": "cv_c_d",
+      "wires": [
+        "q_2",
+        "m_2"
+      ],
+      "params": [
+        "(-0-0.0046293684950121875j)"
+      ],
+      "source_term": "H_1 (eq 15): -chi_R*n_R*sigma_z/2 + g_cd_R*x_R*sigma_z/2"
+    },
+    {
+      "gate": "rxx",
+      "wires": [
+        "q_0",
+        "q_1"
+      ],
+      "params": [
+        0.0075
+      ],
+      "source_term": "H_2XX (eq 16): g_cdl/4 sigma_a^x x_l + g_RR' sigma_x sigma_x/2 + g_RR'l sigma_x sigma_x x_l/2"
+    },
+    {
+      "gate": "rxx",
+      "wires": [
+        "q_0",
+        "q_2"
+      ],
+      "params": [
+        0.006750000000000001
+      ],
+      "source_term": "H_2XX (eq 16): g_cdl/4 sigma_a^x x_l + g_RR' sigma_x sigma_x/2 + g_RR'l sigma_x sigma_x x_l/2"
+    },
+    {
+      "gate": "swap",
+      "wires": [
+        "q_0",
+        "anc"
+      ],
+      "params": [],
+      "source_term": "H_2XX (eq 16): g_cdl/4 sigma_a^x x_l + g_RR' sigma_x sigma_x/2 + g_RR'l sigma_x sigma_x x_l/2"
+    },
+    {
+      "gate": "cv_c_d",
+      "wires": [
+        "anc",
+        "m_l"
+      ],
+      "params": [
+        "-0.0016770509831248424j"
+      ],
+      "source_term": "H_2XX (eq 16): g_cdl/4 sigma_a^x x_l + g_RR' sigma_x sigma_x/2 + g_RR'l sigma_x sigma_x x_l/2"
+    },
+    {
+      "gate": "swap",
+      "wires": [
+        "q_0",
+        "anc"
+      ],
+      "params": [],
+      "source_term": "H_2XX (eq 16): g_cdl/4 sigma_a^x x_l + g_RR' sigma_x sigma_x/2 + g_RR'l sigma_x sigma_x x_l/2"
+    },
+    {
+      "gate": "h",
+      "wires": [
+        "q_0"
+      ],
+      "params": [],
+      "source_term": "H_2XX (eq 16): g_cdl/4 sigma_a^x x_l + g_RR' sigma_x sigma_x/2 + g_RR'l sigma_x sigma_x x_l/2"
+    },
+    {
+      "gate": "h",
+      "wires": [
+        "q_1"
+      ],
+      "params": [],
+      "source_term": "H_2XX (eq 16): g_cdl/4 sigma_a^x x_l + g_RR' sigma_x sigma_x/2 + g_RR'l sigma_x sigma_x x_l/2"
+    },
+    {
+      "gate": "cx",
+      "wires": [
+        "q_1",
+        "q_0"
+      ],
+      "params": [],
+      "source_term": "H_2XX (eq 16): g_cdl/4 sigma_a^x x_l + g_RR' sigma_x sigma_x/2 + g_RR'l sigma_x sigma_x x_l/2"
+    },
+    {
+      "gate": "swap",
+      "wires": [
+        "q_0",
+        "anc"
+      ],
+      "params": [],
+      "source_term": "H_2XX (eq 16): g_cdl/4 sigma_a^x x_l + g_RR' sigma_x sigma_x/2 + g_RR'l sigma_x sigma_x x_l/2"
+    },
+    {
+      "gate": "cv_c_d",
+      "wires": [
+        "anc",
+        "m_l"
+      ],
+      "params": [
+        "0.00075j"
+      ],
+      "source_term": "H_2XX (eq 16): g_cdl/4 sigma_a^x x_l + g_RR' sigma_x sigma_x/2 + g_RR'l sigma_x sigma_x x_l/2"
+    },
+    {
+      "gate": "swap",
+      "wires": [
+        "q_0",
+        "anc"
+      ],
+      "params": [],
+      "source_term": "H_2XX (eq 16): g_cdl/4 sigma_a^x x_l + g_RR' sigma_x sigma_x/2 + g_RR'l sigma_x sigma_x x_l/2"
+    },
+    {
+      "gate": "cx",
+      "wires": [
+        "q_1",
+        "q_0"
+      ],
+      "params": [],
+      "source_term": "H_2XX (eq 16): g_cdl/4 sigma_a^x x_l + g_RR' sigma_x sigma_x/2 + g_RR'l sigma_x sigma_x x_l/2"
+    },
+    {
+      "gate": "h",
+      "wires": [
+        "q_0"
+      ],
+      "params": [],
+      "source_term": "H_2XX (eq 16): g_cdl/4 sigma_a^x x_l + g_RR' sigma_x sigma_x/2 + g_RR'l sigma_x sigma_x x_l/2"
+    },
+    {
+      "gate": "h",
+      "wires": [
+        "q_1"
+      ],
+      "params": [],
+      "source_term": "H_2XX (eq 16): g_cdl/4 sigma_a^x x_l + g_RR' sigma_x sigma_x/2 + g_RR'l sigma_x sigma_x x_l/2"
+    },
+    {
+      "gate": "h",
+      "wires": [
+        "q_0"
+      ],
+      "params": [],
+      "source_term": "H_2XX (eq 16): g_cdl/4 sigma_a^x x_l + g_RR' sigma_x sigma_x/2 + g_RR'l sigma_x sigma_x x_l/2"
+    },
+    {
+      "gate": "h",
+      "wires": [
+        "q_2"
+      ],
+      "params": [],
+      "source_term": "H_2XX (eq 16): g_cdl/4 sigma_a^x x_l + g_RR' sigma_x sigma_x/2 + g_RR'l sigma_x sigma_x x_l/2"
+    },
+    {
+      "gate": "cx",
+      "wires": [
+        "q_2",
+        "q_0"
+      ],
+      "params": [],
+      "source_term": "H_2XX (eq 16): g_cdl/4 sigma_a^x x_l + g_RR' sigma_x sigma_x/2 + g_RR'l sigma_x sigma_x x_l/2"
+    },
+    {
+      "gate": "swap",
+      "wires": [
+        "q_0",
+        "anc"
+      ],
+      "params": [],
+      "source_term": "H_2XX (eq 16): g_cdl/4 sigma_a^x x_l + g_RR' sigma_x sigma_x/2 + g_RR'l sigma_x sigma_x x_l/2"
+    },
+    {
+      "gate": "cv_c_d",
+      "wires": [
+        "anc",
+        "m_l"
+      ],
+      "params": [
+        "-0.0010125000000000002j"
+      ],
+      "source_term": "H_2XX (eq 16): g_cdl/4 sigma_a^x x_l + g_RR' sigma_x sigma_x/2 + g_RR'l sigma_x sigma_x x_l/2"
+    },
+    {
+      "gate": "swap",
+      "wires": [
+        "q_0",
+        "anc"
+      ],
+      "params": [],
+      "source_term": "H_2XX (eq 16): g_cdl/4 sigma_a^x x_l + g_RR' sigma_x sigma_x/2 + g_RR'l sigma_x sigma_x x_l/2"
+    },
+    {
+      "gate": "cx",
+      "wires": [
+        "q_2",
+        "q_0"
+      ],
+      "params": [],
+      "source_term": "H_2XX (eq 16): g_cdl/4 sigma_a^x x_l + g_RR' sigma_x sigma_x/2 + g_RR'l sigma_x sigma_x x_l/2"
+    },
+    {
+      "gate": "h",
+      "wires": [
+        "q_0"
+      ],
+      "params": [],
+      "source_term": "H_2XX (eq 16): g_cdl/4 sigma_a^x x_l + g_RR' sigma_x sigma_x/2 + g_RR'l sigma_x sigma_x x_l/2"
+    },
+    {
+      "gate": "h",
+      "wires": [
+        "q_2"
+      ],
+      "params": [],
+      "source_term": "H_2XX (eq 16): g_cdl/4 sigma_a^x x_l + g_RR' sigma_x sigma_x/2 + g_RR'l sigma_x sigma_x x_l/2"
+    },
+    {
+      "gate": "ryy",
+      "wires": [
+        "q_0",
+        "q_1"
+      ],
+      "params": [
+        0.0075
+      ],
+      "source_term": "H_2YY (eq 17): g_cdl/4 sigma_a^x x_l + g_RR' sigma_y sigma_y/2 + g_RR'l sigma_y sigma_y x_l/2"
+    },
+    {
+      "gate": "ryy",
+      "wires": [
+        "q_0",
+        "q_2"
+      ],
+      "params": [
+        0.006750000000000001
+      ],
+      "source_term": "H_2YY (eq 17): g_cdl/4 sigma_a^x x_l + g_RR' sigma_y sigma_y/2 + g_RR'l sigma_y sigma_y x_l/2"
+    },
+    {
+      "gate": "swap",
+      "wires": [
+        "q_0",
+        "anc"
+      ],
+      "params": [],
+      "source_term": "H_2YY (eq 17): g_cdl/4 sigma_a^x x_l + g_RR' sigma_y sigma_y/2 + g_RR'l sigma_y sigma_y x_l/2"
+    },
+    {
+      "gate": "cv_c_d",
+      "wires": [
+        "anc",
+        "m_l"
+      ],
+      "params": [
+        "-0.0016770509831248424j"
+      ],
+      "source_term": "H_2YY (eq 17): g_cdl/4 sigma_a^x x_l + g_RR' sigma_y sigma_y/2 + g_RR'l sigma_y sigma_y x_l/2"
+    },
+    {
+      "gate": "swap",
+      "wires": [
+        "q_0",
+        "anc"
+      ],
+      "params": [],
+      "source_term": "H_2YY (eq 17): g_cdl/4 sigma_a^x x_l + g_RR' sigma_y sigma_y/2 + g_RR'l sigma_y sigma_y x_l/2"
+    },
+    {
+      "gate": "rz",
+      "wires": [
+        "q_0"
+      ],
+      "params": [
+        -1.5707963267948966
+      ],
+      "source_term": "H_2YY (eq 17): g_cdl/4 sigma_a^x x_l + g_RR' sigma_y sigma_y/2 + g_RR'l sigma_y sigma_y x_l/2"
+    },
+    {
+      "gate": "h",
+      "wires": [
+        "q_0"
+      ],
+      "params": [],
+      "source_term": "H_2YY (eq 17): g_cdl/4 sigma_a^x x_l + g_RR' sigma_y sigma_y/2 + g_RR'l sigma_y sigma_y x_l/2"
+    },
+    {
+      "gate": "rz",
+      "wires": [
+        "q_1"
+      ],
+      "params": [
+        -1.5707963267948966
+      ],
+      "source_term": "H_2YY (eq 17): g_cdl/4 sigma_a^x x_l + g_RR' sigma_y sigma_y/2 + g_RR'l sigma_y sigma_y x_l/2"
+    },
+    {
+      "gate": "h",
+      "wires": [
+        "q_1"
+      ],
+      "params": [],
+      "source_term": "H_2YY (eq 17): g_cdl/4 sigma_a^x x_l + g_RR' sigma_y sigma_y/2 + g_RR'l sigma_y sigma_y x_l/2"
+    },
+    {
+      "gate": "cx",
+      "wires": [
+        "q_1",
+        "q_0"
+      ],
+      "params": [],
+      "source_term": "H_2YY (eq 17): g_cdl/4 sigma_a^x x_l + g_RR' sigma_y sigma_y/2 + g_RR'l sigma_y sigma_y x_l/2"
+    },
+    {
+      "gate": "swap",
+      "wires": [
+        "q_0",
+        "anc"
+      ],
+      "params": [],
+      "source_term": "H_2YY (eq 17): g_cdl/4 sigma_a^x x_l + g_RR' sigma_y sigma_y/2 + g_RR'l sigma_y sigma_y x_l/2"
+    },
+    {
+      "gate": "cv_c_d",
+      "wires": [
+        "anc",
+        "m_l"
+      ],
+      "params": [
+        "0.00075j"
+      ],
+      "source_term": "H_2YY (eq 17): g_cdl/4 sigma_a^x x_l + g_RR' sigma_y sigma_y/2 + g_RR'l sigma_y sigma_y x_l/2"
+    },
+    {
+      "gate": "swap",
+      "wires": [
+        "q_0",
+        "anc"
+      ],
+      "params": [],
+      "source_term": "H_2YY (eq 17): g_cdl/4 sigma_a^x x_l + g_RR' sigma_y sigma_y/2 + g_RR'l sigma_y sigma_y x_l/2"
+    },
+    {
+      "gate": "cx",
+      "wires": [
+        "q_1",
+        "q_0"
+      ],
+      "params": [],
+      "source_term": "H_2YY (eq 17): g_cdl/4 sigma_a^x x_l + g_RR' sigma_y sigma_y/2 + g_RR'l sigma_y sigma_y x_l/2"
+    },
+    {
+      "gate": "h",
+      "wires": [
+        "q_0"
+      ],
+      "params": [],
+      "source_term": "H_2YY (eq 17): g_cdl/4 sigma_a^x x_l + g_RR' sigma_y sigma_y/2 + g_RR'l sigma_y sigma_y x_l/2"
+    },
+    {
+      "gate": "rz",
+      "wires": [
+        "q_0"
+      ],
+      "params": [
+        1.5707963267948966
+      ],
+      "source_term": "H_2YY (eq 17): g_cdl/4 sigma_a^x x_l + g_RR' sigma_y sigma_y/2 + g_RR'l sigma_y sigma_y x_l/2"
+    },
+    {
+      "gate": "h",
+      "wires": [
+        "q_1"
+      ],
+      "params": [],
+      "source_term": "H_2YY (eq 17): g_cdl/4 sigma_a^x x_l + g_RR' sigma_y sigma_y/2 + g_RR'l sigma_y sigma_y x_l/2"
+    },
+    {
+      "gate": "rz",
+      "wires": [
+        "q_1"
+      ],
+      "params": [
+        1.5707963267948966
+      ],
+      "source_term": "H_2YY (eq 17): g_cdl/4 sigma_a^x x_l + g_RR' sigma_y sigma_y/2 + g_RR'l sigma_y sigma_y x_l/2"
+    },
+    {
+      "gate": "rz",
+      "wires": [
+        "q_0"
+      ],
+      "params": [
+        -1.5707963267948966
+      ],
+      "source_term": "H_2YY (eq 17): g_cdl/4 sigma_a^x x_l + g_RR' sigma_y sigma_y/2 + g_RR'l sigma_y sigma_y x_l/2"
+    },
+    {
+      "gate": "h",
+      "wires": [
+        "q_0"
+      ],
+      "params": [],
+      "source_term": "H_2YY (eq 17): g_cdl/4 sigma_a^x x_l + g_RR' sigma_y sigma_y/2 + g_RR'l sigma_y sigma_y x_l/2"
+    },
+    {
+      "gate": "rz",
+      "wires": [
+        "q_2"
+      ],
+      "params": [
+        -1.5707963267948966
+      ],
+      "source_term": "H_2YY (eq 17): g_cdl/4 sigma_a^x x_l + g_RR' sigma_y sigma_y/2 + g_RR'l sigma_y sigma_y x_l/2"
+    },
+    {
+      "gate": "h",
+      "wires": [
+        "q_2"
+      ],
+      "params": [],
+      "source_term": "H_2YY (eq 17): g_cdl/4 sigma_a^x x_l + g_RR' sigma_y sigma_y/2 + g_RR'l sigma_y sigma_y x_l/2"
+    },
+    {
+      "gate": "cx",
+      "wires": [
+        "q_2",
+        "q_0"
+      ],
+      "params": [],
+      "source_term": "H_2YY (eq 17): g_cdl/4 sigma_a^x x_l + g_RR' sigma_y sigma_y/2 + g_RR'l sigma_y sigma_y x_l/2"
+    },
+    {
+      "gate": "swap",
+      "wires": [
+        "q_0",
+        "anc"
+      ],
+      "params": [],
+      "source_term": "H_2YY (eq 17): g_cdl/4 sigma_a^x x_l + g_RR' sigma_y sigma_y/2 + g_RR'l sigma_y sigma_y x_l/2"
+    },
+    {
+      "gate": "cv_c_d",
+      "wires": [
+        "anc",
+        "m_l"
+      ],
+      "params": [
+        "-0.0010125000000000002j"
+      ],
+      "source_term": "H_2YY (eq 17): g_cdl/4 sigma_a^x x_l + g_RR' sigma_y sigma_y/2 + g_RR'l sigma_y sigma_y x_l/2"
+    },
+    {
+      "gate": "swap",
+      "wires": [
+        "q_0",
+        "anc"
+      ],
+      "params": [],
+      "source_term": "H_2YY (eq 17): g_cdl/4 sigma_a^x x_l + g_RR' sigma_y sigma_y/2 + g_RR'l sigma_y sigma_y x_l/2"
+    },
+    {
+      "gate": "cx",
+      "wires": [
+        "q_2",
+        "q_0"
+      ],
+      "params": [],
+      "source_term": "H_2YY (eq 17): g_cdl/4 sigma_a^x x_l + g_RR' sigma_y sigma_y/2 + g_RR'l sigma_y sigma_y x_l/2"
+    },
+    {
+      "gate": "h",
+      "wires": [
+        "q_0"
+      ],
+      "params": [],
+      "source_term": "H_2YY (eq 17): g_cdl/4 sigma_a^x x_l + g_RR' sigma_y sigma_y/2 + g_RR'l sigma_y sigma_y x_l/2"
+    },
+    {
+      "gate": "rz",
+      "wires": [
+        "q_0"
+      ],
+      "params": [
+        1.5707963267948966
+      ],
+      "source_term": "H_2YY (eq 17): g_cdl/4 sigma_a^x x_l + g_RR' sigma_y sigma_y/2 + g_RR'l sigma_y sigma_y x_l/2"
+    },
+    {
+      "gate": "h",
+      "wires": [
+        "q_2"
+      ],
+      "params": [],
+      "source_term": "H_2YY (eq 17): g_cdl/4 sigma_a^x x_l + g_RR' sigma_y sigma_y/2 + g_RR'l sigma_y sigma_y x_l/2"
+    },
+    {
+      "gate": "rz",
+      "wires": [
+        "q_2"
+      ],
+      "params": [
+        1.5707963267948966
+      ],
+      "source_term": "H_2YY (eq 17): g_cdl/4 sigma_a^x x_l + g_RR' sigma_y sigma_y/2 + g_RR'l sigma_y sigma_y x_l/2"
+    },
+    {
+      "gate": "rz",
+      "wires": [
+        "q_0"
+      ],
+      "params": [
+        1.5707963267948966
+      ],
+      "source_term": "H_2YY (eq 17): g_cdl/4 sigma_a^x x_l + g_RR' sigma_y sigma_y/2 + g_RR'l sigma_y sigma_y x_l/2"
+    },
+    {
+      "gate": "h",
+      "wires": [
+        "q_0"
+      ],
+      "params": [],
+      "source_term": "H_2YY (eq 17): g_cdl/4 sigma_a^x x_l + g_RR' sigma_y sigma_y/2 + g_RR'l sigma_y sigma_y x_l/2"
+    },
+    {
+      "gate": "rz",
+      "wires": [
+        "q_2"
+      ],
+      "params": [
+        1.5707963267948966
+      ],
+      "source_term": "H_2YY (eq 17): g_cdl/4 sigma_a^x x_l + g_RR' sigma_y sigma_y/2 + g_RR'l sigma_y sigma_y x_l/2"
+    },
+    {
+      "gate": "h",
+      "wires": [
+        "q_2"
+      ],
+      "params": [],
+      "source_term": "H_2YY (eq 17): g_cdl/4 sigma_a^x x_l + g_RR' sigma_y sigma_y/2 + g_RR'l sigma_y sigma_y x_l/2"
+    },
+    {
+      "gate": "cx",
+      "wires": [
+        "q_2",
+        "q_0"
+      ],
+      "params": [],
+      "source_term": "H_2YY (eq 17): g_cdl/4 sigma_a^x x_l + g_RR' sigma_y sigma_y/2 + g_RR'l sigma_y sigma_y x_l/2"
+    },
+    {
+      "gate": "swap",
+      "wires": [
+        "q_0",
+        "anc"
+      ],
+      "params": [],
+      "source_term": "H_2YY (eq 17): g_cdl/4 sigma_a^x x_l + g_RR' sigma_y sigma_y/2 + g_RR'l sigma_y sigma_y x_l/2"
+    },
+    {
+      "gate": "cv_c_d",
+      "wires": [
+        "anc",
+        "m_l"
+      ],
+      "params": [
+        "-0.0010125000000000002j"
+      ],
+      "source_term": "H_2YY (eq 17): g_cdl/4 sigma_a^x x_l + g_RR' sigma_y sigma_y/2 + g_RR'l sigma_y sigma_y x_l/2"
+    },
+    {
+      "gate": "swap",
+      "wires": [
+        "q_0",
+        "anc"
+      ],
+      "params": [],
+      "source_term": "H_2YY (eq 17): g_cdl/4 sigma_a^x x_l + g_RR' sigma_y sigma_y/2 + g_RR'l sigma_y sigma_y x_l/2"
+    },
+    {
+      "gate": "cx",
+      "wires": [
+        "q_2",
+        "q_0"
+      ],
+      "params": [],
+      "source_term": "H_2YY (eq 17): g_cdl/4 sigma_a^x x_l + g_RR' sigma_y sigma_y/2 + g_RR'l sigma_y sigma_y x_l/2"
+    },
+    {
+      "gate": "h",
+      "wires": [
+        "q_0"
+      ],
+      "params": [],
+      "source_term": "H_2YY (eq 17): g_cdl/4 sigma_a^x x_l + g_RR' sigma_y sigma_y/2 + g_RR'l sigma_y sigma_y x_l/2"
+    },
+    {
+      "gate": "rz",
+      "wires": [
+        "q_0"
+      ],
+      "params": [
+        -1.5707963267948966
+      ],
+      "source_term": "H_2YY (eq 17): g_cdl/4 sigma_a^x x_l + g_RR' sigma_y sigma_y/2 + g_RR'l sigma_y sigma_y x_l/2"
+    },
+    {
+      "gate": "h",
+      "wires": [
+        "q_2"
+      ],
+      "params": [],
+      "source_term": "H_2YY (eq 17): g_cdl/4 sigma_a^x x_l + g_RR' sigma_y sigma_y/2 + g_RR'l sigma_y sigma_y x_l/2"
+    },
+    {
+      "gate": "rz",
+      "wires": [
+        "q_2"
+      ],
+      "params": [
+        -1.5707963267948966
+      ],
+      "source_term": "H_2YY (eq 17): g_cdl/4 sigma_a^x x_l + g_RR' sigma_y sigma_y/2 + g_RR'l sigma_y sigma_y x_l/2"
+    },
+    {
+      "gate": "rz",
+      "wires": [
+        "q_0"
+      ],
+      "params": [
+        1.5707963267948966
+      ],
+      "source_term": "H_2YY (eq 17): g_cdl/4 sigma_a^x x_l + g_RR' sigma_y sigma_y/2 + g_RR'l sigma_y sigma_y x_l/2"
+    },
+    {
+      "gate": "h",
+      "wires": [
+        "q_0"
+      ],
+      "params": [],
+      "source_term": "H_2YY (eq 17): g_cdl/4 sigma_a^x x_l + g_RR' sigma_y sigma_y/2 + g_RR'l sigma_y sigma_y x_l/2"
+    },
+    {
+      "gate": "rz",
+      "wires": [
+        "q_1"
+      ],
+      "params": [
+        1.5707963267948966
+      ],
+      "source_term": "H_2YY (eq 17): g_cdl/4 sigma_a^x x_l + g_RR' sigma_y sigma_y/2 + g_RR'l sigma_y sigma_y x_l/2"
+    },
+    {
+      "gate": "h",
+      "wires": [
+        "q_1"
+      ],
+      "params": [],
+      "source_term": "H_2YY (eq 17): g_cdl/4 sigma_a^x x_l + g_RR' sigma_y sigma_y/2 + g_RR'l sigma_y sigma_y x_l/2"
+    },
+    {
+      "gate": "cx",
+      "wires": [
+        "q_1",
+        "q_0"
+      ],
+      "params": [],
+      "source_term": "H_2YY (eq 17): g_cdl/4 sigma_a^x x_l + g_RR' sigma_y sigma_y/2 + g_RR'l sigma_y sigma_y x_l/2"
+    },
+    {
+      "gate": "swap",
+      "wires": [
+        "q_0",
+        "anc"
+      ],
+      "params": [],
+      "source_term": "H_2YY (eq 17): g_cdl/4 sigma_a^x x_l + g_RR' sigma_y sigma_y/2 + g_RR'l sigma_y sigma_y x_l/2"
+    },
+    {
+      "gate": "cv_c_d",
+      "wires": [
+        "anc",
+        "m_l"
+      ],
+      "params": [
+        "0.00075j"
+      ],
+      "source_term": "H_2YY (eq 17): g_cdl/4 sigma_a^x x_l + g_RR' sigma_y sigma_y/2 + g_RR'l sigma_y sigma_y x_l/2"
+    },
+    {
+      "gate": "swap",
+      "wires": [
+        "q_0",
+        "anc"
+      ],
+      "params": [],
+      "source_term": "H_2YY (eq 17): g_cdl/4 sigma_a^x x_l + g_RR' sigma_y sigma_y/2 + g_RR'l sigma_y sigma_y x_l/2"
+    },
+    {
+      "gate": "cx",
+      "wires": [
+        "q_1",
+        "q_0"
+      ],
+      "params": [],
+      "source_term": "H_2YY (eq 17): g_cdl/4 sigma_a^x x_l + g_RR' sigma_y sigma_y/2 + g_RR'l sigma_y sigma_y x_l/2"
+    },
+    {
+      "gate": "h",
+      "wires": [
+        "q_0"
+      ],
+      "params": [],
+      "source_term": "H_2YY (eq 17): g_cdl/4 sigma_a^x x_l + g_RR' sigma_y sigma_y/2 + g_RR'l sigma_y sigma_y x_l/2"
+    },
+    {
+      "gate": "rz",
+      "wires": [
+        "q_0"
+      ],
+      "params": [
+        -1.5707963267948966
+      ],
+      "source_term": "H_2YY (eq 17): g_cdl/4 sigma_a^x x_l + g_RR' sigma_y sigma_y/2 + g_RR'l sigma_y sigma_y x_l/2"
+    },
+    {
+      "gate": "h",
+      "wires": [
+        "q_1"
+      ],
+      "params": [],
+      "source_term": "H_2YY (eq 17): g_cdl/4 sigma_a^x x_l + g_RR' sigma_y sigma_y/2 + g_RR'l sigma_y sigma_y x_l/2"
+    },
+    {
+      "gate": "rz",
+      "wires": [
+        "q_1"
+      ],
+      "params": [
+        -1.5707963267948966
+      ],
+      "source_term": "H_2YY (eq 17): g_cdl/4 sigma_a^x x_l + g_RR' sigma_y sigma_y/2 + g_RR'l sigma_y sigma_y x_l/2"
+    },
+    {
+      "gate": "swap",
+      "wires": [
+        "q_0",
+        "anc"
+      ],
+      "params": [],
+      "source_term": "H_2YY (eq 17): g_cdl/4 sigma_a^x x_l + g_RR' sigma_y sigma_y/2 + g_RR'l sigma_y sigma_y x_l/2"
+    },
+    {
+      "gate": "cv_c_d",
+      "wires": [
+        "anc",
+        "m_l"
+      ],
+      "params": [
+        "-0.0016770509831248424j"
+      ],
+      "source_term": "H_2YY (eq 17): g_cdl/4 sigma_a^x x_l + g_RR' sigma_y sigma_y/2 + g_RR'l sigma_y sigma_y x_l/2"
+    },
+    {
+      "gate": "swap",
+      "wires": [
+        "q_0",
+        "anc"
+      ],
+      "params": [],
+      "source_term": "H_2YY (eq 17): g_cdl/4 sigma_a^x x_l + g_RR' sigma_y sigma_y/2 + g_RR'l sigma_y sigma_y x_l/2"
+    },
+    {
+      "gate": "ryy",
+      "wires": [
+        "q_0",
+        "q_2"
+      ],
+      "params": [
+        0.006750000000000001
+      ],
+      "source_term": "H_2YY (eq 17): g_cdl/4 sigma_a^x x_l + g_RR' sigma_y sigma_y/2 + g_RR'l sigma_y sigma_y x_l/2"
+    },
+    {
+      "gate": "ryy",
+      "wires": [
+        "q_0",
+        "q_1"
+      ],
+      "params": [
+        0.0075
+      ],
+      "source_term": "H_2YY (eq 17): g_cdl/4 sigma_a^x x_l + g_RR' sigma_y sigma_y/2 + g_RR'l sigma_y sigma_y x_l/2"
+    },
+    {
+      "gate": "h",
+      "wires": [
+        "q_0"
+      ],
+      "params": [],
+      "source_term": "H_2XX (eq 16): g_cdl/4 sigma_a^x x_l + g_RR' sigma_x sigma_x/2 + g_RR'l sigma_x sigma_x x_l/2"
+    },
+    {
+      "gate": "h",
+      "wires": [
+        "q_2"
+      ],
+      "params": [],
+      "source_term": "H_2XX (eq 16): g_cdl/4 sigma_a^x x_l + g_RR' sigma_x sigma_x/2 + g_RR'l sigma_x sigma_x x_l/2"
+    },
+    {
+      "gate": "cx",
+      "wires": [
+        "q_2",
+        "q_0"
+      ],
+      "params": [],
+      "source_term": "H_2XX (eq 16): g_cdl/4 sigma_a^x x_l + g_RR' sigma_x sigma_x/2 + g_RR'l sigma_x sigma_x x_l/2"
+    },
+    {
+      "gate": "swap",
+      "wires": [
+        "q_0",
+        "anc"
+      ],
+      "params": [],
+      "source_term": "H_2XX (eq 16): g_cdl/4 sigma_a^x x_l + g_RR' sigma_x sigma_x/2 + g_RR'l sigma_x sigma_x x_l/2"
+    },
+    {
+      "gate": "cv_c_d",
+      "wires": [
+        "anc",
+        "m_l"
+      ],
+      "params": [
+        "-0.0010125000000000002j"
+      ],
+      "source_term": "H_2XX (eq 16): g_cdl/4 sigma_a^x x_l + g_RR' sigma_x sigma_x/2 + g_RR'l sigma_x sigma_x x_l/2"
+    },
+    {
+      "gate": "swap",
+      "wires": [
+        "q_0",
+        "anc"
+      ],
+      "params": [],
+      "source_term": "H_2XX (eq 16): g_cdl/4 sigma_a^x x_l + g_RR' sigma_x sigma_x/2 + g_RR'l sigma_x sigma_x x_l/2"
+    },
+    {
+      "gate": "cx",
+      "wires": [
+        "q_2",
+        "q_0"
+      ],
+      "params": [],
+      "source_term": "H_2XX (eq 16): g_cdl/4 sigma_a^x x_l + g_RR' sigma_x sigma_x/2 + g_RR'l sigma_x sigma_x x_l/2"
+    },
+    {
+      "gate": "h",
+      "wires": [
+        "q_0"
+      ],
+      "params": [],
+      "source_term": "H_2XX (eq 16): g_cdl/4 sigma_a^x x_l + g_RR' sigma_x sigma_x/2 + g_RR'l sigma_x sigma_x x_l/2"
+    },
+    {
+      "gate": "h",
+      "wires": [
+        "q_2"
+      ],
+      "params": [],
+      "source_term": "H_2XX (eq 16): g_cdl/4 sigma_a^x x_l + g_RR' sigma_x sigma_x/2 + g_RR'l sigma_x sigma_x x_l/2"
+    },
+    {
+      "gate": "h",
+      "wires": [
+        "q_0"
+      ],
+      "params": [],
+      "source_term": "H_2XX (eq 16): g_cdl/4 sigma_a^x x_l + g_RR' sigma_x sigma_x/2 + g_RR'l sigma_x sigma_x x_l/2"
+    },
+    {
+      "gate": "h",
+      "wires": [
+        "q_1"
+      ],
+      "params": [],
+      "source_term": "H_2XX (eq 16): g_cdl/4 sigma_a^x x_l + g_RR' sigma_x sigma_x/2 + g_RR'l sigma_x sigma_x x_l/2"
+    },
+    {
+      "gate": "cx",
+      "wires": [
+        "q_1",
+        "q_0"
+      ],
+      "params": [],
+      "source_term": "H_2XX (eq 16): g_cdl/4 sigma_a^x x_l + g_RR' sigma_x sigma_x/2 + g_RR'l sigma_x sigma_x x_l/2"
+    },
+    {
+      "gate": "swap",
+      "wires": [
+        "q_0",
+        "anc"
+      ],
+      "params": [],
+      "source_term": "H_2XX (eq 16): g_cdl/4 sigma_a^x x_l + g_RR' sigma_x sigma_x/2 + g_RR'l sigma_x sigma_x x_l/2"
+    },
+    {
+      "gate": "cv_c_d",
+      "wires": [
+        "anc",
+        "m_l"
+      ],
+      "params": [
+        "0.00075j"
+      ],
+      "source_term": "H_2XX (eq 16): g_cdl/4 sigma_a^x x_l + g_RR' sigma_x sigma_x/2 + g_RR'l sigma_x sigma_x x_l/2"
+    },
+    {
+      "gate": "swap",
+      "wires": [
+        "q_0",
+        "anc"
+      ],
+      "params": [],
+      "source_term": "H_2XX (eq 16): g_cdl/4 sigma_a^x x_l + g_RR' sigma_x sigma_x/2 + g_RR'l sigma_x sigma_x x_l/2"
+    },
+    {
+      "gate": "cx",
+      "wires": [
+        "q_1",
+        "q_0"
+      ],
+      "params": [],
+      "source_term": "H_2XX (eq 16): g_cdl/4 sigma_a^x x_l + g_RR' sigma_x sigma_x/2 + g_RR'l sigma_x sigma_x x_l/2"
+    },
+    {
+      "gate": "h",
+      "wires": [
+        "q_0"
+      ],
+      "params": [],
+      "source_term": "H_2XX (eq 16): g_cdl/4 sigma_a^x x_l + g_RR' sigma_x sigma_x/2 + g_RR'l sigma_x sigma_x x_l/2"
+    },
+    {
+      "gate": "h",
+      "wires": [
+        "q_1"
+      ],
+      "params": [],
+      "source_term": "H_2XX (eq 16): g_cdl/4 sigma_a^x x_l + g_RR' sigma_x sigma_x/2 + g_RR'l sigma_x sigma_x x_l/2"
+    },
+    {
+      "gate": "swap",
+      "wires": [
+        "q_0",
+        "anc"
+      ],
+      "params": [],
+      "source_term": "H_2XX (eq 16): g_cdl/4 sigma_a^x x_l + g_RR' sigma_x sigma_x/2 + g_RR'l sigma_x sigma_x x_l/2"
+    },
+    {
+      "gate": "cv_c_d",
+      "wires": [
+        "anc",
+        "m_l"
+      ],
+      "params": [
+        "-0.0016770509831248424j"
+      ],
+      "source_term": "H_2XX (eq 16): g_cdl/4 sigma_a^x x_l + g_RR' sigma_x sigma_x/2 + g_RR'l sigma_x sigma_x x_l/2"
+    },
+    {
+      "gate": "swap",
+      "wires": [
+        "q_0",
+        "anc"
+      ],
+      "params": [],
+      "source_term": "H_2XX (eq 16): g_cdl/4 sigma_a^x x_l + g_RR' sigma_x sigma_x/2 + g_RR'l sigma_x sigma_x x_l/2"
+    },
+    {
+      "gate": "rxx",
+      "wires": [
+        "q_0",
+        "q_2"
+      ],
+      "params": [
+        0.006750000000000001
+      ],
+      "source_term": "H_2XX (eq 16): g_cdl/4 sigma_a^x x_l + g_RR' sigma_x sigma_x/2 + g_RR'l sigma_x sigma_x x_l/2"
+    },
+    {
+      "gate": "rxx",
+      "wires": [
+        "q_0",
+        "q_1"
+      ],
+      "params": [
+        0.0075
+      ],
+      "source_term": "H_2XX (eq 16): g_cdl/4 sigma_a^x x_l + g_RR' sigma_x sigma_x/2 + g_RR'l sigma_x sigma_x x_l/2"
+    },
+    {
+      "gate": "cv_c_d",
+      "wires": [
+        "q_2",
+        "m_2"
+      ],
+      "params": [
+        "(-0-0.0046293684950121875j)"
+      ],
+      "source_term": "H_1 (eq 15): -chi_R*n_R*sigma_z/2 + g_cd_R*x_R*sigma_z/2"
+    },
+    {
+      "gate": "cv_c_r",
+      "wires": [
+        "q_2",
+        "m_2"
+      ],
+      "params": [
+        -0.0033750000000000004
+      ],
+      "source_term": "H_1 (eq 15): -chi_R*n_R*sigma_z/2 + g_cd_R*x_R*sigma_z/2"
+    },
+    {
+      "gate": "cv_c_d",
+      "wires": [
+        "q_1",
+        "m_1"
+      ],
+      "params": [
+        "(-0-0.0037893968486505214j)"
+      ],
+      "source_term": "H_1 (eq 15): -chi_R*n_R*sigma_z/2 + g_cd_R*x_R*sigma_z/2"
+    },
+    {
+      "gate": "cv_c_r",
+      "wires": [
+        "q_1",
+        "m_1"
+      ],
+      "params": [
+        -0.0045000000000000005
+      ],
+      "source_term": "H_1 (eq 15): -chi_R*n_R*sigma_z/2 + g_cd_R*x_R*sigma_z/2"
+    },
+    {
+      "gate": "cv_c_d",
+      "wires": [
+        "q_0",
+        "m_0"
+      ],
+      "params": [
+        "(-0-0.004229077965716046j)"
+      ],
+      "source_term": "H_1 (eq 15): -chi_R*n_R*sigma_z/2 + g_cd_R*x_R*sigma_z/2"
+    },
+    {
+      "gate": "cv_c_r",
+      "wires": [
+        "q_0",
+        "m_0"
+      ],
+      "params": [
+        -0.004
+      ],
+      "source_term": "H_1 (eq 15): -chi_R*n_R*sigma_z/2 + g_cd_R*x_R*sigma_z/2"
+    },
+    {
+      "gate": "rz",
+      "wires": [
+        "q_1"
+      ],
+      "params": [
+        -0.001255001498697389
+      ],
+      "source_term": "H_0 (eq 14): omega_R*n_R, -delta_RR'*sigma_z/2"
+    },
+    {
+      "gate": "rz",
+      "wires": [
+        "q_2"
+      ],
+      "params": [
+        -0.0001243719017726709
+      ],
+      "source_term": "H_0 (eq 14): omega_R*n_R, -delta_RR'*sigma_z/2"
+    },
+    {
+      "gate": "cv_r",
+      "wires": [
+        "m_0"
+      ],
+      "params": [
+        -0.11975
+      ],
+      "source_term": "H_0 (eq 14): omega_R*n_R, -delta_RR'*sigma_z/2"
+    },
+    {
+      "gate": "cv_r",
+      "wires": [
+        "m_1"
+      ],
+      "params": [
+        -0.12
+      ],
+      "source_term": "H_0 (eq 14): omega_R*n_R, -delta_RR'*sigma_z/2"
+    },
+    {
+      "gate": "cv_r",
+      "wires": [
+        "m_2"
+      ],
+      "params": [
+        -0.11962500000000001
+      ],
+      "source_term": "H_0 (eq 14): omega_R*n_R, -delta_RR'*sigma_z/2"
+    },
+    {
+      "gate": "cv_r",
+      "wires": [
+        "m_3"
+      ],
+      "params": [
+        -0.015
+      ],
+      "source_term": "H_0 (eq 14): omega_R*n_R, -delta_RR'*sigma_z/2"
+    }
+  ]
+}

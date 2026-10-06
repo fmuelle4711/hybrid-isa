@@ -1,0 +1,151 @@
+========================================================================================================
+1  MULTITONE QUDIT COUNT -- QPS fused, QT fused, QT-SB fused
+========================================================================================================
+  Built from step_runtime_table.qudit_counts(Nc, '28') with the QT-SB
+  entry changed from (Nc-1) to 1.  Nothing else differs.
+
+  primitive    per step           Nc=3   Nc=6   Nc=8  Nc=12
+  Rotation     4Nc-4                 8     20     28     44
+  QCR          2Nc                   6     12     16     24
+  QCD          4Nc-4                 8     20     28     44
+  QPS          2         (fused)      2      2      2      2
+  QT_multi     2         (fused)      2      2      2      2
+  QT_SB        1         (fused)      1      1      1      1
+  ------------ ---------------- ------ ------ ------ ------
+  TOTAL        10Nc - 3             27     57     77    117
+
+  CLOSED FORM
+      (4Nc-4) + 2Nc + (4Nc-4) + 2 + 2 + 1  =  10 Nc - 3
+      checked against the built dict at every Nc above: consistent
+
+  AGAINST THE EXISTING CONVENTIONS
+  convention                         closed form      Nc=3   Nc=6   Nc=8  Nc=12
+  34-op headline, QPS fused only     16Nc - 14          34     82    114    178
+  28-op, QPS + QT fused              12Nc - 8           28     64     88    136
+  27-op, + QT-SB fused (this read)   10Nc - 3           27     57     77    117
+
+  Nc=3 gives 27, matching the tape count of the figure drawn in
+  simulations/draw_qudit_27_hqml.py (27 operations excluding the
+  leading state-prep X) and data/circuit_qudit_generalized_27_one_step.json.
+
+  WHAT THE FUSIONS COST IN EXACTNESS -- unchanged by this read:
+    QPS fusion   EXACT.   All QPS generators are diagonal projectors on
+                 one wire; measured [Pi_A, Pi_B] = 0.000000.
+    QT fusion    NOT exact.  |A><B| and |A><C| share level A;
+                 measured commutator 1.000000.  Rests on a multitone
+                 hardware claim, not an operator identity.
+    QT-SB fusion NOT exact in the same sense -- same level structure --
+                 but it is the SUMMED exponential, which is what the
+                 qutip reference trotter_method_a.py:212 actually uses,
+                 so it moves the circuit TOWARD its own reference.
+                 At the circuit angle the merged and sequential centres
+                 differ by max 1.97e-05, infidelity 5.25e-11
+                 (results/circuit_qudit_27.txt).
+
+  NOTE: only QT and QT-SB carry laser time here; QPS is virtual (T=0).
+  Under the audited chain counts, 10Nc-3 against 12Nc-8 is a
+  runtime difference of 2(Nc-2) - 1 = 2Nc-5 QT-SB gates, not of
+  the whole op-count gap.  NO ADOPTION -- a count, not a repricing.
+
+========================================================================================================
+2  CENTRE ORDERING IN THE TABLE III SHOT CIRCUITS
+========================================================================================================
+  Question: were the central J_l (qubit) / QT-SB (qudit) terms applied
+  as ONE SUMMED exponential, or SEQUENTIALLY?
+
+  First, a correction to the premise: 'hqml stinespring' describes the
+  N=8 row only.  Per results/table3_provenance.txt the backends are
+      N=4  classical_kraus_shots            (both encodings)
+      N=8  hqml_qnode_stinespring_shots     (qudit)
+           hqml_qnode_stinespring_b_qubit   (qubit)
+  so the four cells are produced by THREE different code paths.
+
+  ----------------------------------------------------------------------------------------------------
+  N=4, BOTH ENCODINGS  ->  SUMMED
+  ----------------------------------------------------------------------------------------------------
+  path: generate_figs_hqml_comparison.py maps both methods onto
+        circuit_dissipative_kraus.build_sub_hamiltonians(builder, N),
+        with _METHOD_TO_BUILDER = {a_qudit: 'A', a_qudit_d: 'A',
+        b_qubit: 'B'}, then build_u_step.
+
+  The centre is assembled as a SINGLE Hamiltonian and exponentiated once:
+       106 |         H_QTSB = (P.J_AB0*P.eta_AB*(trans_d(_A,_B)+trans_d(_B,_A))*xld
+       107 |                   + P.J_AC0*P.eta_AC*(trans_d(_A,_C)+trans_d(_C,_A))*xld)
+      ...  (method 'B', the qubit column, is the same shape)
+       121 |         H_QTSB = (P.g_abl*(trans_d(_A,_B)+trans_d(_B,_A))*xld
+       122 |                   + P.g_acl*(trans_d(_A,_C)+trans_d(_C,_A))*xld)
+  and applied as one exponential of that sum:
+       202 |     Umid = U('QTSB', dt)
+      -> H_QTSB is the SUM of the A-B and A-C terms, and Umid is ONE
+         exp(-i H_QTSB dt).  SUMMED, for both the qubit and the qudit
+         column at N=4.
+
+  ----------------------------------------------------------------------------------------------------
+  N=8, QUDIT  ->  SEQUENTIAL
+  ----------------------------------------------------------------------------------------------------
+  path: circuit_fig89_10_hqml_qnode.py imports the unitary step from
+        circuit_fig6_hqml.one_trotter_step and wraps it in Stinespring
+        channels.  Its centre is TWO separate sideband gates:
+       122 |     # --- H_QTSB centre, full tau (2 sideband) ---
+       123 |     hqml.QT(P.J_AB0 * P.eta_AB * tau_full, level_i=_L_A, level_j=_L_B,
+       124 |             wires=['q', 'l'], sideband=True)
+       125 |     hqml.QT(P.J_AC0 * P.eta_AC * tau_full, level_i=_L_A, level_j=_L_C,
+       126 |             wires=['q', 'l'], sideband=True)
+      -> two hqml.QT(..., sideband=True) calls, each at full tau.
+         SEQUENTIAL.
+
+  ----------------------------------------------------------------------------------------------------
+  N=8, QUBIT  ->  SEQUENTIAL
+  ----------------------------------------------------------------------------------------------------
+  path: circuit_fig89_10_hqml_qnode_b_qubit.py, a literal 3-qubit
+        circuit on wires QB[0..2] plus one ancilla.  Its step is
+       221 |     h = tau_full / 2.0
+       222 |     _H0(h)
+       223 |     _H1(h)
+       224 |     _H2XX(h)
+       225 |     _H2YY(h)
+       226 |     _H2YY(h, reverse=True)
+       227 |     _H2XX(h, reverse=True)
+       228 |     _H1(h,  reverse=True)
+       229 |     _H0(h,  reverse=True)
+      The J_l pieces are the g_alt displacement sandwiches inside
+      _H2XX and _H2YY, emitted one pair at a time in a Python loop:
+       190 |             val = g_alt[i - 1] * tau / 2.0
+       191 |             r, phi = float(np.abs(val)), float(np.angle(val))
+       192 |             hqml.ConditionalDisplacement(r, phi, wires=[ANC, MODES[3]])
+       193 |             qml.SWAP(wires=[QB[0], ANC])
+      -> the A-B and A-C link terms are separate gate sandwiches, and
+         the XX and YY halves are separate blocks.  SEQUENTIAL on both
+         counts; there is no single summed centre anywhere in this path.
+
+  ----------------------------------------------------------------------------------------------------
+  ANSWER
+  ----------------------------------------------------------------------------------------------------
+  cell                   centre       generating path
+  N=4  qubit             SUMMED       circuit_dissipative_kraus build_sub_hamiltonians('B') + build_u_step
+  N=4  qudit             SUMMED       circuit_dissipative_kraus build_sub_hamiltonians('A') + build_u_step
+  N=8  qubit             SEQUENTIAL   circuit_fig89_10_hqml_qnode_b_qubit one_trotter_step
+  N=8  qudit             SEQUENTIAL   circuit_fig6_hqml one_trotter_step, via qnode.py
+
+  CONSEQUENCE, reported not fixed.  The two rows of Table III now differ
+  in THREE respects at once, not one:
+      1. Fock cutoff        4       vs 8
+      2. noise channel      classical Kraus vs Stinespring in-circuit
+      3. centre ordering    summed  vs sequential
+  Item 3 is new here; items 1 and 2 were recorded in
+  results/table3_provenance.txt section 7.  Any reading of Table III as
+  a clean Fock-convergence test is confounded by 2 and 3.
+
+  Scale of item 3, from the measurements already in the repo: the
+  summed-vs-sequential centre gap is 0.00377 % RMSE on the qudit
+  (results/qtsb_summed_center.txt) and 0.00408 % on the qubit
+  (results/jl_summed_center.txt).  Both are far below the ~1 % Table III
+  entries, so this does not explain those numbers -- but it does mean
+  the N=4 and N=8 rows are not the same circuit, and the paper should
+  not describe them as one pipeline run at two cutoffs.
+
+  A further note on the N=4 qubit column: builder 'B' is the cqed
+  Hamiltonian expressed with trans_d/proj_d, i.e. in the QUDIT
+  encoding, whereas the N=8 qubit column is a literal 3-qubit circuit.
+  So 'qubit' does not mean the same object in the two rows either.
+  Reported for the record; no number is changed.

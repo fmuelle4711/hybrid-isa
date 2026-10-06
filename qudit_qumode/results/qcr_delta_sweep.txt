@@ -1,0 +1,65 @@
+====================================================================================================================
+QCR DISPERSIVE-DETUNING SWEEP -- defending delta_disp = 40 kHz
+====================================================================================================================
+  Omega_sb/2pi = 4.000 kHz (MEASURED, Meth)
+  nu/2pi       = 770 kHz (MEASURED, Meth) -- stand-in ceiling, see below
+  T_QCR at delta = 40 kHz = 55.93 us (read from appendix_table.md)
+
+  delta_disp is OUR CHOICE, not a Meth parameter.  Meth drives resonant
+  sidebands (delta = 0) and never uses a dispersive detuning.  The two
+  limits that bracket a sensible value:
+    lower: delta >> Omega_sb = 4 kHz (dispersive validity)
+    upper: delta << gap to the nearest motional mode (spectral selectivity)
+  CAVEAT: the upper limit is the MODE SPACING, not nu.  A 3-ion chain has
+  3 axial modes with gaps smaller than nu = 770 kHz.  This repo does not
+  anchor the mode spectrum, so nu is used as a stand-in and the real
+  ceiling is tighter.  Flagged, not resolved.
+
+  T_QCR scales LINEARLY with delta because chi = Omega_sb^2/(4 delta) and
+  the gate angle is chi*T.  So T(delta) = T_ref * delta/delta_ref.
+
+====================================================================================================================
+SWEEP
+====================================================================================================================
+  angle held FIXED at theta = 0.016 for every row;
+  duration T(delta) = theta / chi(delta), so T = 25.465 us at 40 kHz.
+  (v1 wrongly used T_paper = 55.93 us, i.e. angle 0.0351 = 2.20x theta.  Those numbers are superseded.)
+
+  delta  Om/del   chi/2pi     T_ang   1-F pred_n  1-F pred_n1   1-F fitted   1-F fit+VZ   leak P(g)    leak n>2
+  (kHz)              (Hz)      (us)
+     20   0.200    200.00    12.732   4.9117e-02   4.9757e-02   4.7515e-02   4.6870e-02  1.3531e-01  6.0117e-02
+     30   0.133    133.33    19.099   4.2842e-02   4.3907e-02   4.3833e-02   3.7836e-02  9.8508e-02  4.6857e-02
+     40   0.100    100.00    25.465   7.0202e-03   8.0336e-03   8.0877e-03   2.8403e-03  1.8402e-03  3.2636e-04
+     60   0.067     66.67    38.197   1.3580e-02   1.4574e-02   1.3559e-02   9.1885e-03  2.2121e-02  8.8874e-03
+     80   0.050     50.00    50.930   7.4004e-03   8.4294e-03   7.4265e-03   2.7163e-03  1.9687e-03  5.7463e-04
+
+  'fitted' = exp(-i[chi_fit n + const] t Pi_l), the effective generator
+  actually produced by the drive; 'fit+VZ' additionally absorbs the free
+  per-level virtual-Z.  The bare pred_n column is the reference's error,
+  not the gate's -- it is kept only to show the difference.
+
+====================================================================================================================
+RUNTIME IMPACT AT Nc = 3
+====================================================================================================================
+  qudit step minus QCR and QT = Rot 8x5.0 + QCD 8x2.5664000000000002 + QT-SB 2x0.0597 = 60.6506 us
+  QCR appears 6 times per step
+  T_qubit sequential = 2396.1112 us,  parallel-MS = 1396.1112 us (unaffected by delta)
+
+   delta      T_QCR   T_qudit lo   T_qudit hi          ratio seq       ratio par-MS      1-F(SW)
+      20     27.965     228.6506     250.4406    [9.57x, 10.48x]     [5.57x, 6.11x] 4.687007e-02
+      30     41.948     312.5456     334.3356     [7.17x, 7.67x]     [4.18x, 4.47x] 3.783559e-02
+      40     55.930     396.4406     418.2306     [5.73x, 6.04x]     [3.34x, 3.52x] 2.840325e-03
+      60     83.895     564.2306     586.0206     [4.09x, 4.25x]     [2.38x, 2.47x] 9.188510e-03
+      80    111.860     732.0206     753.8106     [3.18x, 3.27x]     [1.85x, 1.91x] 2.716268e-03
+
+  READING
+    The sequential ratio swings from 10.48x at 20 kHz to 3.18x at 80 kHz.
+    Smaller delta makes the gate FASTER and the ratio BETTER, but the
+    Schrieffer-Wolff parameter Omega_sb/delta grows and the SW infidelity
+    and leakage grow with it -- read the 1-F and leakage columns before
+    treating a small delta as free.  That is why both are tabulated here.
+    At the chosen 40 kHz: Omega/delta = 0.100, 1-F(fit+VZ) = 2.840325e-03, ratio seq = [5.73x, 6.04x].
+
+  NO ADOPTION.  runtime_table.md keeps delta = 40 kHz and T_QCR = 55.93 us.
+  This run turns that from an assumption into a bracketed, reasoned choice,
+  and shows the cost of moving it in either direction.

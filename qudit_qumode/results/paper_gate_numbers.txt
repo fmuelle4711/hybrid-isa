@@ -1,0 +1,60 @@
+============================================================================================
+EVERY GATE NUMBER IN THE MANUSCRIPT, CHECKED AGAINST ITS SOURCE
+============================================================================================
+  Nc = 3.  DOES NOT TOUCH THE DATA PATH.
+
+QUDIT   (source: data/circuit_qudit_generalized_27_one_step.json,
+                results/segment_counts.txt)
+  blocks drawn, multitone-fused (Fig 3)              27   expected 27     OK   
+  blocks drawn before the centre merge               28   expected 28     OK   
+  LOGICAL ISA operations  <- paper's 34              34   expected 34     OK   Rot 8, QCR 6, QCD 8, QPS 6, QT 4, QT-SB 2
+  timed pulses, reference  <- paper's 27             27   expected 27     OK   one-pulse C_{Pi}R, merged C_{Pi_x}D centre
+  timed pulses, multitone  <- paper's 25             25   expected 25     OK   X_E fused to one block per half step
+
+  TWO DIFFERENT 27s.  The first row is 27 scheduled CONTROL BLOCKS
+  (multitone), the last is 27 TIMED PULSES of the 34-invocation
+  reference circuit.  Unrelated arithmetic, same digits.  The
+  manuscript keeps them in separate columns and never in one
+  sentence; do the same when quoting this file.
+
+QUBIT   (source: circuits/trapped_ion_qubit tapes,
+                results/segment_counts.txt)
+  LOGICAL operations  <- paper's 32                  32   expected 32     OK   11*Nc - 1
+  timed pulses  <- paper's 58                        58   expected 58     OK   one-pulse CR, J_l decomposed
+  timed pulses, J_l as 1 MS window                   32   expected 32     OK   the OPTIMISTIC J_l convention, not the paper's
+
+  the drawn circuit, a SEPARATE counting:
+  tape operations                                    70   expected 70     OK   the OLD segment total, coincidence
+  of which virtual (RZ)                              12   expected 12     OK   
+  timed tape operations                              58   expected 58     OK   equals the paper's 58 under one-pulse pricing; see note below
+
+VU cQED (source: data/circuit_vu_one_step.json, verified against Vu's
+                own script by circuits/cqed_vu/verify_vu_132.py)
+  c2qa primitives, measured                         132   expected 132    OK   148 emitted - 16 barriers
+  abstract count  <- paper's 96                      96   expected 96     OK   CITED from Vu, never recounted by us
+  of which SWAP (pure routing)                       24   expected 24     OK   qudit/qubit: 0
+  of which rz (virtual)                              20   expected 20     OK   
+  timed primitives                                  112   expected 112    OK   
+
+============================================================================================
+THE LIKE-FOR-LIKE COMPARISON THE ABSTRACT MAKES
+============================================================================================
+  logical operations   qudit  34   vs   qubit  32      (paper: '34 and 32')
+  timed pulses         qudit  27   vs   qubit  58      (paper: '27 against 58')
+
+  Both rows compare the SAME quantity on both sides, under the
+  one-pulse C_{Pi}R convention the manuscript now uses.
+
+  WHY THE QUBIT'S TWO 58s NOW AGREE.  The drawn tape has 58 timed
+  operations and the segment total is also 58.  Under the OLD echo
+  pricing these were 58 and 70 and had to be kept apart.  Charging
+  the dispersive gate one segment instead of three removes exactly
+  the 12 that separated them (two per CR, 6 CR gates), so the two counts coincide for a
+  reason, not by accident.  They are still different quantities.
+
+  58 remains a FLOOR: Appendix B prices each CNOT as one primitive,
+  and a CNOT on trapped ions is itself an MS gate plus rotations.
+
+============================================================================================
+RESULT: every number in the manuscript matches its source.
+============================================================================================

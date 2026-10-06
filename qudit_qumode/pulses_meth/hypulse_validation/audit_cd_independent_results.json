@@ -1,0 +1,49 @@
+{
+  "note": "Independent qutip repropagation of CD at both operating points. Waveforms recompiled deterministically (seed=42) because step_two_points_v4_results.json stores only scalars for CD; recompiled F_grape verified against the stored value before the repropagation was accepted as an audit of that number.",
+  "protocol": "audit_v3.py (CHECK A bound-binding, CHECK C independent reprop + integrated area)",
+  "source_of_parameters": "step_two_points_v4_results.json",
+  "results": {
+    "A_meth": {
+      "tag": "METH_OPERATING_POINT",
+      "amp_CD_rad_per_us": 0.025132489901306062,
+      "T_us": 39.79,
+      "num_tslots": 200,
+      "dt_us": 0.19895,
+      "F_grape_stored": 0.9999979946930231,
+      "F_grape_recompiled": 0.9999979946930231,
+      "reproduces_stored": true,
+      "termination": "Goal achieved",
+      "check_A_max_ux": 0.024560014252164246,
+      "check_A_max_up": 0.025132489901306062,
+      "check_A_pct_ux": 97.72216898767333,
+      "check_A_pct_up": 100.0,
+      "check_A_binds": true,
+      "F_indep": 0.9999959893817534,
+      "check_C_F_match": true,
+      "check_C_int_up": 0.9999609755791591,
+      "check_C_int_ux": 0.000649439201911402,
+      "check_C_int_match": true
+    },
+    "B_bazavan_opt": {
+      "tag": "BAZAVAN_DEMONSTRATED_RANGE",
+      "amp_CD_rad_per_us": 0.07934406405906382,
+      "T_us": 12.6,
+      "num_tslots": 200,
+      "dt_us": 0.063,
+      "F_grape_stored": 0.9999982212766804,
+      "F_grape_recompiled": 0.9999982212766804,
+      "reproduces_stored": true,
+      "termination": "Goal achieved",
+      "check_A_max_ux": 0.07934406405906382,
+      "check_A_max_up": 0.07934406405906382,
+      "check_A_pct_ux": 100.0,
+      "check_A_pct_up": 100.0,
+      "check_A_binds": true,
+      "F_indep": 0.9999964425255241,
+      "check_C_F_match": true,
+      "check_C_int_up": 0.9994718887212081,
+      "check_C_int_ux": 0.00040798674975925966,
+      "check_C_int_match": true
+    }
+  }
+}

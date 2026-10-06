@@ -1,0 +1,72 @@
+WHERE 132 COMES FROM
+
+================================================================================================
+CHECK 1  --  the JSON list vs the circuit make_vu actually builds
+================================================================================================
+  hand-maintained json_gates : 132
+  circuit instructions       : 132
+  abstract count returned    : 96   (Vu's paper figure, not measured)
+
+  gate         JSON  circuit
+  cv_c_d         18       18   
+  cv_c_r          6        6   
+  cv_r            8        8   
+  cx             16       16   
+  h              32       32   
+  rxx             4        4   
+  ryy             4        4   
+  rz             20       20   
+  swap           24       24   
+  TOTAL         132      132
+
+  -> the JSON faithfully describes the circuit make_vu builds: True
+     (this says nothing yet about whether that circuit is VU'S)
+
+================================================================================================
+CHECK 2  --  one Trotter step emitted by VU'S OWN CODE
+================================================================================================
+  source : legacy\vu_reference\cqed-vibronic-simulation-main\3_chromophore_vibronic_simulation.py
+  running lines 1-293 only (parameters, registers, and the four H
+  function definitions).  The driver loop at line 294 -- 401 steps
+  at 10000 shots with damping and dephasing -- is NOT executed.
+
+  timestep = 0.005 ps;  1 instruction(s) present before the step (Vu's initial circuit.x)
+  applying Vu's own order: H0 H1 H2XX H2YY H2YYrev H2XXrev H1rev H0rev
+
+  raw instructions emitted by Vu's code : 148
+  of which barriers (not gates)         : 16
+  GATES                                 : 132
+
+================================================================================================
+SIDE BY SIDE  --  Vu's own script vs our re-implementation
+================================================================================================
+  gate           VU   ours
+  cv_c_d         18     18   
+  cv_c_r          6      6   
+  cv_r            8      8   
+  cx             16     16   
+  h              32     32   
+  rxx             4      4   
+  ryy             4      4   
+  rz             20     20   
+  swap           24     24   
+  TOTAL         132    132
+
+  -> our circuit reproduces Vu's gate for gate: True
+
+================================================================================================
+ANSWER
+================================================================================================
+  132 is not a number we assigned.  Vu's own published script emits
+  148 instructions per second-order Trotter step, of which 16
+  are barriers -- transpiler scheduling directives that compile to
+  nothing and occupy no pulse slot.  148 - 16 = 132.
+
+  Every primitive type matches our re-implementation exactly, so the
+  JSON, the HybridLane port, and Vu's own code all agree.
+
+  What 132 is NOT: it is not Vu's paper's count.  Their stated '96
+  gates per step' is an abstract operator decomposition, hardcoded
+  at simulations/circuit_diagrams.py:545 as a citation.  We have
+  never recounted 96 and this script does not check it.
+

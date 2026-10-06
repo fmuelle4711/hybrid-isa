@@ -1,0 +1,69 @@
+========================================================================================================
+ENTANGLING-ONLY GATE COUNTS -- full symmetric Trotter step, Nc = 3
+========================================================================================================
+  entangling := acts on more than one wire.  Single-qubit and
+  single-qudit gates excluded.
+
+1  TI QUBIT, LOGICAL  (vibronic_scaling.build_one_hot_trotter_step)
+           gate  count  wires  entangling?
+             cd      8      2          YES
+       Rotation      8      1           no
+            chi      6      2          YES
+             rz      4      1           no
+              J      4      2          YES
+             Jl      2      3          YES
+     TOTAL 32   ENTANGLING-ONLY = 20
+     (builder's own n_entangling() flag says 20)
+
+2  TI QUBIT, TI-NATIVE  (logical expanded; Jl = XX sandwich + YY sandwich)
+      primitive  count  wires  entangling?
+              H     16      1           no
+             CD     12      2          YES
+              Z     12      1           no
+            Rot      8      1           no
+             MS      8      2          YES
+           CNOT      8      2          YES
+             CR      6      2          YES
+     TOTAL 70  (timed, excluding virtual-Z: 58)
+     ENTANGLING-ONLY = 34
+
+3  TI QUDIT, 28-GATE FUSED  (circuit_diagrams_28.make_qudit_generalized_28)
+     builder asserts total = 28
+             gate  count  wires  entangling?
+         Rotation      8      1           no
+              QCD      8      2          YES
+              QCR      6      2          YES
+          QPS_gen      2      1           no
+         QT_multi      2      1           no
+            QT-SB      2      2          YES
+     TOTAL 28   ENTANGLING-ONLY = 16
+
+========================================================================================================
+COMPARISON -- entangling only, full symmetric step, Nc = 3
+========================================================================================================
+                          encoding   all gates   entangling    frac
+                 TI qubit, logical          32           20     62%
+       TI qubit, TI-native (timed)          58           34     59%
+           TI qudit, 28-gate fused          28           16     57%
+
+  qubit-native / qudit entangling ratio = 34/16 = 2.12x
+
+  CAVEATS
+    * QT is flagged entangling=True in vibronic_scaling.py but acts on a
+      SINGLE wire -- it is an intra-qudit level transition and entangles
+      nothing.  Counted here as non-entangling on wire count; the
+      builder's flag disagrees and is noted above.
+    * CNOT is counted as ONE entangling primitive.  On a trapped ion it
+      is itself an MS plus local rotations, and no CNOT duration is
+      anchored in this repo, so the qubit-native entangling count is a
+      LOWER BOUND.
+    * The qudit 28-gate builder fuses QPS and QT.  QPS fusion is exact
+      (commuting projectors); QT fusion is NOT exact by commutation
+      ([|A><B|,|A><C|] = 1.0, measured) and rests on a multi-tone
+      hardware claim priced from step_qt_meth_aggcap.py.
+    * The 28-gate qudit builder is NOT the same builder as
+      build_qudit_trotter_step (which gives 36 unfused / 34 QPS-fused).
+      Comparing 28 against the qubit numbers mixes builders; stated here,
+      not resolved.
+
+  REPORT ONLY.  Nothing fixed.

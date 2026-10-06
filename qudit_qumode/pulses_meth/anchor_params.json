@@ -1,0 +1,386 @@
+{
+  "_readme": [
+    "Single hardware anchor for paper-facing results.",
+    "Every entry carries an explicit source tag; only meth_main / meth_si / bazavan_pra107",
+    "may back a paper-facing quantitative claim. Entries tagged 'assumed' must appear only",
+    "as internal cross-check inputs (never quoted as a Meth number).",
+    "Provenance schema: {value, unit, source, cite, reason?}.",
+    "  source ::= meth_main | meth_si | bazavan_pra107 | assumed",
+    "  cite   ::= 'page N', 'Table SX', 'Ext. Data Fig. N panel', 'Eq. (X)'",
+    "RQC/Yb+ numbers dropped from this file (previously in v5 handoff, internal only)."
+  ],
+  "ion": {
+    "species": {
+      "value": "40Ca+",
+      "unit": "-",
+      "source": "meth_main",
+      "cite": "page 1 & Methods p.8"
+    },
+    "qubit_manifold": {
+      "value": "4S1/2 ground, 3D5/2 excited (narrow quadrupole)",
+      "unit": "-",
+      "source": "meth_main",
+      "cite": "page 1 & Methods p.8"
+    },
+    "qudit_manifold": {
+      "value": "3D5/2 Zeeman sublevels only (S1/2 auxiliary |g>)",
+      "unit": "-",
+      "source": "meth_main",
+      "cite": "Methods p.8, Ext. Data Fig. 2a"
+    }
+  },
+  "trap": {
+    "axial_com_frequency_over_2pi_MHz": {
+      "value": 0.77,
+      "unit": "MHz",
+      "source": "meth_main",
+      "cite": "Methods p.8 'Realizing controlled rotations'"
+    },
+    "beam_angle_to_trap_axis_deg": {
+      "value": 22.5,
+      "unit": "deg",
+      "source": "meth_main",
+      "cite": "Methods p.8"
+    }
+  },
+  "coupling": {
+    "lamb_dicke_eta": {
+      "value": 0.041,
+      "unit": "-",
+      "source": "meth_main",
+      "cite": "Methods p.8"
+    },
+    "bsb_hamiltonian": {
+      "value": "H_j = i eta Omega_j (a^dag sigma+ + a sigma-) on |g><->|k>",
+      "unit": "-",
+      "source": "meth_main",
+      "cite": "Eq. (2), Methods p.8"
+    },
+    "demonstrated_bsb_rabi_over_2pi_kHz": {
+      "value": 4.0,
+      "unit": "kHz",
+      "source": "meth_main",
+      "cite": "Methods p.8 (S-1/2<->D-1/2 example, Ext. Data Fig. 2c)",
+      "reason": "Reported operating point for BSB Rabi. NOT a hardware maximum."
+    }
+  },
+  "coherence": {
+    "T1_D5_2_s": {
+      "value": 1.1,
+      "unit": "s",
+      "source": "meth_main",
+      "cite": "Ext. Data Fig. 2a"
+    },
+    "T2_optical_ms": {
+      "value": 92,
+      "unit": "ms",
+      "value_uncertainty": 9,
+      "source": "meth_main",
+      "cite": "Ext. Data Fig. 2a"
+    },
+    "motional_coherence_tau_ms": {
+      "value": 27.4,
+      "unit": "ms",
+      "value_uncertainty": 0.4,
+      "source": "meth_main",
+      "cite": "Methods p.8"
+    },
+    "heating_rate_phonons_per_s": {
+      "value": 2.7,
+      "unit": "phonons/s",
+      "value_uncertainty": 0.2,
+      "source": "meth_main",
+      "cite": "Methods p.8"
+    }
+  },
+  "ac_stark_spectator_shifts_kHz": {
+    "_note": "Ext. Data Fig. 2c, BSB on S-1/2<->D-1/2. Compensated in software by frame updates.",
+    "D_minus_5_2": {
+      "value": 1.9,
+      "unit": "kHz",
+      "value_uncertainty": 0.2,
+      "source": "meth_main",
+      "cite": "Ext. Data Fig. 2c"
+    },
+    "D_plus_1_2": {
+      "value": 1.4,
+      "unit": "kHz",
+      "value_uncertainty": 0.1,
+      "source": "meth_main",
+      "cite": "Ext. Data Fig. 2c"
+    },
+    "D_plus_3_2": {
+      "value": 5.3,
+      "unit": "kHz",
+      "value_uncertainty": 0.5,
+      "source": "meth_main",
+      "cite": "Ext. Data Fig. 2c"
+    },
+    "D_minus_3_2": {
+      "value": 0.0,
+      "unit": "kHz",
+      "source": "meth_main",
+      "cite": "Ext. Data Fig. 2c ('we measure no shift')"
+    }
+  },
+  "timing_paper_facing": {
+    "_authoritative_source": "meth_si Note IVc, page 5 \u00e2\u20ac\u201d physically derived from measured event durations.",
+    "_conflict_resolution": {
+      "primary_formula": "(d-2) * 3.5 + 1  ms",
+      "primary_source": "meth_si Note IVc, page 5",
+      "primary_derivation": "(d-1) detection events x 1 ms fluorescence + (d-2) inter-event re-cooling x (2 ms Doppler + 0.5 ms PGC) = (d-1)*1 + (d-2)*2.5 = (d-2)*3.5 + 1  ms.  Re-cooling is skipped after the last detection, which is why the (d-2) coefficient carries the re-cooling and the (d-1) carries the fluorescence.",
+      "secondary_formula": "(d-2) * 4  ms",
+      "secondary_source": "meth_si Note II, page 3 (rounded value inside a tradeoff sentence, not a measurement)",
+      "secondary_use": "table_SIII_reproduction_only \u00e2\u20ac\u201d invoke ONLY inside a validation script that reproduces SI Table SIII from its own rounded inputs; NEVER cite in a paper-facing runtime claim."
+    },
+    "readout_time_vs_d_ms": {
+      "formula": "(d-2) * 3.5 + 1",
+      "unit": "ms",
+      "source": "meth_si",
+      "cite": "Note IVc p.5 (physical derivation from event schedule)"
+    },
+    "readout_time_vs_d_ms__table_SIII_reproduction_only": {
+      "formula": "(d-2) * 4",
+      "unit": "ms",
+      "source": "meth_si",
+      "cite": "Note II p.3 (rounded tradeoff value)",
+      "paper_facing": false,
+      "use_only_when": "reproducing the numbers in SI Table SIII on their own terms"
+    },
+    "qubit_entangling_gate_time_ms": {
+      "value": 0.2,
+      "unit": "ms",
+      "source": "meth_si",
+      "cite": "Note II p.3"
+    },
+    "qudit_entangling_gate_time_ms": {
+      "value": "not_in_meth",
+      "unit": "ms",
+      "source": "assumed",
+      "reason": "SI never quotes a per-gate qudit entangling duration. Runtime cross-check uses only the total readout formula + Table SIII ratio."
+    },
+    "single_qudit_gate_time_ms": {
+      "value": "not_in_meth",
+      "unit": "ms",
+      "source": "assumed",
+      "reason": "Not quoted. Runtime tradeoff argument in SI Note II folds single-qudit ops into the same 'device' template that produced Tab. SIII."
+    }
+  },
+  "duration_reporting_rule": {
+    "rule": "Report T in units of 1/(eta*Omega) (or 1/Omega for carrier-only gates) wherever the gate time scales that way, and give the ms value only as an illustration at the stated Omega.",
+    "why": "sideband_omega_max_over_2pi_kHz (8 kHz) and carrier_omega_max_over_2pi_kHz (100 kHz) are 'assumed' fields (see hardware_bounds_NOT_in_meth). Every gate duration in absolute ms therefore inherits that assumption. Report a duration in Omega-invariant form and no paper claim rests on those assumed Omega values.",
+    "applies_to": [
+      "QPS carrier-only diagonal drive (T ~ 1/Omega)",
+      "QT, QCD, QCR, QT-SB sideband-driven blocks (T ~ 1/(eta*Omega))"
+    ],
+    "runtime_ratio_note": "The qudit/qubit runtime RATIO is Omega-independent when both encodings run on the same drive. Absolute qudit-encoding ms and absolute qubit-encoding ms both scale by 1/Omega, so their ratio is invariant. State this explicitly in the runtime section."
+  },
+  "circuit_scaling_meth": {
+    "_source_all": "meth_si Note II (page 2-3)",
+    "qed_matter_open_plaquette": {
+      "cnot_qudit_encoding": "18 + 4*(d-1)",
+      "cnot_qubit_encoding": "18 + 36*(d-1)",
+      "table": "SI Table SI",
+      "register_size_qudit_by_d": {
+        "3": 5,
+        "5": 5,
+        "7": 5
+      },
+      "register_size_qubit_by_d": {
+        "3": 7,
+        "5": 9,
+        "7": 11
+      }
+    },
+    "pure_gauge_periodic_plaquette": {
+      "cnot_qudit_encoding": "8",
+      "cnot_qubit_encoding": "48 + 12*d",
+      "table": "SI Table SII",
+      "register_size_qudit_by_d": {
+        "3": 3,
+        "5": 3,
+        "7": 3
+      },
+      "register_size_qubit_by_d": {
+        "3": 9,
+        "5": 15,
+        "7": 21
+      }
+    }
+  },
+  "relative_runtime_meth_table_SIII": {
+    "_source": "meth_si Table SIII (page 3)",
+    "_note": "'One execution' RELATIVE runtime, calculated for the device used in the main text.",
+    "open_boundary_conditions": {
+      "qudit_d_3": 1.0,
+      "qudit_d_5": 1.52,
+      "qudit_d_7": 2.04,
+      "qubit_d_3": 1.48,
+      "qubit_d_5": 2.26,
+      "qubit_d_7": 3.04
+    },
+    "periodic_boundary_conditions": {
+      "qudit_d_3": 1.0,
+      "qudit_d_5": 1.54,
+      "qudit_d_7": 2.08,
+      "qubit_d_3": 1.76,
+      "qubit_d_5": 2.08,
+      "qubit_d_7": 2.41
+    }
+  },
+  "sdf_recipe": {
+    "_purpose": "Basis for QCD conditioning and QCR/QT-SB pulse construction.",
+    "convention": {
+      "value": "sigma_z spin-dependent force (Bazavan bichromatic)",
+      "unit": "-",
+      "source": "bazavan_pra107",
+      "cite": "PRA 107, 022617 (2023)"
+    },
+    "bichromatic_phase": {
+      "value": "antisymmetric (tone_+ carries e^{-i zeta}, tone_- carries e^{+i zeta})",
+      "unit": "-",
+      "source": "bazavan_pra107",
+      "cite": "Eq. defining the SDF interaction"
+    },
+    "resonance_condition": {
+      "value": "beat note 2*delta locks to axial COM \u00cf\u2030_z; each tone detuned by \u00c2\u00b1delta from carrier",
+      "unit": "-",
+      "source": "bazavan_pra107",
+      "cite": "same section as above"
+    },
+    "diagonal_operator": {
+      "value": "sigma_z (natural for QCD level-diagonal projector; zero conjugation cost)",
+      "unit": "-",
+      "source": "derived",
+      "cite": "docs/sdf_zbasis.md"
+    }
+  },
+  "coherence_budget_paper_facing": {
+    "_rule": "Any single-pulse duration must satisfy T_pulse << motional_coherence_tau and T_pulse << T2_optical.",
+    "T_pulse_le_motional_us": {
+      "value": 2740,
+      "unit": "us",
+      "source": "meth_main",
+      "cite": "10% of tau=27.4 ms"
+    },
+    "T_pulse_le_optical_T2_us": {
+      "value": 9200,
+      "unit": "us",
+      "source": "meth_main",
+      "cite": "10% of T2=92 ms"
+    },
+    "heating_budget_phonons_per_pulse": {
+      "value": 0.014,
+      "unit": "phonons",
+      "source": "meth_main",
+      "cite": "heating rate 2.7/s times 5 ms envelope (Meth typical)"
+    }
+  },
+  "hardware_bounds_NOT_in_meth": {
+    "_note": "These parameters are NOT quoted in Meth main+SI. Used only as internal cross-check inputs, never as paper-facing headline numbers.",
+    "carrier_omega_max_over_2pi_kHz": {
+      "value": 100.0,
+      "unit": "kHz",
+      "source": "assumed",
+      "reason": "Consistent with Bazavan-class Ca+ trap. Rejects any pulse whose Omega_peak/2pi > 100 kHz."
+    },
+    "sideband_omega_max_over_2pi_kHz": {
+      "value": 8.0,
+      "unit": "kHz",
+      "source": "assumed",
+      "reason": "Demonstrated BSB Rabi is 4 kHz (Meth, SIDEBAND rate = \u03b7\u00b7\u03a9_carrier). Allow 2\u00d7 headroom (8 kHz sideband) before flagging saturation. NOT a carrier Rabi bound."
+    },
+    "detuning_range_over_2pi_MHz": {
+      "value": [
+        -2.0,
+        2.0
+      ],
+      "unit": "MHz",
+      "source": "assumed",
+      "reason": "Bounded by (i) staying below 2 * \u00cf\u2030_z = 1.54 MHz to keep single-mode picture, (ii) not sweeping across other Zeeman transitions ~few MHz away (Meth SI Note IVa)."
+    },
+    "awg_sample_rate_MSa_per_s": {
+      "value": 100.0,
+      "unit": "MSa/s",
+      "source": "assumed",
+      "reason": "Standard AWG for ion-trap control; sub-kHz slew is trivial at this rate."
+    },
+    "rise_fall_ns": {
+      "value": 100.0,
+      "unit": "ns",
+      "source": "assumed",
+      "reason": "AOM rise time typical of this class of experiment."
+    }
+  },
+  "internal_cross_check_only_do_NOT_quote": {
+    "_note": "RQC/Yb+ numbers previously carried in handoff v5. Retained here only as internal sanity ratio; MUST NOT appear in paper-facing tables.",
+    "rqc_yb_plus_dropped": true
+  },
+  "software_frame_updates": {
+    "observation": "Meth compensates spectator AC-Stark shifts in software via a per-state phase register with frame updates on subsequent operations.",
+    "sources": [
+      "Meth Methods p.8 (\"compensated for in software by frame updates on subsequent operations\")",
+      "Meth SI Note IVa (encoding chosen to make spectator shifts static, easily compensated by software frame updates)"
+    ],
+    "implication": "Frame-update / virtual-Z is native, calibrated, and used on-line on this hardware. This is INDEPENDENT support that QPS (= virtual-Z on the addressed level) commits zero physical time on both encodings, per the QPS README.",
+    "connects_to": [
+      "QPS/README.md",
+      "timing_paper_facing.qudit_entangling_gate_time_ms"
+    ]
+  },
+  "sideband_rabi_interpretation": {
+    "meth_reports_directly_the_sideband_rabi": true,
+    "evidence": "Meth Methods p.8 quotes \"AC Stark shifts on spectator levels for an excitation of the blue sideband of the S-1/2<->D-1/2 transition ... with a Rabi frequency 2\u03c0\u00d74 kHz\". The Rabi frequency IS the sideband Rabi (i.e., already \u03b7\u00b7\u03a9_carrier), not the carrier Rabi.",
+    "value_sideband_rabi_2pi_kHz": 4.0,
+    "value_carrier_rabi_2pi_kHz_derived": 97.5609756097561,
+    "sdf_rate_g_over_2pi_kHz_at_meth_bsb": 2.0,
+    "analytic_QCD_alpha_half_us_at_meth_bsb": 39.78873577297387
+  },
+  "per_pulse_hardware_overhead": {
+    "value": "not_in_meth",
+    "search_locations": [
+      "Meth main text",
+      "Meth SI Notes IVa-IVc",
+      "Ringbauer et al. Nat Phys 18 1053 (2022)"
+    ],
+    "search_result": "No per-pulse dead time, AWG/AOM switching time, or inter-pulse sequence overhead is quoted in Meth main+SI or Ringbauer 2022. Only individual pulse durations (t_pi, gate times) and total sequence times (readout, cooling) appear.",
+    "implication": "Absolute headline durations at the sub-microsecond level are NOT MEANINGFUL without this figure. Report sub-us times only as internal analytic values, not as paper claims.",
+    "paper_facing_rule": "Never quote a sub-microsecond gate time as the paper number. If T_ideal + rise/fall lands below 1 microsecond, either quote \"< 1 us, overhead-limited\" or defer the absolute headline until per-pulse overhead is measured."
+  },
+  "meth_c_rot_time_model": {
+    "from_user_specification": true,
+    "B_theta_phi_time": "t(theta) = theta / (2 * Omega_BSB)",
+    "t_pi": "t_pi = pi / (2 * Omega_BSB)",
+    "general_C_ROT_structure": "control mapping = B(pi, 0) and B(-pi, 0), 2*t_pi FIXED; target sequence = B(pi, 0), B(theta, phi), B(-pi, 0), contributing 2*t_pi + t(theta). Total = 4*t_pi + t(theta).",
+    "known_input_C_ROT": "1 fixed pi + 1 theta-scaled BSB pulse = t_pi + t(theta) (n_BSB = 2).",
+    "convention_note": "Under the user-specified formula, Omega_BSB is angular Rabi frequency (rad/s). At Omega_BSB = 2*pi*4 kHz: t_pi = 62.5 us, t(theta) = 19.9*theta us/rad."
+  },
+  "sources_extended": {
+    "choi_arxiv2601": {
+      "reference": "Choi et al., arXiv:2601.04591",
+      "system": "171Yb+, two radial modes",
+      "covers": "QCR / SDR conditional-Kerr; single off-resonant tone on red sideband",
+      "measured_values": {
+        "Omega_c_2pi_kHz": 100,
+        "eta_1": 0.1,
+        "eta_2": 0.087,
+        "delta_50_kHz_chi_2pi_Hz": -471,
+        "delta_50_uncert": 15,
+        "delta_100_kHz_chi_2pi_Hz": -246,
+        "delta_100_uncert": 9
+      },
+      "validates_our_QCR_formula": "chi = Omega_sb^2/(4 delta) = eta^2 Omega_c^2/(4 delta) \u2014 algebraically identical to Choi; predictions match within ~2 sigma at both delta values.",
+      "ac_stark_cancellation": "two-segment sequence split by microwave pi pulse, t1/t2 = delta1/delta2; adds ~2x overhead vs single-segment."
+    }
+  },
+  "QCR_experimental_anchor": {
+    "status": "experimentally anchored (not theory-only) as of this anchor update",
+    "primary_experimental_source": "Choi arXiv:2601.04591 (171Yb+); validates chi formula within error",
+    "operator_mapping_reference": "Paper ISA QCR gate is Pi_l-conditioned: U_QCR(theta,l) = exp(-i theta Pi_l (x) n), Pi_l = |l><l| (only |l> rotates; |g> and any spectators inert; verified at d=3, hypulse_validation/qcr_d3_spectator_audit.json, F=1, spectator phase 0). The Choi SDR / sigma_z / Xi_l form is the HARDWARE INTERMEDIATE (native dispersive light shift is symmetric on {g,l}); the difference between Pi_l = (I - sigma_z)/2 and (-sigma_z/2) is an unconditional mode rotation, absorbed into the free mode frame, so T_QCR = T_CR = theta/chi at bound saturation. Conditional phase per photon differs by 2x between conventions (Pi_l: theta; sigma_z/Xi_l: 2*theta); all paper numbers use the Pi_l convention.",
+    "ac_stark_cancellation_included": true,
+    "paper_facing_T_QCR_us": 55.93,
+    "paper_facing_T_QCR_overhead_note": "2 segments at Meth anchor Omega_BSB=4 kHz + microwave pi. t_pi = pi/Omega = 5 us at Omega/2pi = 100 kHz, ASSUMED (Ringbauer-class carrier; Omega not measured in Meth).",
+    "no_snap_realization_on_trapped_ions": "Confirmed by Liu et al. PRX Quantum 7, 010201 (2026): no direct SNAP on trapped ions due to lack of dispersive coupling; must synthesize from sideband transitions.",
+    "hypulse_status": "simulation only; no experimental calibration on selected apparatus (hardware_pulse_benchmark_ca40 audit)"
+  }
+}

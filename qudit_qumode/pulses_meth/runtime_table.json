@@ -1,0 +1,236 @@
+{
+  "generated_by": "pulses_meth/hypulse_validation/step_runtime_table.py",
+  "note": "Machine-readable twin of runtime_table.md.  Same `rows` object renders both, so a mismatch is impossible by construction.",
+  "conventions": {
+    "j_per_ms": 2,
+    "j_per_ms_rationale": "H_J = g(XX+YY)/2; one MS window gives only sigma_phi (x) sigma_phi, so XX+YY needs two. Exact since [XX,YY]=0. results/j_ms_convention.txt",
+    "jl_windows": 1,
+    "jl_note": "H_Jl held at ONE MS window; its decomposition-based price is print-only and NOT adopted.",
+    "figgatt_windows": {
+      "defensible_floor": 5,
+      "favourable_bound": 3
+    },
+    "qudit_convention": "34 (11Nc+1, QPS fused only; QPS fusion is exact)",
+    "qudit_convention_alt": "28 (7Nc+7) additionally fuses QT, which is NOT exact: max|[Sigma_AB,Sigma_AC]| = 1.0. Reported as a labelled extra row only.",
+    "qt_bounds_us": [
+      0.105,
+      11.0
+    ]
+  },
+  "gate_times_us": {
+    "QCD": 2.5664000000000002,
+    "QCR": 55.93,
+    "QT_SB": 0.649351,
+    "rotation": 5.0,
+    "MS": 200.0,
+    "QPS": 0.0,
+    "rz": 0.0
+  },
+  "tau_motional_us": 27400.0,
+  "rows": [
+    {
+      "Nc": 3,
+      "T_qudit_lo_us": 397.829902,
+      "T_qudit_hi_us": 441.409902,
+      "T_qubit_seq_us": 2396.1112,
+      "T_qubit_figgatt5_us": 1396.1112,
+      "T_qubit_figgatt3_us": 996.1112,
+      "ratio_seq": [
+        5.428313205352606,
+        6.022954001079587
+      ],
+      "ratio_figgatt5": [
+        3.162845223168555,
+        3.50931690398677
+      ],
+      "ratio_figgatt3": [
+        2.2566580302949344,
+        2.503862065149643
+      ],
+      "T_qudit28_lo_us": 397.61990199999997,
+      "T_qudit28_hi_us": 419.409902,
+      "ratio28_seq": [
+        5.713053479600489,
+        6.026134979531281
+      ],
+      "qudit_counts": {
+        "Rotation": 8,
+        "QCR": 6,
+        "QCD": 8,
+        "QT_SB": 2,
+        "QPS": 6,
+        "QT_multi": 4
+      },
+      "qudit_counts_28": {
+        "Rotation": 8,
+        "QCR": 6,
+        "QCD": 8,
+        "QT_SB": 2,
+        "QPS": 2,
+        "QT_multi": 2
+      },
+      "qubit_counts": {
+        "QCR": 6,
+        "QCD": 8,
+        "Rotation": 8,
+        "rz": 4,
+        "MS_J": 4,
+        "MS_Jl": 2
+      },
+      "ms_windows": 10
+    },
+    {
+      "Nc": 6,
+      "T_qudit_lo_us": 781.386355,
+      "T_qudit_hi_us": 890.336355,
+      "T_qubit_seq_us": 5777.0896,
+      "T_qubit_figgatt5_us": 1777.0896,
+      "T_qubit_figgatt3_us": 1377.0896,
+      "ratio_seq": [
+        6.4886596706477295,
+        7.3933842881093055
+      ],
+      "ratio_figgatt5": [
+        1.9959755546542857,
+        2.2742777482977674
+      ],
+      "ratio_figgatt3": [
+        1.5467071430549413,
+        1.7623670943166139
+      ],
+      "T_qudit28_lo_us": 780.5463550000001,
+      "T_qudit28_hi_us": 802.336355,
+      "ratio28_seq": [
+        7.200333830068065,
+        7.401340821071415
+      ],
+      "qudit_counts": {
+        "Rotation": 14,
+        "QCR": 12,
+        "QCD": 14,
+        "QT_SB": 5,
+        "QPS": 12,
+        "QT_multi": 10
+      },
+      "qudit_counts_28": {
+        "Rotation": 14,
+        "QCR": 12,
+        "QCD": 14,
+        "QT_SB": 5,
+        "QPS": 2,
+        "QT_multi": 2
+      },
+      "qubit_counts": {
+        "QCR": 12,
+        "QCD": 14,
+        "Rotation": 14,
+        "rz": 10,
+        "MS_J": 10,
+        "MS_Jl": 5
+      },
+      "ms_windows": 25
+    },
+    {
+      "Nc": 8,
+      "T_qudit_lo_us": 1037.090657,
+      "T_qudit_hi_us": 1189.620657,
+      "T_qubit_seq_us": 8031.0752,
+      "T_qubit_figgatt5_us": 2031.0752,
+      "T_qubit_figgatt3_us": 1631.0752,
+      "ratio_seq": [
+        6.750954728924147,
+        7.743850690190916
+      ],
+      "ratio_figgatt5": [
+        1.707330137593601,
+        1.9584355391603918
+      ],
+      "ratio_figgatt3": [
+        1.3710884981715648,
+        1.572741195758357
+      ],
+      "T_qudit28_lo_us": 1035.830657,
+      "T_qudit28_hi_us": 1057.620657,
+      "ratio28_seq": [
+        7.593530957291051,
+        7.7532704267122305
+      ],
+      "qudit_counts": {
+        "Rotation": 18,
+        "QCR": 16,
+        "QCD": 18,
+        "QT_SB": 7,
+        "QPS": 16,
+        "QT_multi": 14
+      },
+      "qudit_counts_28": {
+        "Rotation": 18,
+        "QCR": 16,
+        "QCD": 18,
+        "QT_SB": 7,
+        "QPS": 2,
+        "QT_multi": 2
+      },
+      "qubit_counts": {
+        "QCR": 16,
+        "QCD": 18,
+        "Rotation": 18,
+        "rz": 14,
+        "MS_J": 14,
+        "MS_Jl": 7
+      },
+      "ms_windows": 35
+    },
+    {
+      "Nc": 12,
+      "T_qudit_lo_us": 1548.499261,
+      "T_qudit_hi_us": 1788.189261,
+      "T_qubit_seq_us": 12539.0464,
+      "T_qubit_figgatt5_us": 2539.0464,
+      "T_qubit_figgatt3_us": 2139.0464,
+      "ratio_seq": [
+        7.012147244966594,
+        8.097547551880943
+      ],
+      "ratio_figgatt5": [
+        1.4198980249887543,
+        1.6396820224249369
+      ],
+      "ratio_figgatt3": [
+        1.1962080561896407,
+        1.3813674012466968
+      ],
+      "T_qudit28_lo_us": 1546.399261,
+      "T_qudit28_hi_us": 1568.189261,
+      "ratio28_seq": [
+        7.9958756967919316,
+        8.108543968063884
+      ],
+      "qudit_counts": {
+        "Rotation": 26,
+        "QCR": 24,
+        "QCD": 26,
+        "QT_SB": 11,
+        "QPS": 24,
+        "QT_multi": 22
+      },
+      "qudit_counts_28": {
+        "Rotation": 26,
+        "QCR": 24,
+        "QCD": 26,
+        "QT_SB": 11,
+        "QPS": 2,
+        "QT_multi": 2
+      },
+      "qubit_counts": {
+        "QCR": 24,
+        "QCD": 26,
+        "Rotation": 26,
+        "rz": 22,
+        "MS_J": 22,
+        "MS_Jl": 11
+      },
+      "ms_windows": 55
+    }
+  ]
+}

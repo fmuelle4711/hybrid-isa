@@ -1,0 +1,132 @@
+========================================================================================================
+RUNTIME REGENERATION ON THE PER-INSTANCE BASE
+========================================================================================================
+  commit 2129848
+  source of every row: the compiled tapes, via scripts/appendix_d_tables_tex.py
+
+0  VERIFICATION -- closed-form counts against the Nc=3 tape
+   all 6 qudit and 9 qubit closed forms reproduce the tape at Nc=3.
+   tape totals  qudit 36 (16Nc-12 = 36)   qubit 70 (38Nc-44 = 70)
+   logical      qudit 34   qubit 32   (two qudit Z_d fuse, so 36 tape rows carry 34 ISA ops)
+
+========================================================================================================
+1  PER-CLASS SUMMARY AT Nc = 3  (this is the summary table)
+========================================================================================================
+  QUDIT
+    class      rule   count        n   mean T (us)   total (us)
+    Rotation   R1     4Nc-4        8        5.0000      40.0000
+    C_Pi R     R2     2Nc          6       25.0000     150.0000
+    C_Pi_z D   R3     4Nc-4        8        2.2338      17.8701
+    X_E        R4     2(Nc-1)      4        0.3321       1.3284
+    C_Pi_x D   R5     2(Nc-2)      2        0.6494       1.2987
+    Z_d        R6     2(Nc+1)      8        0.0000       0.0000
+                                             TOTAL     210.4971
+
+  QUBIT
+    class      rule   count        n   mean T (us)   total (us)
+    Rotation   R1     4Nc-4        8        5.0000      40.0000
+    CR         R2     2Nc          6       25.0000     150.0000
+    CD         R3     4Nc-4        8        2.2338      17.8701
+    CD_Jl      R8     4(Nc-2)      4        0.0000       0.0000
+    r_z        R6     6(Nc-1)     12        0.0000       0.0000
+    MS XX      R7     2(Nc-1)      4      200.0000     800.0000
+    MS YY      R7     2(Nc-1)      4      200.0000     800.0000
+    H          R8     8(Nc-1)     16        0.0000       0.0000
+    CNOT       R8     4(Nc-1)      8        0.0000       0.0000
+    J_l window R7     (Nc-1)       2      200.0000     400.0000
+                                             TOTAL    2207.8701
+
+  reference totals   qudit 210.4971   qubit 2207.8701   ratio 10.4888
+  multitone qudit    209.4600   ratio 10.5408
+    X_E    2 blocks 0.9406 us, each 2*sqrt(sum theta^2)/(0.07 Omega_c) at the aggregate field (was 1.3284 over 4 sequential tones)
+    C_PixD 1 block  0.6494 us, the summed exponential (was 1.2987 over 2)
+    Z_d fuses too but is virtual either way, T = 0.
+
+========================================================================================================
+2  PROJECTION TO LARGER Nc   (PROJECTED, not compiled -- see header)
+========================================================================================================
+   Nc  qudit ops  qubit ops     T_qubit  MS win    T_qudit   ratio       T_mt  ratio_mt
+    3         34         32      2207.9      10      210.5    10.5      209.5      10.5
+    6         82         80      6044.7      28      453.2    13.3      446.3      13.5
+    8        114        112      8602.5      40      615.0    14.0      604.1      14.2
+   12        178        176     13718.3      64      938.6    14.6      919.9      14.9
+
+  AUDITED CHAIN COUNTS.  Rotation and the R3 conditional
+  displacement are both 4Nc-4: one mode free evolution per mode
+  per half step over the 2Nc-2 modes, and per site one R3 on its
+  high mode (Vu Eq. 20 term 2) plus one on its low mode (Eq. 21
+  term 1) with the two boundary low modes dropped.  The qubit CD
+  is split by rule, 4Nc-4 real ones at R3 and 4(Nc-2) zero-time
+  ones inside the J_l; blending them diluted the mean by 12/8.
+  Closed forms: qudit ISA 16Nc-14, qubit logical 16Nc-16,
+  multitone 10Nc-3, MS windows 6Nc-8.  T0 is now identical on
+  both sides, so T0_qubit - T0_qudit = 0 at every Nc.
+
+  The link term C_Pi_x D, and the qubit J_l that
+  mirrors it, are counted 2(Nc-2) per step, not Nc-1: Vu Eq. 21
+  gives every bond two vibronic link terms, one per endpoint
+  low-frequency mode, and Eq. 52 drops the two boundary modes, so
+  the end bonds keep one each and interior bonds two.  The MS-window
+  column is therefore 4(Nc-1) + 2(Nc-2) = 6Nc-8, giving 10/28/40/64.
+  At Nc = 3 that is 10, unchanged, because both bonds are end bonds
+  and 2(Nc-2) = Nc-1 = 2.  See results/cluster_bound.md section 5b.
+
+========================================================================================================
+3  DETUNING SWEEP ON THE AMPLITUDE-CALIBRATED BASE
+========================================================================================================
+  reading the delta grid from results\qcr_delta_sweep.txt
+  Its 1-F and leakage columns are SUPERSEDED: they were measured at
+  the uncalibrated amplitude and the formula duration, neither of
+  which this table now uses.
+    read  delta   20 kHz   Om/del 0.200   T  12.732 us   1-F(fit+VZ) 4.687000e-02   leak P(g) 1.353100e-01
+    read  delta   30 kHz   Om/del 0.133   T  19.099 us   1-F(fit+VZ) 3.783600e-02   leak P(g) 9.850800e-02
+    read  delta   40 kHz   Om/del 0.100   T  25.465 us   1-F(fit+VZ) 2.840300e-03   leak P(g) 1.840200e-03
+    read  delta   60 kHz   Om/del 0.067   T  38.197 us   1-F(fit+VZ) 9.188500e-03   leak P(g) 2.212100e-02
+    read  delta   80 kHz   Om/del 0.050   T  50.930 us   1-F(fit+VZ) 2.716300e-03   leak P(g) 1.968700e-03
+
+  reading the calibrated sweep from results\cpir_amplitude_sweep.txt
+    read  delta   20 kHz   T  50.000 us   Om_sb/2pi  2.058 kHz   Om_sb/delta 0.1029   leak 1.28e-03   six-gate  300.000 us
+    read  delta   30 kHz   T  33.333 us   Om_sb/2pi  3.087 kHz   Om_sb/delta 0.1029   leak 1.28e-03   six-gate  200.000 us
+    read  delta   40 kHz   T  25.000 us   Om_sb/2pi  4.116 kHz   Om_sb/delta 0.1029   leak 1.28e-03   six-gate  150.000 us
+    read  delta   60 kHz   T  16.667 us   Om_sb/2pi  6.174 kHz   Om_sb/delta 0.1029   leak 1.28e-03   six-gate  100.000 us
+    read  delta   80 kHz   T  12.500 us   Om_sb/2pi  8.232 kHz   Om_sb/delta 0.1029   leak 1.28e-03   six-gate   75.000 us
+
+  NOTE: leak and Omega_sb/delta are IDENTICAL at every detuning.
+  That is exact in this model, not a coincidence.  With
+  T = 2*pi/delta the required amplitude is
+  Omega_sb = delta sqrt(2 theta/pi), so Omega_sb/delta = sqrt(2 theta/pi)
+  and delta*T = 2*pi are both independent of delta, so in the
+  simulated drive model the whole gate is the same evolution up to a
+  rescaling of time.  Under this rule the detuning buys duration and
+  costs laser power rather than trading against fidelity, which is
+  what the published sweep column showed.  Fixed hardware
+  frequencies absent from the model can break that.
+
+   delta    T (us)  Om_sb/2pi   Om/del      leak    T_qudit    T_qubit   ratio
+      20    50.000      2.058   0.1029  1.28e-03      360.5     2357.9     6.5
+      30    33.333      3.087   0.1029  1.28e-03      260.5     2257.9     8.7
+      40    25.000      4.116   0.1029  1.28e-03      210.5     2207.9    10.5
+      60    16.667      6.174   0.1029  1.28e-03      160.5     2157.9    13.4
+      80    12.500      8.232   0.1029  1.28e-03      135.5     2132.9    15.7
+
+  The slope REVERSES relative to the published table.  That priced
+  T = theta/chi, which grows with delta, so a smaller detuning gave
+  a shorter gate and a better ratio.  Here T = 2*pi/delta, so a
+  smaller
+  detuning gives a LONGER gate and a worse ratio, while asking for
+  less laser power.
+
+========================================================================================================
+4  DERIVED VALUES THE MANUSCRIPT QUOTES ELSEWHERE
+========================================================================================================
+  R1 removed from BOTH sides (the 5.0 us rotation assumption):
+    qudit 210.4971 - 40.0 = 170.4971
+    qubit 2207.8701 - 40.0 = 2167.8701
+    ratio 12.7150  -> 12.7   (was quoted as '9.9 to 12.4' on the bracketed base)
+  R1 share of the qudit step: 19.0% of 210.5; of the qubit step 1.8% of 2207.9
+  sweep ratio endpoints: 6.5 at 20 kHz, 15.7 at 80 kHz
+  ratio across Nc: 10.5 at Nc=3 -> 14.6 at Nc=12
+
+  wrote results/runtime_final_regen.tex
+
+  READ ONLY.  No adoption.

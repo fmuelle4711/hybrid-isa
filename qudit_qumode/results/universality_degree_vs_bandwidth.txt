@@ -1,0 +1,72 @@
+========================================================================================================
+UNIVERSALITY DIAGNOSTIC: IS BANDWIDTH 3 THE SAME AS DEGREE 3?
+========================================================================================================
+  The reported 'max polynomial degree' column is matrix bandwidth
+  (verification/universality_closure_check.py, max_bandwidth_1mode).
+  Bandwidth 3 does not bound polynomial degree: n^k is bandwidth 0 at
+  any degree.  Tested here by a dimension count instead.
+
+--------------------------------------------------------------------------------------------------------
+  N = 6   (operator space 24 x 24, u(dN) has dim 576)
+    canonical space  u(4) (x) monomials deg<=3 : 16 x 10 = 160 generators, span dim = 160
+    Lie closure dims per iteration: [12, 29, 105, 375]
+    iteration-3 span dim = 375
+    max bandwidth over those 375 elements = 3   (this is the number the doc calls 'max degree')
+    dim span(canonical + closure) = 379
+    -> 219 closure directions lie OUTSIDE the cubic space
+    DECISIVE: 375 > 160, so the span cannot be
+    contained in u(4) (x) cubic polynomials.  Operators of
+    polynomial degree >= 4 are present while the bandwidth
+    metric still reports 3.
+
+--------------------------------------------------------------------------------------------------------
+  N = 8   (operator space 32 x 32, u(dN) has dim 1024)
+    canonical space  u(4) (x) monomials deg<=3 : 16 x 10 = 160 generators, span dim = 160
+    Lie closure dims per iteration: [12, 29, 105, 375]
+    iteration-3 span dim = 375
+    max bandwidth over those 375 elements = 3   (this is the number the doc calls 'max degree')
+    dim span(canonical + closure) = 379
+    -> 219 closure directions lie OUTSIDE the cubic space
+    DECISIVE: 375 > 160, so the span cannot be
+    contained in u(4) (x) cubic polynomials.  Operators of
+    polynomial degree >= 4 are present while the bandwidth
+    metric still reports 3.
+
+--------------------------------------------------------------------------------------------------------
+  N = 10   (operator space 40 x 40, u(dN) has dim 1600)
+    canonical space  u(4) (x) monomials deg<=3 : 16 x 10 = 160 generators, span dim = 160
+    Lie closure dims per iteration: [12, 29, 105, 375]
+    iteration-3 span dim = 375
+    max bandwidth over those 375 elements = 3   (this is the number the doc calls 'max degree')
+    dim span(canonical + closure) = 379
+    -> 219 closure directions lie OUTSIDE the cubic space
+    DECISIVE: 375 > 160, so the span cannot be
+    contained in u(4) (x) cubic polynomials.  Operators of
+    polynomial degree >= 4 are present while the bandwidth
+    metric still reports 3.
+
+========================================================================================================
+CONCLUSION
+========================================================================================================
+  The 'max polynomial degree' column measures matrix bandwidth, and the
+  iteration-3 span provably exits the cubic polynomial space, so the
+  two are not the same quantity.
+
+  WHAT SURVIVES.  Only the bare observation that the per-iteration dims
+  are identical at N = 6, 8, 10.  No inference about truncation follows
+  from it: three cutoffs agreeing is consistent with all three carrying
+  the same artefact, and the safe-interior window mitigates boundary
+  leakage without proving its absence.
+
+  WHAT DOES NOT.  The inference 'bandwidth 3 -> polynomial degree 3 ->
+  non-Gaussian resource' does not follow, and the N-independence of the
+  dims does not license it either.  The claim that the numerical ranks
+  rule out a truncation artifact should be restated as a claim about
+  bandwidth, or dropped, until degree is measured directly.
+
+  CHEAPEST ROUTE TO A REAL DEGREE STATEMENT.  Project each closure
+  element onto Weyl-symmetrised monomials of increasing degree and
+  report the smallest max_deg whose span contains the closure.  That is
+  the same linear algebra as above, run over max_deg = 3, 4, 5, ...
+
+  NO ADOPTION.  This script edits nothing else.

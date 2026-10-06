@@ -1,0 +1,6 @@
+# SPDX-FileCopyrightText: 2025 Battelle Memorial Institute
+# SPDX-License-Identifier: BSD-2-Clause
+[pytest]
+markers = [
+    "slow: marks tests as slow (deselect with '-m \"not slow\"')",
+]

@@ -1,0 +1,139 @@
+====================================================================================================================
+QT-SB DURATION SWEEP AT THE CIRCUIT ANGLE -- where does the gate start working?
+====================================================================================================================
+  theta = 0.0015  (params.py:16-17 via step_qtsb_meth.py:5-9)
+  motional period 2pi/nu = 1.298701 us
+  Omega_c = 0.612993689 rad/us   eta = 0.041
+  bandwidth target = 500 kHz, K_max = floor(BW*T) per T
+  criterion: shortest T with err/signal < 0.1
+
+  BASELINES for context (results/qtsb_constrained_circuit.txt):
+    priced T = 0.0597 us : K_max = 0, optimiser -> ~identity, err/signal = 0.9886
+
+====================================================================================================================
+T = 0.05 motional periods = 0.064935 us
+====================================================================================================================
+  K_max = floor(500000 * 6.4935e-08) = 0   -> 1 coeff/quadrature, 2 free parameters
+  analytic flat amplitude |c| = theta/(eta*T) = 5.634146e-01 rad/us  (91.912% of Omega_c)
+  UNOPTIMISED analytic flat : 1-F_vz = 8.554952e-04  leak = 4.765228e-06  err/signal = 325.9034
+    seed=analytic  it=   4  1-F_raw=2.595312e-06  1-F_vz=2.595312e-06  leak=1.687276e-06  err/sig=0.9887  max|c|=3.303841e-03  BW=0.0kHz  (7s)
+    seed=rand1     it=   4  1-F_raw=2.595312e-06  1-F_vz=2.595312e-06  leak=1.687276e-06  err/sig=0.9887  max|c|=3.303841e-03  BW=0.0kHz  (8s)
+  BEST: 1-F_vz = 2.595312e-06  err/signal = 0.9887  
+
+====================================================================================================================
+T = 0.1 motional periods = 0.129870 us
+====================================================================================================================
+  K_max = floor(500000 * 1.2987e-07) = 0   -> 1 coeff/quadrature, 2 free parameters
+  analytic flat amplitude |c| = theta/(eta*T) = 2.817073e-01 rad/us  (45.956% of Omega_c)
+  UNOPTIMISED analytic flat : 1-F_vz = 7.738267e-04  leak = 4.008875e-06  err/signal = 294.7915
+    seed=analytic  it=   4  1-F_raw=2.597950e-06  1-F_vz=2.597950e-06  leak=1.687301e-06  err/sig=0.9897  max|c|=1.658196e-03  BW=0.0kHz  (8s)
+    seed=rand1     it=   4  1-F_raw=2.597950e-06  1-F_vz=2.597950e-06  leak=1.687301e-06  err/sig=0.9897  max|c|=1.658196e-03  BW=0.0kHz  (18s)
+  BEST: 1-F_vz = 2.597950e-06  err/signal = 0.9897  
+
+====================================================================================================================
+T = 0.15 motional periods = 0.194805 us
+====================================================================================================================
+  K_max = floor(500000 * 1.9481e-07) = 0   -> 1 coeff/quadrature, 2 free parameters
+  analytic flat amplitude |c| = theta/(eta*T) = 1.878049e-01 rad/us  (30.637% of Omega_c)
+  UNOPTIMISED analytic flat : 1-F_vz = 6.515678e-04  leak = 2.927839e-06  err/signal = 248.2166
+    seed=analytic  it=   5  1-F_raw=2.601426e-06  1-F_vz=2.601426e-06  leak=1.687332e-06  err/sig=0.9910  max|c|=1.124895e-03  BW=0.0kHz  (18s)
+    seed=rand1     it=   5  1-F_raw=2.601426e-06  1-F_vz=2.601426e-06  leak=1.687332e-06  err/sig=0.9910  max|c|=1.124898e-03  BW=0.0kHz  (35s)
+  BEST: 1-F_vz = 2.601426e-06  err/signal = 0.9910  
+
+====================================================================================================================
+T = 0.2 motional periods = 0.259740 us
+====================================================================================================================
+  K_max = floor(500000 * 2.5974e-07) = 0   -> 1 coeff/quadrature, 2 free parameters
+  analytic flat amplitude |c| = theta/(eta*T) = 1.408537e-01 rad/us  (22.978% of Omega_c)
+  UNOPTIMISED analytic flat : 1-F_vz = 5.065293e-04  leak = 1.741861e-06  err/signal = 192.9638
+    seed=analytic  it=   3  1-F_raw=2.604595e-06  1-F_vz=2.604595e-06  leak=1.687361e-06  err/sig=0.9922  max|c|=8.908901e-04  BW=0.0kHz  (32s)
+    seed=rand1     it=   3  1-F_raw=2.604594e-06  1-F_vz=2.604594e-06  leak=1.687361e-06  err/sig=0.9922  max|c|=8.904867e-04  BW=0.0kHz  (8s)
+  BEST: 1-F_vz = 2.604594e-06  err/signal = 0.9922  
+
+====================================================================================================================
+T = 0.3 motional periods = 0.389610 us
+====================================================================================================================
+  K_max = floor(500000 * 3.8961e-07) = 0   -> 1 coeff/quadrature, 2 free parameters
+  analytic flat amplitude |c| = theta/(eta*T) = 9.390244e-02 rad/us  (15.319% of Omega_c)
+  UNOPTIMISED analytic flat : 1-F_vz = 2.251531e-04  leak = 1.028342e-07  err/signal = 85.7727
+    seed=analytic  it=   3  1-F_raw=2.603523e-06  1-F_vz=2.603523e-06  leak=1.687348e-06  err/sig=0.9918  max|c|=9.133863e-04  BW=0.0kHz  (49s)
+    seed=rand1     it=   3  1-F_raw=2.603523e-06  1-F_vz=2.603523e-06  leak=1.687348e-06  err/sig=0.9918  max|c|=9.133880e-04  BW=0.0kHz  (17s)
+  BEST: 1-F_vz = 2.603523e-06  err/signal = 0.9918  
+
+====================================================================================================================
+T = 0.5 motional periods = 0.649351 us
+====================================================================================================================
+  K_max = floor(500000 * 6.4935e-07) = 0   -> 1 coeff/quadrature, 2 free parameters
+  analytic flat amplitude |c| = theta/(eta*T) = 5.634146e-02 rad/us  (9.191% of Omega_c)
+  UNOPTIMISED analytic flat : 1-F_vz = 3.452386e-09  leak = 6.518983e-09  err/signal = 0.0013
+    seed=analytic  it=   2  1-F_raw=3.438474e-09  1-F_vz=3.438474e-09  leak=1.244006e-09  err/sig=0.0013  max|c|=5.647141e-02  BW=0.0kHz  (7s)
+    seed=rand1     it=   3  1-F_raw=3.438494e-09  1-F_vz=3.438494e-09  leak=1.244019e-09  err/sig=0.0013  max|c|=5.647142e-02  BW=0.0kHz  (10s)
+  BEST: 1-F_vz = 3.438474e-09  err/signal = 0.0013  *** MEETS err/signal < 0.1 ***
+
+====================================================================================================================
+T = 1.0 motional periods = 1.298701 us
+====================================================================================================================
+  K_max = floor(500000 * 1.2987e-06) = 0   -> 1 coeff/quadrature, 2 free parameters
+  analytic flat amplitude |c| = theta/(eta*T) = 2.817073e-02 rad/us  (4.596% of Omega_c)
+  UNOPTIMISED analytic flat : 1-F_vz = 3.820899e-11  leak = 8.548046e-09  err/signal = 0.0000
+    seed=analytic  it=   3  1-F_raw=3.113398e-12  1-F_vz=3.113398e-12  leak=3.760845e-09  err/sig=0.0000  max|c|=2.827381e-02  BW=0.0kHz  (59s)
+    seed=rand1     it=   4  1-F_raw=3.156031e-12  1-F_vz=3.156031e-12  leak=3.785298e-09  err/sig=0.0000  max|c|=2.827402e-02  BW=0.0kHz  (32s)
+  BEST: 1-F_vz = 3.113398e-12  err/signal = 0.0000  *** MEETS err/signal < 0.1 ***
+
+====================================================================================================================
+T = 2.0 motional periods = 2.597403 us
+====================================================================================================================
+  K_max = floor(500000 * 2.5974e-06) = 1   -> 3 coeff/quadrature, 6 free parameters
+  analytic flat amplitude |c| = theta/(eta*T) = 1.408537e-02 rad/us  (2.298% of Omega_c)
+  UNOPTIMISED analytic flat : 1-F_vz = 3.790268e-11  leak = 8.505852e-09  err/signal = 0.0000
+    seed=analytic  it=   7  1-F_raw=3.059442e-12  1-F_vz=3.059442e-12  leak=3.805983e-09  err/sig=0.0000  max|c|=1.442700e-02  BW=385.0kHz  (24s)
+    seed=rand1     it=   3  1-F_raw=3.312273e-11  1-F_vz=2.885592e-11  leak=3.787404e-09  err/sig=0.0000  max|c|=2.371101e-02  BW=385.0kHz  (40s)
+  BEST: 1-F_vz = 3.059442e-12  err/signal = 0.0000  *** MEETS err/signal < 0.1 ***
+
+====================================================================================================================
+T = 5.0 motional periods = 6.493506 us
+====================================================================================================================
+  K_max = floor(500000 * 6.4935e-06) = 3   -> 7 coeff/quadrature, 14 free parameters
+  analytic flat amplitude |c| = theta/(eta*T) = 5.634146e-03 rad/us  (0.919% of Omega_c)
+  UNOPTIMISED analytic flat : 1-F_vz = 3.781386e-11  leak = 8.494038e-09  err/signal = 0.0000
+    seed=analytic  it=   4  1-F_raw=3.027134e-12  1-F_vz=3.027134e-12  leak=3.785875e-09  err/sig=0.0000  max|c|=5.654712e-03  BW=462.0kHz  (16s)
+    seed=rand1     it=  12  1-F_raw=3.497425e-12  1-F_vz=3.497425e-12  leak=3.768724e-09  err/sig=0.0000  max|c|=1.125370e-02  BW=462.0kHz  (65s)
+  BEST: 1-F_vz = 3.027134e-12  err/signal = 0.0000  *** MEETS err/signal < 0.1 ***
+
+====================================================================================================================
+T = 10.0 motional periods = 12.987013 us
+====================================================================================================================
+  K_max = floor(500000 * 1.2987e-05) = 6   -> 13 coeff/quadrature, 26 free parameters
+  analytic flat amplitude |c| = theta/(eta*T) = 2.817073e-03 rad/us  (0.460% of Omega_c)
+  UNOPTIMISED analytic flat : 1-F_vz = 3.776257e-11  leak = 8.492350e-09  err/signal = 0.0000
+    seed=analytic  it=   3  1-F_raw=3.099965e-12  1-F_vz=3.100298e-12  leak=3.785886e-09  err/sig=0.0000  max|c|=2.827355e-03  BW=462.0kHz  (10s)
+    seed=rand1     it=   9  1-F_raw=3.415934e-12  1-F_vz=3.407830e-12  leak=3.785987e-09  err/sig=0.0000  max|c|=6.659801e-03  BW=462.0kHz  (50s)
+  BEST: 1-F_vz = 3.100298e-12  err/signal = 0.0000  *** MEETS err/signal < 0.1 ***
+
+====================================================================================================================
+SWEEP TABLE
+====================================================================================================================
+ periods      T (us)  K_max   |c| analytic         1-F_vz       leakage  err/signal  meets<0.1
+    0.05    0.064935      0   5.634146e-01   2.595312e-06  1.687276e-06      0.9887         no
+     0.1    0.129870      0   2.817073e-01   2.597950e-06  1.687301e-06      0.9897         no
+    0.15    0.194805      0   1.878049e-01   2.601426e-06  1.687332e-06      0.9910         no
+     0.2    0.259740      0   1.408537e-01   2.604594e-06  1.687361e-06      0.9922         no
+     0.3    0.389610      0   9.390244e-02   2.603523e-06  1.687348e-06      0.9918         no
+     0.5    0.649351      0   5.634146e-02   3.438474e-09  1.244006e-09      0.0013        YES
+       1    1.298701      0   2.817073e-02   3.113398e-12  3.760845e-09      0.0000        YES
+       2    2.597403      1   1.408537e-02   3.059442e-12  3.805983e-09      0.0000        YES
+       5    6.493506      3   5.634146e-03   3.027134e-12  3.785875e-09      0.0000        YES
+      10   12.987013      6   2.817073e-03   3.100298e-12  3.785886e-09      0.0000        YES
+
+  SHORTEST WORKING T = 0.5 motional periods = 0.649351 us
+    1-F_indep_vz = 3.438474e-09
+    leakage      = 1.244006e-09
+    err/signal   = 0.001310   (< 0.1)
+    K_max        = 0 harmonics, BW used = 0.0 kHz
+    max|c|       = 5.647141e-02 rad/us (9.212% of Omega_c)
+
+    vs the priced 0.0597 us: 11x longer
+
+  NO ADOPTION.  T_QT-SB in runtime_table.md is unchanged.  This run
+  identifies a duration at which the gate functions under a 500 kHz
+  envelope budget; whether to price QT-SB there is a separate decision.

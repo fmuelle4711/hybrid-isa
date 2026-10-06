@@ -1,0 +1,461 @@
+# SPDX-FileCopyrightText: 2025 Battelle Memorial Institute
+# SPDX-License-Identifier: BSD-2-Clause
+import math
+
+import numpy as np
+import pennylane as qml
+from pennylane.decomposition.symbolic_decomposition import (
+    adjoint_rotation,
+    pow_rotation,
+)
+from pennylane.operation import CVOperation
+from pennylane.ops.cv import _rotation, _two_term_shift_rule
+from pennylane.typing import TensorLike
+from pennylane.wires import WiresLike
+
+import hybridlane as hqml
+
+from ..op_math.decompositions.qubit_conditioned_decompositions import to_native_qcond
+
+
+# Re-export since it matches the convention of Y. Liu
+class Displacement(CVOperation):
+    r"""Phase space displacement gate :math:`D(\alpha)`
+
+    .. math::
+
+       D(\alpha) = \exp[\alpha \ad -\alpha^* a]
+
+    where :math:`\alpha = ae^{i\phi}`. The result of applying a displacement to the
+    vacuum is a coherent state :math:`D(\alpha)\ket{0} = \ket{\alpha}`.
+    """
+
+    num_params = 2
+    num_wires = 1
+    ndim_params = (0, 0)
+    grad_method = "A"
+
+    shift = 0.1
+    multiplier = 0.5 / shift
+    a = 1
+    grad_recipe = (
+        [[multiplier, a, shift], [-multiplier, a, -shift]],
+        _two_term_shift_rule,
+    )
+
+    resource_keys = set()
+
+    def __init__(
+        self, a: TensorLike, phi: TensorLike, wires: WiresLike, id: str | None = None
+    ):
+        super().__init__(a, phi, wires=wires, id=id)
+
+    @property
+    def resource_params(self):
+        return {}
+
+    @staticmethod
+    def _heisenberg_rep(p):
+        c = math.cos(p[1])
+        s = math.sin(p[1])
+        scale = 2  # sqrt(2 * hbar)
+        return np.array([[1, 0, 0], [scale * c * p[0], 1, 0], [scale * s * p[0], 0, 1]])
+
+    def adjoint(self):
+        a, phi = self.parameters
+        new_phi = (phi + math.pi) % (2 * math.pi)
+        return Displacement(a, new_phi, wires=self.wires)
+
+    def label(self, decimals=None, base_label=None, cache=None):
+        return super().label(
+            decimals=decimals, base_label=base_label or "D", cache=cache
+        )
+
+
+@qml.register_resources({Displacement: 1})
+def _pow_d(a, phi, wires, z, **_):
+    Displacement(a * z, phi, wires)
+
+
+qml.add_decomps("Adjoint(Displacement)", adjoint_rotation)
+qml.add_decomps("Pow(Displacement)", _pow_d)
+qml.add_decomps("qCond(Displacement)", to_native_qcond(1))
+
+D = Displacement
+r"""Phase space displacement gate :math:`D(\alpha)`
+
+.. math::
+   D(\alpha) = \exp[\alpha \ad -\alpha^* a]
+
+.. seealso::
+
+    This is an alias of :class:`~hybridlane.Displacement`
+"""
+
+
+# Modify to use -i convention
+class Rotation(CVOperation):
+    r"""Phase space rotation gate :math:`R(\theta)`
+
+    .. math::
+
+        R(\theta) = \exp[-i\theta \hat{n}]
+    """
+
+    num_params = 1
+    num_wires = 1
+    ndim_params = (0,)
+    grad_method = "A"
+    grad_recipe = (_two_term_shift_rule,)
+
+    resource_keys = set()
+
+    def __init__(self, theta: TensorLike, wires: WiresLike, id: str | None = None):
+        super().__init__(theta, wires=wires, id=id)
+
+    @property
+    def resource_params(self):
+        return {}
+
+    @staticmethod
+    def _heisenberg_rep(p):
+        return _rotation(-p[0])
+
+    def adjoint(self):
+        return Rotation(-self.parameters[0], wires=self.wires)
+
+    def simplify(self):
+        theta = self.data[0]
+        if _can_replace(theta, 0):
+            return qml.Identity(wires=self.wires)
+
+        return self
+
+    def label(self, decimals=None, base_label=None, cache=None):
+        return super().label(
+            decimals=decimals, base_label=base_label or "R", cache=cache
+        )
+
+
+qml.add_decomps("Adjoint(Rotation)", adjoint_rotation)
+qml.add_decomps("Pow(Rotation)", pow_rotation)
+qml.add_decomps("qCond(Rotation)", to_native_qcond(1))
+
+R = Rotation
+r"""Phase space rotation gate :math:`R(\theta)`
+
+.. math::
+
+    R(\theta) = \exp[-i\theta \hat{n}]
+
+.. seealso::
+
+    This is an alias of :class:`~hybridlane.Rotation`
+"""
+
+
+# Re-export since it matches paper convention
+class Squeezing(CVOperation):
+    r"""Phase space squeezing gate :math:`S(\zeta)`
+
+    .. math::
+        S(\zeta) = \exp\left[\frac{1}{2}(\zeta^* a^2 - \zeta(\ad)^2)\right].
+
+    where :math:`\zeta = r e^{i\phi}`.
+    """
+
+    num_params = 2
+    num_wires = 1
+    ndim_params = (0, 0)
+    grad_method = "A"
+
+    shift = 0.1
+    multiplier = 0.5 / math.sinh(shift)
+    a = 1
+    grad_recipe = (
+        [[multiplier, a, shift], [-multiplier, a, -shift]],
+        _two_term_shift_rule,
+    )
+
+    resource_keys = set()
+
+    def __init__(self, r, phi, wires, id=None):
+        super().__init__(r, phi, wires=wires, id=id)
+
+    @property
+    def resource_params(self):
+        return {}
+
+    @staticmethod
+    def _heisenberg_rep(p):
+        R = _rotation(p[1] / 2)
+        return R @ np.diag([1, math.exp(-p[0]), math.exp(p[0])]) @ R.T
+
+    def adjoint(self):
+        r, phi = self.parameters
+        new_phi = (phi + np.pi) % (2 * np.pi)
+        return Squeezing(r, new_phi, wires=self.wires)
+
+    def label(self, decimals=None, base_label=None, cache=None):
+        return super().label(
+            decimals=decimals, base_label=base_label or "S", cache=cache
+        )
+
+
+@qml.register_resources({Squeezing: 1})
+def _pow_s(r, phi, wires, z, **_):
+    Squeezing(r * z, phi, wires)
+
+
+qml.add_decomps("Adjoint(Squeezing)", adjoint_rotation)
+qml.add_decomps("Pow(Squeezing)", _pow_s)
+qml.add_decomps("qCond(Squeezing)", to_native_qcond(1))
+
+S = Squeezing
+r"""Phase space squeezing gate :math:`S(\zeta)`
+
+.. math::
+
+    S(\zeta) = \exp\left[\frac{1}{2}(\zeta^* a^2 - \zeta(\ad)^2)\right]
+
+.. seealso::
+
+    This is an alias of :class:`~hybridlane.Squeezing`
+"""
+
+
+# Modify to have -i convention
+class Kerr(CVOperation):
+    r"""Kerr gate :math:`K(\kappa)`
+
+    .. math::
+
+        K(\kappa) = \exp[-i \kappa \hat{n}^2].
+    """
+
+    num_params = 1
+    num_wires = 1
+    ndim_params = (0,)
+    grad_method = "F"
+
+    resource_keys = set()
+
+    def __init__(self, kappa: TensorLike, wires: WiresLike, id: str | None = None):
+        super().__init__(kappa, wires=wires, id=id)
+
+    @property
+    def resource_params(self):
+        return {}
+
+    def adjoint(self):
+        return Kerr(-self.parameters[0], wires=self.wires)
+
+    def simplify(self):
+        kappa = self.data[0]
+        if _can_replace(kappa, 0):
+            return qml.Identity(wires=self.wires)
+
+        return self
+
+    def label(self, decimals=None, base_label=None, cache=None):
+        return super().label(
+            decimals=decimals, base_label=base_label or "K", cache=cache
+        )
+
+
+qml.add_decomps("Adjoint(Kerr)", adjoint_rotation)
+qml.add_decomps("Pow(Kerr)", pow_rotation)
+
+K = Kerr
+r"""Kerr gate :math:`K(\kappa)`
+
+.. math::
+
+    K(\kappa) = \exp[-i \kappa \hat{n}^2]
+
+.. seealso::
+
+    This is an alias of :class:`~hybridlane.Kerr`
+"""
+
+
+# Modify for -i convention
+class CubicPhase(CVOperation):
+    r"""Cubic phase shift gate :math:`C(r)`
+
+    .. math::
+
+        C(r) = e^{-i r \hat{x}^3}.
+    """
+
+    num_params = 1
+    num_wires = 1
+    ndim_params = (0,)
+    grad_method = "F"
+
+    resource_keys = set()
+
+    def __init__(self, r: TensorLike, wires: WiresLike, id: str | None = None):
+        super().__init__(r, wires=wires, id=id)
+
+    @property
+    def resource_params(self):
+        return {}
+
+    def adjoint(self):
+        return CubicPhase(-self.parameters[0], wires=self.wires)
+
+    def simplify(self):
+        r = self.data[0]
+        if _can_replace(r, 0):
+            return qml.Identity(wires=self.wires)
+
+        return self
+
+    def label(self, decimals=None, base_label=None, cache=None):
+        return super().label(
+            decimals=decimals, base_label=base_label or "C", cache=cache
+        )
+
+
+qml.add_decomps("Adjoint(CubicPhase)", adjoint_rotation)
+qml.add_decomps("Pow(CubicPhase)", pow_rotation)
+
+C = CubicPhase
+r"""Cubic phase shift gate :math:`C(r)`
+
+.. math::
+
+    C(r) = e^{-i r \hat{x}^3}.
+
+.. seealso::
+
+    This is an alias of :class:`~hybridlane.CubicPhase`
+"""
+
+
+def _can_replace(x, y):
+    return (
+        not qml.math.is_abstract(x)
+        and not qml.math.requires_grad(x)
+        and qml.math.allclose(x, y)
+    )
+
+
+class SelectiveNumberArbitraryPhase(CVOperation):
+    r"""Selective Number-dependent Arbitrary Phase (SNAP) gate :math:`SNAP(\varphi, n)`
+
+    This gate imparts a custom phase onto each Fock state of the qumode. Its expression
+    is
+
+    .. math::
+
+        SNAP(\varphi, n) = e^{-i \varphi \ket{n}\bra{n}}
+
+    with :math:`\varphi \in [0, 2\pi)` (Box III.10 of :footcite:p:`liu2026hybrid`).
+
+    .. note::
+
+        This definition differs from the vectorized version presented in the CVDV
+        paper, instead applying to a single Fock state. To apply it across multiple
+        Fock modes, consider
+
+        .. code:: python
+
+            angles = [0.25, 0.5, 0.75, 1.0]
+            fock_states = [0, 3, 7, 10]
+
+            for phi_n, n in zip(angles, fock_states):
+                SelectiveNumberArbitraryPhase(phi_n, n, 'm')
+
+    References
+    ----------
+
+    .. footbibliography::
+    """
+
+    num_params = 1
+    num_wires = 1
+    ndim_params = (0,)
+
+    resource_keys = set()
+
+    def __init__(
+        self,
+        phi: TensorLike,
+        n: int,
+        wires: WiresLike,
+        id: str | None = None,
+    ):
+        if n < 0:
+            raise ValueError(f"Fock state must be >= 0; got {n}")
+
+        self.hyperparameters["n"] = n
+        super().__init__(phi, wires=wires, id=id)
+
+    @property
+    def resource_params(self):
+        return {}
+
+    def adjoint(self):
+        phi = self.parameters[0]
+        return SelectiveNumberArbitraryPhase(
+            -phi, self.hyperparameters["n"], self.wires
+        )
+
+    def pow(self, z: int | float):
+        return [
+            SelectiveNumberArbitraryPhase(
+                self.data[0] * z, self.hyperparameters["n"], self.wires
+            )
+        ]
+
+    @classmethod
+    def _unflatten(cls, data, metadata):
+        wires = metadata[0]
+        hyperparams = dict(metadata[1])
+        return cls(data[0], hyperparams["n"], wires)
+
+    def simplify(self):
+        phi = self.data[0] % (2 * math.pi)
+        n = self.hyperparameters["n"]
+
+        if _can_replace(phi, 0):
+            return qml.Identity(self.wires)
+
+        return SelectiveNumberArbitraryPhase(phi, n, self.wires)
+
+    def label(self, decimals=None, base_label=None, cache=None):
+        n = self.hyperparameters["n"]
+        return super().label(
+            decimals=decimals, base_label=base_label or f"SNAP_{{{n}}}", cache=cache
+        )
+
+
+SNAP = SelectiveNumberArbitraryPhase
+r"""Selective Number-dependent Arbitrary Phase (SNAP) gate
+
+.. math::
+
+    SNAP(\varphi, n) = e^{-i \varphi \ket{n}\bra{n}}
+
+.. seealso::
+
+    This is an alias for :class:`~hybridlane.SelectiveNumberArbitraryPhase`
+"""
+
+
+def _snap_to_sqr_resources():
+    return {hqml.SQR: 2}
+
+
+@qml.register_resources(_snap_to_sqr_resources, work_wires={"zeroed": 1})
+def _snap_to_sqr(phi, wires, n, **_):
+    with qml.allocate(1, "zero", restored=True) as ancilla:
+        hqml.SQR(math.pi, 0, n, ancilla + wires)
+        hqml.SQR(-math.pi, phi, n, ancilla + wires)
+
+
+qml.add_decomps(SNAP, _snap_to_sqr)
+qml.add_decomps("Adjoint(SelectiveNumberArbitraryPhase)", adjoint_rotation)
+qml.add_decomps("Pow(SelectiveNumberArbitraryPhase)", pow_rotation)

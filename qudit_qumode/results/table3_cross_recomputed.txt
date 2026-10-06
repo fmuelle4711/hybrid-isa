@@ -1,0 +1,135 @@
+================================================================================================================
+TABLE III CROSS-ENCODING COLUMN, RECOMPUTED FROM THE STORED TRAJECTORIES
+================================================================================================================
+  convention, same as the other four columns:
+    100 * sqrt(mean((x-y)^2)) per channel, PLAIN MEAN over A/B/C per
+    panel, then mean over the 8 dissipative panels.  fig6_closed is not
+    part of the dissipative table and is excluded.
+  Vu loader and rmse() imported from scripts/analyze_n4_results.py so
+  the reference-interpolation convention cannot drift.
+
+  INPUT FILES
+    N=4  qubit data/fig8_hqml_b_qubit_N4_10000shots.npz          shots 10000  fock 4  classical_kraus_shots
+    N=4  qubit data/fig9_hqml_b_qubit_N4_10000shots.npz          shots 10000  fock 4  classical_kraus_shots
+    N=4  qubit data/fig10_hqml_b_qubit_N4_10000shots.npz         shots 10000  fock 4  classical_kraus_shots
+    N=4  qudit data/fig8_hqml_a_qudit_N4_10000shots.npz          shots 10000  fock 4  classical_kraus_shots
+    N=4  qudit data/fig9_hqml_a_qudit_N4_10000shots.npz          shots 10000  fock 4  classical_kraus_shots
+    N=4  qudit data/fig10_hqml_a_qudit_N4_10000shots.npz         shots 10000  fock 4  classical_kraus_shots
+    N=8  qubit data/fig8_hqml_b_qubit_N8_10000shots.npz          shots 10000  fock 8  hqml_qnode_stinespring_b_qubit
+    N=8  qubit data/fig9_hqml_b_qubit_N8_10000shots.npz          shots 10000  fock 8  hqml_qnode_stinespring_b_qubit
+    N=8  qubit data/fig10_hqml_b_qubit_N8_10000shots.npz         shots 10000  fock 8  hqml_qnode_stinespring_b_qubit
+    N=8  qudit data/fig8_hqml_a_qudit_N8_10000shots.npz          shots 10000  fock 8  hqml_qnode_stinespring_shots
+    N=8  qudit data/fig9_hqml_a_qudit_N8_10000shots.npz          shots 10000  fock 8  hqml_qnode_stinespring_shots
+    N=8  qudit data/fig10_hqml_a_qudit_N8_10000shots.npz         shots 10000  fock 8  hqml_qnode_stinespring_shots
+    reference   .\data\vu_reference/<per-panel .out>, mapped by analyze_n4_results.VU_FOR_PANEL
+
+================================================================================================================
+1  VERIFICATION GATE -- reproduce the two SOURCED N=4 numbers first
+================================================================================================================
+  N=4  qubit vs reference
+    panel                   A       B       C   mean(A,B,C)   note
+    fig8_top           0.2598  0.1847  0.2356        0.2267   41 pts
+    fig8_middle        0.2305  0.2207  0.2953        0.2489   41 pts
+    fig8_bottom        0.3246  0.2214  0.2773        0.2745   41 pts
+    fig9_top           0.5275  0.3958  0.5763        0.4999   41 pts
+    fig9_middle        6.4868  5.2719  6.3937        6.0508   41 pts
+    fig9_bottom        0.5853  0.4896  0.5287        0.5345   41 pts
+    fig10_combined     0.1936  0.2249  0.2169        0.2118   41 pts
+    fig10_damp_only    0.2598  0.1847  0.2356        0.2267   41 pts
+    mean over 8 panels = 1.0342 %  ->  1.03 %   paper 1.03 %   MATCH
+
+  N=4  qudit vs reference
+    panel                   A       B       C   mean(A,B,C)   note
+    fig8_top           0.2131  0.1495  0.3064        0.2230   41 pts
+    fig8_middle        0.3667  0.1521  0.3116        0.2768   41 pts
+    fig8_bottom        0.3237  0.2315  0.3869        0.3140   41 pts
+    fig9_top           0.6360  0.6340  0.7436        0.6712   41 pts
+    fig9_middle        6.2125  5.4899  6.3712        6.0245   41 pts
+    fig9_bottom        0.7223  0.7810  0.6957        0.7330   41 pts
+    fig10_combined     0.1959  0.2174  0.2815        0.2316   41 pts
+    fig10_damp_only    0.2131  0.1495  0.3064        0.2230   41 pts
+    mean over 8 panels = 1.0871 %  ->  1.09 %   paper 1.09 %   MATCH
+
+  GATE: PASSED -- this code path reproduces the sourced column.
+
+================================================================================================================
+2  THE TWO CROSS-ENCODING NUMBERS  (this is the requested computation)
+================================================================================================================
+  N=4  qubit vs qudit
+    panel                   A       B       C   mean(A,B,C)   note
+    fig8_top           0.2520  0.1454  0.1630        0.1868   grids identical
+    fig8_middle        0.3684  0.2328  0.2892        0.2968   grids identical
+    fig8_bottom        0.2239  0.2282  0.2303        0.2275   grids identical
+    fig9_top           0.2752  0.4463  0.3917        0.3711   grids identical
+    fig9_middle        0.5429  0.6849  0.7416        0.6565   grids identical
+    fig9_bottom        0.3415  0.4863  0.3554        0.3944   grids identical
+    fig10_combined     0.0194  0.0855  0.1012        0.0687   grids identical
+    fig10_damp_only    0.2520  0.1454  0.1630        0.1868   grids identical
+    mean over 8 panels = 0.2986 %  ->  0.30 %   paper 0.30 %   MATCH
+
+  N=8  qubit vs qudit
+    panel                   A       B       C   mean(A,B,C)   note
+    fig8_top           0.2323  0.2639  0.2380        0.2447   grids identical
+    fig8_middle        0.2165  0.1359  0.3154        0.2226   grids identical
+    fig8_bottom        0.3473  0.2995  0.2440        0.2969   grids identical
+    fig9_top           0.6772  0.7071  0.9982        0.7942   grids identical
+    fig9_middle        0.6265  0.7510  0.8071        0.7282   grids identical
+    fig9_bottom        0.6416  0.9683  0.5882        0.7327   grids identical
+    fig10_combined     0.3796  0.2366  0.2768        0.2977   grids identical
+    fig10_damp_only    0.3549  0.2937  0.2798        0.3094   grids identical
+    mean over 8 panels = 0.4533 %  ->  0.45 %   paper 0.45 %   MATCH
+
+================================================================================================================
+3  N=8 vs-REFERENCE PAIR -- recomputed as a check on commit a2f3104
+================================================================================================================
+  These two have no stored artefact either; the only record of them is
+  the commit message (1.0212 % and 1.0856 %).  Same code path, so this
+  is a genuine independent check of that message.
+
+  N=8  qubit vs reference
+    panel                   A       B       C   mean(A,B,C)   note
+    fig8_top           0.2124  0.2085  0.1910        0.2040   41 pts
+    fig8_middle        0.1537  0.1582  0.2421        0.1847   41 pts
+    fig8_bottom        0.3427  0.2129  0.2097        0.2551   41 pts
+    fig9_top           0.4399  0.5190  0.5990        0.5193   41 pts
+    fig9_middle        6.5222  5.3131  6.4238        6.0864   41 pts
+    fig9_bottom        0.5185  0.5341  0.3411        0.4646   41 pts
+    fig10_combined     0.2391  0.1877  0.2101        0.2123   41 pts
+    fig10_damp_only    0.3098  0.2628  0.1580        0.2435   41 pts
+    mean over 8 panels = 1.0212 %  ->  1.02 %   paper 1.02 %   MATCH
+
+  N=8  qudit vs reference
+    panel                   A       B       C   mean(A,B,C)   note
+    fig8_top           0.2586  0.1504  0.3033        0.2375   41 pts
+    fig8_middle        0.2884  0.0978  0.3635        0.2499   41 pts
+    fig8_bottom        0.2254  0.2330  0.2473        0.2352   41 pts
+    fig9_top           0.6406  0.7239  0.7172        0.6939   41 pts
+    fig9_middle        6.3301  5.6749  6.3154        6.1068   41 pts
+    fig9_bottom        0.7358  0.8012  0.5843        0.7071   41 pts
+    fig10_combined     0.2576  0.2056  0.2220        0.2284   41 pts
+    fig10_damp_only    0.2459  0.1749  0.2576        0.2262   41 pts
+    mean over 8 panels = 1.0856 %  ->  1.09 %   paper 1.09 %   MATCH
+
+================================================================================================================
+4  ALL SIX TABLE III NUMBERS
+================================================================================================================
+  N    column           recomputed   paper           files
+  N=4  qubit vs ref        1.0342%   1.03% MATCH     data/fig{8,9,10}_hqml_b_qubit_N4_10000shots.npz + Vu .out
+  N=4  qudit vs ref        1.0871%   1.09% MATCH     data/fig{8,9,10}_hqml_a_qudit_N4_10000shots.npz + Vu .out
+  N=4  qubit vs qudit      0.2986%   0.30% MATCH     data/fig{8,9,10}_hqml_{b_qubit,a_qudit}_N4_10000shots.npz
+  N=8  qubit vs ref        1.0212%   1.02% MATCH     data/fig{8,9,10}_hqml_b_qubit_N8_10000shots.npz + Vu .out
+  N=8  qudit vs ref        1.0856%   1.09% MATCH     data/fig{8,9,10}_hqml_a_qudit_N8_10000shots.npz + Vu .out
+  N=8  qubit vs qudit      0.4533%   0.45% MATCH     data/fig{8,9,10}_hqml_{b_qubit,a_qudit}_N8_10000shots.npz
+
+================================================================================================================
+VERDICT
+================================================================================================================
+  All six reproduce the printed table.  The two cross-encoding
+  entries and the two N=8 vs-reference entries now have a saved
+  artefact for the first time; previously they existed only in
+  commit message a2f3104.
+
+  Reminder from results/table3_provenance.txt: the N=4 row was produced
+  on the classical_kraus_shots backend and the N=8 row on
+  hqml_qnode_stinespring, so the two rows differ in solver as well as in
+  Fock cutoff.  That is unchanged by this recomputation.
